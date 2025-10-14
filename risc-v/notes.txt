@@ -1,0 +1,30 @@
+ 31          25 24    20 19    15 14   12 11     7 6       0
++--------------+--------+--------+-------+---------+---------+
+|   funct7     |  rs2   |  rs1   |funct3|   rd    |  opcode |
++--------------+--------+--------+-------+---------+---------+
+
+bits [6:0] → opcode
+bits [11:7] → destination register (rd)
+bits [14:12] → function subcode (funct3)
+bits [19:15] → source register 1 (rs1)
+bits [24:20] → source register 2 (rs2)
+bits [31:25] → function subcode (funct7)
+
+B - Byte        8b
+H - Halfword    16b
+W - Word        32b
+D - Doubleword  64b
+
+Added instructions:
+
+ANDI
+ORI
+XORI
+ADD
+SUB
+AND
+OR
+XOR
+SW
+SH
+SB

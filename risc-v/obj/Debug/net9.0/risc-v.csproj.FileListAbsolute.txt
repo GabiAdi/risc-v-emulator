@@ -1,0 +1,14 @@
+/home/user/RiderProjects/risc-v/risc-v/bin/Debug/net9.0/risc-v
+/home/user/RiderProjects/risc-v/risc-v/bin/Debug/net9.0/risc-v.deps.json
+/home/user/RiderProjects/risc-v/risc-v/bin/Debug/net9.0/risc-v.runtimeconfig.json
+/home/user/RiderProjects/risc-v/risc-v/bin/Debug/net9.0/risc-v.dll
+/home/user/RiderProjects/risc-v/risc-v/bin/Debug/net9.0/risc-v.pdb
+/home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/risc-v.GeneratedMSBuildEditorConfig.editorconfig
+/home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/risc-v.AssemblyInfoInputs.cache
+/home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/risc-v.AssemblyInfo.cs
+/home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/risc-v.csproj.CoreCompileInputs.cache
+/home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/risc-v.dll
+/home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/refint/risc-v.dll
+/home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/risc-v.pdb
+/home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/risc-v.genruntimeconfig.cache
+/home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/ref/risc-v.dll
