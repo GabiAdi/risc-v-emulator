@@ -85,8 +85,6 @@ public class Cpu
         break_occured?.Invoke(this, new BreakEventArgs(pc));
     }
     
-    // public void on_syscall()
-
     private uint get_reg(int index)
     {
         return index == 0 ? 0u : reg[index];

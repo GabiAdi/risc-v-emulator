@@ -12,3 +12,4 @@
 /home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/risc-v.pdb
 /home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/risc-v.genruntimeconfig.cache
 /home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/ref/risc-v.dll
+/home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/risc-v.sourcelink.json

@@ -24,9 +24,9 @@ public class SystemHandler
                 uint b;
                 while ((b = bus.read(addr++, 1)) != 0)
                 {
-                    sb.Append(b);
+                    sb.Append((char)b);
                 }
-                Console.Write(sb.ToString());
+                Console.WriteLine(sb.ToString());
                 break;
             case 11:
                 Console.Write((char)e.args[0]);
