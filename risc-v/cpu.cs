@@ -451,6 +451,11 @@ public class Cpu
         if (index > reg.Length) throw new IndexOutOfRangeException();
         reg[index] = value;
     }
+    
+    public void set_pc(uint address)
+    {
+        pc = address;
+    }
 
     public void step()
     {
