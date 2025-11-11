@@ -273,55 +273,94 @@ public class Cpu
                 break;
             
             case 0x33: // R type
+                r.dest = d.rd;
                 if (d.funct3 == 0x0 && d.funct7 == 0x0) // ADD
                 {
                     r.result = d.val_rs1 + d.val_rs2;
-                    r.dest = d.rd;
                 }
                 else if (d.funct3 == 0x0 && d.funct7 == 0x20) // SUB
                 {
                     r.result = d.val_rs1 - d.val_rs2;
-                    r.dest = d.rd;
                 }
                 else if (d.funct3 == 0x1 && d.funct7 == 0x00) // SLL
                 {
                     r.result = (uint)((int)d.val_rs1 << (int)(d.val_rs2 & 0x1F));
-                    r.dest = d.rd;
                 }
                 else if (d.funct3 == 0x5 && d.funct7 == 0x00) // SRL
                 {
                     r.result = d.val_rs1 >> (int)(d.val_rs2 & 0x1F);
-                    r.dest = d.rd;
                 }
                 else if (d.funct3 == 0x5 && d.funct7 == 0x20) // SRA
                 {
                     r.result = (uint)((int)d.val_rs1 >> (int)(d.val_rs2  & 0x1F));
-                    r.dest = d.rd;
                 }
                 else if (d.funct3 == 0x2 && d.funct7 == 0x00) // SLT
                 {
                     r.result = (int)d.val_rs1 < (int)d.val_rs2 ? (uint)1 : (uint)0; 
-                    r.dest = d.rd;
                 }
                 else if (d.funct3 == 0x3 && d.funct7 == 0x00) // SLTU
                 {
                     r.result = d.val_rs1 < d.val_rs2 ? (uint)1 : (uint)0;
-                    r.dest = d.rd;
                 }
                 else if (d.funct3 == 0x7 && d.funct7 == 0x0) // AND
                 {
                     r.result = d.val_rs1 & d.val_rs2;
-                    r.dest = d.rd;
                 }
                 else if (d.funct3 == 0x6 && d.funct7 == 0x0) // OR 
                 {
                     r.result = d.val_rs1 | d.val_rs2;
-                    r.dest = d.rd;
                 }
-                else if (d.funct3 == 0x4 && d.funct7 == 0x00) // XOR
+                else if (d.funct3 == 0x4 && d.funct7 == 0x0) // XOR
                 {
                     r.result = d.val_rs1 ^ d.val_rs2;
-                    r.dest = d.rd;
+                } 
+                else if (d.funct3 == 0x0 && d.funct7 == 0x1) // MUL
+                {
+                    r.result = (uint)((int)d.val_rs1 * (int)d.val_rs2);
+                }
+                else if (d.funct3 == 0x1 && d.funct7 == 0x1) // MULH 
+                {
+                    r.result = (uint)(((long)(int)d.val_rs1 * (long)(int)d.val_rs2) >> 32);
+                }
+                else if (d.funct3 == 0x2 && d.funct7 == 0x1) // MULHSU
+                {
+                    r.result = (uint)(((long)(int)d.val_rs1 * (long)(uint)d.val_rs2) >> 32);
+                }
+                else if (d.funct3 == 0x3 && d.funct7 == 0x1) // MULHU
+                {
+                    r.result = (uint)(((ulong)d.val_rs1 * (ulong)d.val_rs2) >> 32);
+                }
+                else if (d.funct3 == 0x4 && d.funct7 == 0x1) // DIV
+                {
+                    if (d.val_rs2 == 0)
+                    {
+                        r.result = 0xFFFFFFFF; // Division by zero
+                    }
+                    else if ((int)d.val_rs1 == int.MinValue && (int)d.val_rs2 == -1)
+                    {
+                        r.result = unchecked((uint)int.MinValue); // Overflow case
+                    }
+                    else
+                    {
+                        r.result = (uint)((int)d.val_rs1 / (int)d.val_rs2);
+                    }
+                }
+                else if (d.funct3 == 0x5 && d.funct7 == 0x1) // DIVU
+                {
+                    r.result = d.val_rs2 == 0 ? 0xFFFFFFFF : d.val_rs1 / d.val_rs2;
+                }
+                else if (d.funct3 == 0x6 && d.funct7 == 0x1) // REM
+                {
+                    if (d.val_rs2 == 0)
+                        r.result = d.val_rs1;
+                    else if ((int)d.val_rs1 == int.MinValue && (int)d.val_rs2 == -1)
+                        r.result = 0;
+                    else
+                        r.result = (uint)((int)d.val_rs1 % (int)d.val_rs2);
+                }
+                else if (d.funct3 == 0x7 && d.funct7 == 0x1) // REMU
+                {
+                    r.result = d.val_rs2 == 0 ? d.val_rs1 : d.val_rs1 % d.val_rs2;
                 }
                 break;
             
