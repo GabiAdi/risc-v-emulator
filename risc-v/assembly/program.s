@@ -2,7 +2,7 @@
     .globl _start
 _start:
     # Initialize values
-    li x1, 0x00000006     # rs1 = 6
+    li x1, 0x00000006     # rs1 = 6 
     li x2, 0xFFFFFFFC     # rs2 = -4 (signed)
     li x3, 4              # rs3 = 4 (unsigned copy)
 
