@@ -69,6 +69,9 @@ public class Cpu
     
     private uint[] reg = new uint[32]; // 32 General registers
     private uint pc; // Program counter
+    
+    private uint reservation_addr; // Reserved address for atomic operations
+    private bool reservation_valid; // Is the reservation valid?
 
     private Bus bus; // Bus for reading and writing to memory
 
@@ -269,6 +272,40 @@ public class Cpu
                     r.mem_write_val = d.val_rs2;
                     r.mem_width = 4;
                     r.write_to_memory = true;
+                }
+                break;
+            
+            case 0x2F: // Atomics
+                if (d.funct3 == 0x2 && d.funct7 == 0x08) // LR.W
+                {
+                    if((d.val_rs1 & 0x3) != 0)
+                        throw new Exception("Misaligned address for LR.W");
+
+                    reservation_addr = d.val_rs1;
+                    reservation_valid = true;
+                    
+                    r.dest = d.rd;
+                    r.mem_addr = d.val_rs1;
+                    r.mem_width = 4;
+                    r.read_from_memory = true;
+                }
+                else if(d.funct3 == 0x2 && d.funct7 == 0x0C) // SC.W
+                {
+                    r.dest = d.rd;
+
+                    if (reservation_valid && reservation_addr == d.val_rs1)
+                    {
+                        r.mem_addr = d.val_rs1;
+                        r.mem_write_val = d.val_rs2;
+                        r.mem_width = 4;
+                        r.write_to_memory = true;
+                        r.result = 0; // Success
+                    }
+                    else
+                    {
+                        r.result = 1; // Failure
+                    }
+                    reservation_valid = false;
                 }
                 break;
             
@@ -475,6 +512,8 @@ public class Cpu
         
         reg[0] = 0; // Register 0x0 is always zero and cannot be written to
         pc = 0;
+        reservation_addr = 0;
+        reservation_valid = false;
     }
 
     public uint get_register(int index)
