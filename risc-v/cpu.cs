@@ -4,6 +4,26 @@ namespace risc_v;
 
 public class Cpu
 {
+    private enum OpType
+    {
+        LR,
+        SC,
+        AMO,
+        OTHER,
+    }
+    private struct AtomicIns
+    {
+        public int instruction;
+        public uint old;
+        public uint rs2;
+        
+        public AtomicIns(int instruction, uint old, uint rs2)
+        {
+            this.instruction = instruction;
+            this.old = old;
+            this.rs2 = rs2;
+        }
+    }
     private struct DecIns // Decoded instruction
     {
         public uint ins;    // Instruction word
@@ -20,14 +40,14 @@ public class Cpu
         public uint val_rs2;    
 
         public DecIns(uint instruction)
-        { 
+        {
             ins     = instruction;
             opcode  = instruction & 0x7F;
             rd      = (int)((instruction >> 7) & 0x1F);
-            funct3  = (int)((instruction >> 12) & 0x7);
-            rs1     = (int)((instruction >> 15) & 0x1F);
-            rs2     = (int)((instruction >> 20) & 0x1F);
+            funct3      = (int)((instruction >> 12) & 0x7);
             funct7  = (int)((instruction >> 25) & 0x7F);
+            rs1         = (int)((instruction >> 15) & 0x1F);
+            rs2         = (int)((instruction >> 20) & 0x1F);
             imm     = 0;
             val_rs1 = 0;
             val_rs2 = 0;
@@ -47,6 +67,11 @@ public class Cpu
         public uint mem_addr;
         public uint mem_write_val;
         public int mem_width;     // 1=byte, 2=half, 4=word (optional)
+        
+        // For atomics
+        public uint val_rs2;
+        public int funct7; 
+        public OpType op;
 
         // Control flow
         public bool branch_taken;
@@ -64,6 +89,9 @@ public class Cpu
             mem_width = 0;
             branch_taken = false;
             new_pc = 0;
+            funct7 = 0;
+            op = OpType.OTHER;
+            val_rs2 = 0;
         }
     }
     
@@ -285,17 +313,19 @@ public class Cpu
                     reservation_valid = true;
                     
                     r.dest = d.rd;
-                    r.mem_addr = d.val_rs1;
+                    r.mem_addr = d.val_rs1 + d.imm;
                     r.mem_width = 4;
+                    r.op = OpType.LR;
                     r.read_from_memory = true;
                 }
                 else if(d.funct3 == 0x2 && d.funct7 == 0x0C) // SC.W
                 {
                     r.dest = d.rd;
+                    r.op = OpType.SC;
 
                     if (reservation_valid && reservation_addr == d.val_rs1)
                     {
-                        r.mem_addr = d.val_rs1;
+                        r.mem_addr = d.val_rs1 + d.imm;
                         r.mem_write_val = d.val_rs2;
                         r.mem_width = 4;
                         r.write_to_memory = true;
@@ -306,6 +336,17 @@ public class Cpu
                         r.result = 1; // Failure
                     }
                     reservation_valid = false;
+                } else if (d.funct3 == 0x2) // AMOs 
+                {
+                    r.op = OpType.AMO;
+                    r.funct7 = d.funct7;
+                    r.val_rs2 = d.val_rs2;
+                    r.dest = d.rd;
+                    
+                    r.mem_addr = d.val_rs1 + d.imm;
+                    r.mem_width = 4;
+                    r.write_to_memory = true;
+                    r.read_from_memory = true;
                 }
                 break;
             
@@ -471,6 +512,32 @@ public class Cpu
         return r;
     }
 
+    private uint atomic_op(AtomicIns a)
+    {
+        switch (a.instruction)
+        {
+            case 0x00: // AMOADD.W
+                return a.old+a.rs2;
+            case 0x04: // AMOSWAP.W
+                return a.rs2;
+            case 0x10: // AMOXOR.W
+                return a.old ^ a.rs2;
+            case 0x20: // AMOOR.W
+                return a.old | a.rs2;
+            case 0x30: // AMOAND.W
+                return a.old & a.rs2;
+            case 0x40: // AMOMIN.W
+                return (int)a.old < (int)a.rs2 ? a.old : a.rs2;
+            case 0x50: // AMOMAX.W
+                return (int)a.old > (int)a.rs2 ? a.old : a.rs2;
+            case 0x60: // AMOMINU.W
+                return (uint)a.old < (uint)a.rs2 ? a.old : a.rs2;
+            case 0x70: // AMOMAXU.W
+                return (uint)a.old > (uint)a.rs2 ? a.old : a.rs2;
+        }
+        return 0;
+    }
+
     private uint sign_extend(uint value, int width)
     {
         switch (width)
@@ -485,14 +552,39 @@ public class Cpu
 
     private void write_back(ExecResult r)
     {
-        if (r.read_from_memory)
+        if (r.op == OpType.LR)
         {
-            if (r.zero_extend)
-                r.result = bus.read(r.mem_addr, r.mem_width);
-            else
-                r.result = sign_extend(bus.read(r.mem_addr, r.mem_width), r.mem_width);
+            r.result = sign_extend(bus.read(r.mem_addr, r.mem_width), r.mem_width);
         }
-        if (r.write_to_memory) bus.write(r.mem_addr, r.mem_write_val, r.mem_width);
+        else if (r.op == OpType.SC)
+        {
+            if (r.write_to_memory)
+            {
+                bus.write(r.mem_addr, r.mem_write_val, r.mem_width);
+                reservation_valid = false;
+            }
+        }
+        else if (r.op == OpType.AMO)
+        {
+            uint old_val = bus.read(r.mem_addr, r.mem_width);
+            uint new_val = atomic_op(new AtomicIns(r.funct7, old_val, r.val_rs2));
+            
+            bus.write(r.mem_addr, new_val, r.mem_width);
+            reservation_valid = false;
+            
+            r.result = old_val;
+        }
+        else if (r.op == OpType.OTHER)
+        {
+            if (r.read_from_memory) {
+                r.result = r.zero_extend ? bus.read(r.mem_addr, r.mem_width) : sign_extend(bus.read(r.mem_addr, r.mem_width), r.mem_width);
+            }
+            if (r.write_to_memory) {
+                bus.write(r.mem_addr, r.mem_write_val, r.mem_width);
+                reservation_valid = false;
+            }
+        }
+        
         if (r.dest != 0) set_reg(r.dest, r.result); // Cannot write to 0x0
         if (r.branch_taken) pc = r.new_pc;
     }
