@@ -97,6 +97,7 @@ public class Cpu
     
     private uint[] reg = new uint[32]; // 32 General registers
     private uint pc; // Program counter
+    private uint current_ins; // Current instruction being executed
     
     private uint reservation_addr; // Reserved address for atomic operations
     private bool reservation_valid; // Is the reservation valid?
@@ -507,7 +508,9 @@ public class Cpu
                     on_break(pc);
                 }
                 break;
-                
+            default:
+                Console.WriteLine("Unkonwn instruction opcode: 0x" + d.opcode.ToString("X"));
+                break;
         }
         return r;
     }
@@ -626,14 +629,24 @@ public class Cpu
     {
         pc = address;
     }
+    
+    public uint get_pc()
+    {
+        return pc;
+    }
+    
+    public uint get_current_instruction()
+    {
+        return current_ins;
+    }
 
     public void step()
     {
-        uint ins = bus.read(pc, 4); // Fetch
+        current_ins = bus.read(pc, 4); // Fetch
         uint current_pc = pc;
         pc += 4; // Increment PC by 4 bytes
         
-        var decoded = decode(ins);
+        var decoded = decode(current_ins);
         var exec = execute(decoded, current_pc);
         write_back(exec);
     }
