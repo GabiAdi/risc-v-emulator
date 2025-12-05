@@ -33,13 +33,10 @@ ElfLoader loader = new ElfLoader(program_path);
 
 uint[] program_bytes = loader.GetExecutableWords();
 
-WriteHex(loader.GetExecutableWords());
-
 for (uint i = 0; i < program_bytes.Length; i+=4)
 {
     memory.write_word(i, program_bytes[i]);
 }
-
 
 Bus bus = new Bus(memory);
 Cpu cpu = new Cpu(bus);
@@ -47,14 +44,14 @@ Cpu cpu = new Cpu(bus);
 cpu.set_pc(loader.EntryPoint);
 
 Console.WriteLine($"Entry Point: 0x{loader.EntryPoint:X}");
-Console.WriteLine($"Execstart: " + loader.ExecutableRegion.Start);
-Console.WriteLine("Execend: " + loader.ExecutableRegion.End);
+Console.WriteLine($"Execstart: " + loader.TextStart);
+Console.WriteLine("Execend: " + loader.TextEnd);
 
 SystemHandler system_handler = new SystemHandler(bus);
 cpu.syscall_occured += system_handler.handle_syscall;
 cpu.break_occured += system_handler.handle_breakpoint;
 
-Disassembler disassembler = new Disassembler();
+Disassembler disassembler = new Disassembler(loader.GetSymbols());
 
 while (true)
 {

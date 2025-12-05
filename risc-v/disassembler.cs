@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 public class Disassembler
 {
@@ -10,27 +11,50 @@ public class Disassembler
         "x24","x25","x26","x27","x28","x29","x30","x31"
     };
 
-    public string Disassemble(uint instruction)
+    private readonly Dictionary<uint, string> Symbols;
+
+    // Keep track of last AUIPC to detect 'la'
+    private uint? pendingAuipcAddr = null;
+    private int pendingAuipcRd = -1;
+    private int pendingAuipcImm = 0;
+
+    public Disassembler(Dictionary<uint, string> symbols = null)
     {
-        uint opcode = instruction & 0x7F;
-        switch (opcode)
-        {
-            case 0x33: return DecodeRType(instruction);      // R-type (ADD/SUB/MUL etc.)
-            case 0x03: return DecodeITypeLoad(instruction);  // Loads
-            case 0x13: return DecodeITypeALU(instruction);   // I-type ALU
-            case 0x23: return DecodeSType(instruction);      // Stores
-            case 0x63: return DecodeBType(instruction);      // Branch
-            case 0x37: return DecodeUType(instruction,"lui");
-            case 0x17: return DecodeUType(instruction,"auipc");
-            case 0x6F: return DecodeJType(instruction);      // JAL
-            case 0x67: return DecodeITypeJALR(instruction);  // JALR
-            case 0x0F: return "fence";                       // Fence
-            case 0x73: return DecodeSystem(instruction);     // ECALL/EBREAK
-            case 0x2F: return DecodeAtomic(instruction);    // AMO / LR / SC
-            default: return "unknown";
-        }
+        Symbols = symbols ?? new Dictionary<uint, string>();
     }
 
+    private string GetSymbol(uint addr)
+    {
+        return Symbols.TryGetValue(addr, out var name) ? name : $"0x{addr:X}";
+    }
+
+    public string Disassemble(uint instruction, uint pc = 0)
+    {
+        uint opcode = instruction & 0x7F;
+        string decoded = opcode switch
+        {
+            0x33 => DecodeRType(instruction),      // R-type
+            0x03 => DecodeITypeLoad(instruction),  // Loads
+            0x13 => DecodeITypeALU(instruction),   // I-type ALU
+            0x23 => DecodeSType(instruction),      // Stores
+            0x63 => DecodeBType(instruction, pc),  // Branch
+            0x37 => DecodeUType(instruction, "lui"),     // LUI
+            0x17 => DecodeUType(instruction, "auipc"),   // AUIPC
+            0x6F => DecodeJType(instruction, pc),        // JAL
+            0x67 => DecodeITypeJALR(instruction),       // JALR
+            0x0F => "fence",
+            0x73 => DecodeSystem(instruction),
+            0x2F => DecodeAtomic(instruction),
+            _ => "unknown"
+        };
+
+        // Detect pseudo-instructions
+        decoded = DetectPseudo(instruction, decoded, pc);
+
+        return decoded;
+    }
+
+    // ---------------- R-type ----------------
     private string DecodeRType(uint instr)
     {
         int rd = (int)((instr >> 7) & 0x1F);
@@ -54,12 +78,13 @@ public class Disassembler
         return $"{mnemonic} {Registers[rd]}, {Registers[rs1]}, {Registers[rs2]}";
     }
 
+    // ---------------- I-type ALU ----------------
     private string DecodeITypeALU(uint instr)
     {
         int rd = (int)((instr >> 7) & 0x1F);
         int funct3 = (int)((instr >> 12) & 0x7);
         int rs1 = (int)((instr >> 15) & 0x1F);
-        int imm = (int)(instr >> 20) & 0xFFF;
+        int imm = (int)((instr >> 20) & 0xFFF);
         if ((imm & 0x800) != 0) imm |= unchecked((int)0xFFFFF000);
 
         string mnemonic = funct3 switch
@@ -77,12 +102,13 @@ public class Disassembler
         return $"{mnemonic} {Registers[rd]}, {Registers[rs1]}, {imm}";
     }
 
+    // ---------------- I-type Load ----------------
     private string DecodeITypeLoad(uint instr)
     {
         int rd = (int)((instr >> 7) & 0x1F);
         int funct3 = (int)((instr >> 12) & 0x7);
         int rs1 = (int)((instr >> 15) & 0x1F);
-        int imm = (int)(instr >> 20) & 0xFFF;
+        int imm = (int)((instr >> 20) & 0xFFF);
         if ((imm & 0x800) != 0) imm |= unchecked((int)0xFFFFF000);
 
         string mnemonic = funct3 switch
@@ -94,9 +120,13 @@ public class Disassembler
             0x5 => "lhu",
             _ => "unknown"
         };
-        return $"{mnemonic} {Registers[rd]}, {imm}({Registers[rs1]})";
+
+        // Try to annotate symbol
+        string symbol = GetSymbol((uint)imm);
+        return $"{mnemonic} {Registers[rd]}, {imm}({Registers[rs1]}) // {symbol}";
     }
 
+    // ---------------- S-type Store ----------------
     private string DecodeSType(uint instr)
     {
         int imm4_0 = (int)((instr >> 7) & 0x1F);
@@ -114,10 +144,13 @@ public class Disassembler
             0x2 => "sw",
             _ => "unknown"
         };
-        return $"{mnemonic} {Registers[rs2]}, {imm}({Registers[rs1]})";
+
+        string symbol = GetSymbol((uint)imm);
+        return $"{mnemonic} {Registers[rs2]}, {imm}({Registers[rs1]}) // {symbol}";
     }
 
-    private string DecodeBType(uint instr)
+    // ---------------- B-type Branch ----------------
+    private string DecodeBType(uint instr, uint pc)
     {
         int imm11 = (int)((instr >> 7) & 0x1) << 11;
         int imm4_1 = (int)((instr >> 8) & 0xF) << 1;
@@ -140,9 +173,13 @@ public class Disassembler
             0x7 => "bgeu",
             _ => "unknown"
         };
-        return $"{mnemonic} {Registers[rs1]}, {Registers[rs2]}, {imm}";
+
+        uint target = pc + (uint)imm;
+        string symbol = GetSymbol(target);
+        return $"{mnemonic} {Registers[rs1]}, {Registers[rs2]}, {imm} // {symbol}";
     }
 
+    // ---------------- U-type ----------------
     private string DecodeUType(uint instr, string mnemonic)
     {
         int rd = (int)((instr >> 7) & 0x1F);
@@ -150,7 +187,8 @@ public class Disassembler
         return $"{mnemonic} {Registers[rd]}, {imm}";
     }
 
-    private string DecodeJType(uint instr)
+    // ---------------- J-type ----------------
+    private string DecodeJType(uint instr, uint pc)
     {
         int rd = (int)((instr >> 7) & 0x1F);
         int imm20 = (int)((instr >> 31) & 0x1) << 20;
@@ -159,9 +197,13 @@ public class Disassembler
         int imm19_12 = (int)((instr >> 12) & 0xFF) << 12;
         int imm = imm20 | imm19_12 | imm11 | imm10_1;
         if ((imm & 0x100000) != 0) imm |= unchecked((int)0xFFE00000);
-        return $"jal {Registers[rd]}, {imm}";
+
+        uint target = pc + (uint)imm;
+        string symbol = GetSymbol(target);
+        return $"jal {Registers[rd]}, {imm} // {symbol}";
     }
 
+    // ---------------- I-type JALR ----------------
     private string DecodeITypeJALR(uint instr)
     {
         int rd = (int)((instr >> 7) & 0x1F);
@@ -171,6 +213,7 @@ public class Disassembler
         return $"jalr {Registers[rd]}, {imm}({Registers[rs1]})";
     }
 
+    // ---------------- System ----------------
     private string DecodeSystem(uint instr)
     {
         int funct3 = (int)((instr >> 12) & 0x7);
@@ -182,6 +225,7 @@ public class Disassembler
         };
     }
 
+    // ---------------- Atomic ----------------
     private string DecodeAtomic(uint instr)
     {
         int rd = (int)((instr >> 7) & 0x1F);
@@ -190,7 +234,6 @@ public class Disassembler
         int rs2 = (int)((instr >> 20) & 0x1F);
         int funct5 = (int)((instr >> 27) & 0x1F);
 
-        // LR/SC special case
         if (funct5 == 0x02 && funct3 == 0x2) return $"lr.w {Registers[rd]}, ({Registers[rs1]})";
         if (funct5 == 0x03 && funct3 == 0x2) return $"sc.w {Registers[rd]}, {Registers[rs2]}, ({Registers[rs1]})";
 
@@ -208,5 +251,51 @@ public class Disassembler
             _ => "unknown"
         };
         return $"{mnemonic} {Registers[rd]}, {Registers[rs2]}, ({Registers[rs1]})";
+    }
+
+    // ---------------- Pseudo-instruction detection ----------------
+    private string DetectPseudo(uint instr, string decoded, uint pc)
+    {
+        // nop
+        if (instr == 0x00000013) return "nop";
+
+        // mv rd, rs  -> addi rd, rs, 0
+        if (decoded.StartsWith("addi") && decoded.EndsWith(", 0"))
+            return decoded.Replace("addi", "mv");
+
+        uint opcode = instr & 0x7F;
+
+        // Detect AUIPC for possible 'la'
+        if (opcode == 0x17) // AUIPC
+        {
+            pendingAuipcRd = (int)((instr >> 7) & 0x1F);
+            pendingAuipcImm = (int)(instr & 0xFFFFF000);
+            pendingAuipcAddr = pc;
+            return decoded; // still print AUIPC for now
+        }
+
+        // Detect ADDI after AUIPC -> la
+        if (opcode == 0x13 && pendingAuipcRd >= 0)
+        {
+            int rd = (int)((instr >> 7) & 0x1F);
+            int rs1 = (int)((instr >> 15) & 0x1F);
+            int imm = (int)((instr >> 20) & 0xFFF);
+            if ((imm & 0x800) != 0) imm |= unchecked((int)0xFFFFF000); // sign-extend
+
+            if (rd == pendingAuipcRd && rs1 == pendingAuipcRd)
+            {
+                uint targetAddr = (uint)(pendingAuipcImm + imm);
+                string symbol = GetSymbol(targetAddr);
+
+                // Clear pending AUIPC
+                pendingAuipcRd = -1;
+                pendingAuipcImm = 0;
+                pendingAuipcAddr = null;
+
+                return $"la {Registers[rd]}, {symbol}";
+            }
+        }
+
+        return decoded;
     }
 }
