@@ -7,8 +7,483 @@
   "targets": {
     ".NETCoreApp,Version=v9.0": {
       "risc-v/1.0.0": {
+        "dependencies": {
+          "Reko.Decompiler.Runtime": "0.12.1"
+        },
         "runtime": {
           "risc-v.dll": {}
+        }
+      },
+      "Reko.Decompiler.Runtime/0.12.1": {
+        "runtime": {
+          "lib/net8.0/K4os.Compression.LZ4.dll": {
+            "assemblyVersion": "1.3.8.0",
+            "fileVersion": "1.3.8.0"
+          },
+          "lib/net8.0/Reko.Arch.Alpha.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Altera.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          },
+          "lib/net8.0/Reko.Arch.Angstrem.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Arc.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Arm.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Avr.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Blackfin.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.C166.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.CSky.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Cil.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.CompactRisc.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Cray.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Etrax.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Fujitsu.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.H8.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.IA64.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Infineon.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.LatticeMico.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Loongson.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.M16C.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.M6800.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.M68k.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.MCore.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.MN103.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Maxim.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.MicroBlaze.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.MicrochipPIC.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.MilStd1750.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Mips.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Mos6502.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Msp430.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Nec.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Oki.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.OpenRISC.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.PaRisc.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Padauk.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Pdp.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.PowerPC.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Qualcomm.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.RiscV.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Rl78.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Sparc.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.SuperH.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Telink.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Tlcs.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Tms7000.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.V850.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Vax.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.WE32100.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.X86.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.XCore.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Xtensa.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.Zilog.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.i8051.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Arch.zSeries.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Core.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Decompiler.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.AmigaOS.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.AtariTOS.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.BbcMicro.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.C64.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.Cpm.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.Dreamcast.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.Gameboy.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.Hpux.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.MacOS.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.MorphOS.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.Msdos.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.NeoGeo.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.OS2.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.OpenVMS.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.PalmOS.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.Pdp10Env.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.Ps3.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.RT11.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.RiscOS.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.SegaGenesis.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.Snes.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.Switch.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.SysV.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.Trs80.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.Wii.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.Windows.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.Xbox.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Environments.ZX81.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.AOut.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.Archives.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.BinHex.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.Coff.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.DiskImages.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.Dol.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.Elf.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.HpSom.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.Hunk.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.IntelHex.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.LLVM.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.Ldm.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.MachO.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.MzExe.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.Nro.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.OdbgScript.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.Omf.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.Pef.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.Srec.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.TekHex.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.TypeLib.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.VmsExe.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.WebAssembly.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.Xbe.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.ImageLoaders.Xex.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Libraries.Libc.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Libraries.MacsBug.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          },
+          "lib/net8.0/Reko.Libraries.Microchip.Utils.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Libraries.Python.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          },
+          "lib/net8.0/Reko.Scripts.Python.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          },
+          "lib/net8.0/Reko.Symbols.LGSymLoader.dll": {
+            "assemblyVersion": "0.12.1.0",
+            "fileVersion": "0.12.1.0"
+          }
         }
       }
     }
@@ -18,6 +493,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Reko.Decompiler.Runtime/0.12.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tbUGmGDDWr0iZo5PiFoogI8LkQ8TeAnz8gEvdV3HS9Cfx8FxS9rk0fKzTkv9QzM57S/pKlM71j3rhLY3LGrXAw==",
+      "path": "reko.decompiler.runtime/0.12.1",
+      "hashPath": "reko.decompiler.runtime.0.12.1.nupkg.sha512"
     }
   }
 }

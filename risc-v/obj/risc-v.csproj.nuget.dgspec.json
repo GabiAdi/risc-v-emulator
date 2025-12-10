@@ -43,6 +43,12 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Reko.Decompiler.Runtime": {
+              "target": "Package",
+              "version": "[0.12.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

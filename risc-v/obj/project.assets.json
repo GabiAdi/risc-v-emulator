@@ -1,11 +1,1455 @@
 {
   "version": 3,
   "targets": {
-    "net9.0": {}
+    "net9.0": {
+      "Reko.Decompiler.Runtime/0.12.1": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/K4os.Compression.LZ4.dll": {},
+          "lib/net8.0/Reko.Arch.Alpha.dll": {},
+          "lib/net8.0/Reko.Arch.Altera.dll": {},
+          "lib/net8.0/Reko.Arch.Angstrem.dll": {},
+          "lib/net8.0/Reko.Arch.Arc.dll": {},
+          "lib/net8.0/Reko.Arch.Arm.dll": {},
+          "lib/net8.0/Reko.Arch.Avr.dll": {},
+          "lib/net8.0/Reko.Arch.Blackfin.dll": {},
+          "lib/net8.0/Reko.Arch.C166.dll": {},
+          "lib/net8.0/Reko.Arch.CSky.dll": {},
+          "lib/net8.0/Reko.Arch.Cil.dll": {},
+          "lib/net8.0/Reko.Arch.CompactRisc.dll": {},
+          "lib/net8.0/Reko.Arch.Cray.dll": {},
+          "lib/net8.0/Reko.Arch.Etrax.dll": {},
+          "lib/net8.0/Reko.Arch.Fujitsu.dll": {},
+          "lib/net8.0/Reko.Arch.H8.dll": {},
+          "lib/net8.0/Reko.Arch.IA64.dll": {},
+          "lib/net8.0/Reko.Arch.Infineon.dll": {},
+          "lib/net8.0/Reko.Arch.LatticeMico.dll": {},
+          "lib/net8.0/Reko.Arch.Loongson.dll": {},
+          "lib/net8.0/Reko.Arch.M16C.dll": {},
+          "lib/net8.0/Reko.Arch.M6800.dll": {},
+          "lib/net8.0/Reko.Arch.M68k.dll": {},
+          "lib/net8.0/Reko.Arch.MCore.dll": {},
+          "lib/net8.0/Reko.Arch.MN103.dll": {},
+          "lib/net8.0/Reko.Arch.Maxim.dll": {},
+          "lib/net8.0/Reko.Arch.MicroBlaze.dll": {},
+          "lib/net8.0/Reko.Arch.MicrochipPIC.dll": {},
+          "lib/net8.0/Reko.Arch.MilStd1750.dll": {},
+          "lib/net8.0/Reko.Arch.Mips.dll": {},
+          "lib/net8.0/Reko.Arch.Mos6502.dll": {},
+          "lib/net8.0/Reko.Arch.Msp430.dll": {},
+          "lib/net8.0/Reko.Arch.Nec.dll": {},
+          "lib/net8.0/Reko.Arch.Oki.dll": {},
+          "lib/net8.0/Reko.Arch.OpenRISC.dll": {},
+          "lib/net8.0/Reko.Arch.PaRisc.dll": {},
+          "lib/net8.0/Reko.Arch.Padauk.dll": {},
+          "lib/net8.0/Reko.Arch.Pdp.dll": {},
+          "lib/net8.0/Reko.Arch.PowerPC.dll": {},
+          "lib/net8.0/Reko.Arch.Qualcomm.dll": {},
+          "lib/net8.0/Reko.Arch.RiscV.dll": {},
+          "lib/net8.0/Reko.Arch.Rl78.dll": {},
+          "lib/net8.0/Reko.Arch.Sparc.dll": {},
+          "lib/net8.0/Reko.Arch.SuperH.dll": {},
+          "lib/net8.0/Reko.Arch.Telink.dll": {},
+          "lib/net8.0/Reko.Arch.Tlcs.dll": {},
+          "lib/net8.0/Reko.Arch.Tms7000.dll": {},
+          "lib/net8.0/Reko.Arch.V850.dll": {},
+          "lib/net8.0/Reko.Arch.Vax.dll": {},
+          "lib/net8.0/Reko.Arch.WE32100.dll": {},
+          "lib/net8.0/Reko.Arch.X86.dll": {},
+          "lib/net8.0/Reko.Arch.XCore.dll": {},
+          "lib/net8.0/Reko.Arch.Xtensa.dll": {},
+          "lib/net8.0/Reko.Arch.Zilog.dll": {},
+          "lib/net8.0/Reko.Arch.i8051.dll": {},
+          "lib/net8.0/Reko.Arch.zSeries.dll": {},
+          "lib/net8.0/Reko.Core.dll": {
+            "related": ".xml"
+          },
+          "lib/net8.0/Reko.Decompiler.dll": {
+            "related": ".xml"
+          },
+          "lib/net8.0/Reko.Environments.AmigaOS.dll": {},
+          "lib/net8.0/Reko.Environments.AtariTOS.dll": {},
+          "lib/net8.0/Reko.Environments.BbcMicro.dll": {},
+          "lib/net8.0/Reko.Environments.C64.dll": {},
+          "lib/net8.0/Reko.Environments.Cpm.dll": {},
+          "lib/net8.0/Reko.Environments.Dreamcast.dll": {},
+          "lib/net8.0/Reko.Environments.Gameboy.dll": {},
+          "lib/net8.0/Reko.Environments.Hpux.dll": {},
+          "lib/net8.0/Reko.Environments.MacOS.dll": {},
+          "lib/net8.0/Reko.Environments.MorphOS.dll": {},
+          "lib/net8.0/Reko.Environments.Msdos.dll": {},
+          "lib/net8.0/Reko.Environments.NeoGeo.dll": {},
+          "lib/net8.0/Reko.Environments.OS2.dll": {},
+          "lib/net8.0/Reko.Environments.OpenVMS.dll": {},
+          "lib/net8.0/Reko.Environments.PalmOS.dll": {},
+          "lib/net8.0/Reko.Environments.Pdp10Env.dll": {},
+          "lib/net8.0/Reko.Environments.Ps3.dll": {},
+          "lib/net8.0/Reko.Environments.RT11.dll": {},
+          "lib/net8.0/Reko.Environments.RiscOS.dll": {},
+          "lib/net8.0/Reko.Environments.SegaGenesis.dll": {},
+          "lib/net8.0/Reko.Environments.Snes.dll": {},
+          "lib/net8.0/Reko.Environments.Switch.dll": {},
+          "lib/net8.0/Reko.Environments.SysV.dll": {},
+          "lib/net8.0/Reko.Environments.Trs80.dll": {},
+          "lib/net8.0/Reko.Environments.Wii.dll": {},
+          "lib/net8.0/Reko.Environments.Windows.dll": {},
+          "lib/net8.0/Reko.Environments.Xbox.dll": {},
+          "lib/net8.0/Reko.Environments.ZX81.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.AOut.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Archives.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.BinHex.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Coff.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.DiskImages.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Dol.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Elf.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.HpSom.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Hunk.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.IntelHex.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.LLVM.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Ldm.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.MachO.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.MzExe.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Nro.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.OdbgScript.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Omf.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Pef.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Srec.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.TekHex.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.TypeLib.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.VmsExe.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.WebAssembly.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Xbe.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Xex.dll": {},
+          "lib/net8.0/Reko.Libraries.Libc.dll": {},
+          "lib/net8.0/Reko.Libraries.MacsBug.dll": {},
+          "lib/net8.0/Reko.Libraries.Microchip.Utils.dll": {},
+          "lib/net8.0/Reko.Libraries.Python.dll": {},
+          "lib/net8.0/Reko.Scripts.Python.dll": {},
+          "lib/net8.0/Reko.Symbols.LGSymLoader.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/K4os.Compression.LZ4.dll": {},
+          "lib/net8.0/Reko.Arch.Alpha.dll": {},
+          "lib/net8.0/Reko.Arch.Altera.dll": {},
+          "lib/net8.0/Reko.Arch.Angstrem.dll": {},
+          "lib/net8.0/Reko.Arch.Arc.dll": {},
+          "lib/net8.0/Reko.Arch.Arm.dll": {},
+          "lib/net8.0/Reko.Arch.Avr.dll": {},
+          "lib/net8.0/Reko.Arch.Blackfin.dll": {},
+          "lib/net8.0/Reko.Arch.C166.dll": {},
+          "lib/net8.0/Reko.Arch.CSky.dll": {},
+          "lib/net8.0/Reko.Arch.Cil.dll": {},
+          "lib/net8.0/Reko.Arch.CompactRisc.dll": {},
+          "lib/net8.0/Reko.Arch.Cray.dll": {},
+          "lib/net8.0/Reko.Arch.Etrax.dll": {},
+          "lib/net8.0/Reko.Arch.Fujitsu.dll": {},
+          "lib/net8.0/Reko.Arch.H8.dll": {},
+          "lib/net8.0/Reko.Arch.IA64.dll": {},
+          "lib/net8.0/Reko.Arch.Infineon.dll": {},
+          "lib/net8.0/Reko.Arch.LatticeMico.dll": {},
+          "lib/net8.0/Reko.Arch.Loongson.dll": {},
+          "lib/net8.0/Reko.Arch.M16C.dll": {},
+          "lib/net8.0/Reko.Arch.M6800.dll": {},
+          "lib/net8.0/Reko.Arch.M68k.dll": {},
+          "lib/net8.0/Reko.Arch.MCore.dll": {},
+          "lib/net8.0/Reko.Arch.MN103.dll": {},
+          "lib/net8.0/Reko.Arch.Maxim.dll": {},
+          "lib/net8.0/Reko.Arch.MicroBlaze.dll": {},
+          "lib/net8.0/Reko.Arch.MicrochipPIC.dll": {},
+          "lib/net8.0/Reko.Arch.MilStd1750.dll": {},
+          "lib/net8.0/Reko.Arch.Mips.dll": {},
+          "lib/net8.0/Reko.Arch.Mos6502.dll": {},
+          "lib/net8.0/Reko.Arch.Msp430.dll": {},
+          "lib/net8.0/Reko.Arch.Nec.dll": {},
+          "lib/net8.0/Reko.Arch.Oki.dll": {},
+          "lib/net8.0/Reko.Arch.OpenRISC.dll": {},
+          "lib/net8.0/Reko.Arch.PaRisc.dll": {},
+          "lib/net8.0/Reko.Arch.Padauk.dll": {},
+          "lib/net8.0/Reko.Arch.Pdp.dll": {},
+          "lib/net8.0/Reko.Arch.PowerPC.dll": {},
+          "lib/net8.0/Reko.Arch.Qualcomm.dll": {},
+          "lib/net8.0/Reko.Arch.RiscV.dll": {},
+          "lib/net8.0/Reko.Arch.Rl78.dll": {},
+          "lib/net8.0/Reko.Arch.Sparc.dll": {},
+          "lib/net8.0/Reko.Arch.SuperH.dll": {},
+          "lib/net8.0/Reko.Arch.Telink.dll": {},
+          "lib/net8.0/Reko.Arch.Tlcs.dll": {},
+          "lib/net8.0/Reko.Arch.Tms7000.dll": {},
+          "lib/net8.0/Reko.Arch.V850.dll": {},
+          "lib/net8.0/Reko.Arch.Vax.dll": {},
+          "lib/net8.0/Reko.Arch.WE32100.dll": {},
+          "lib/net8.0/Reko.Arch.X86.dll": {},
+          "lib/net8.0/Reko.Arch.XCore.dll": {},
+          "lib/net8.0/Reko.Arch.Xtensa.dll": {},
+          "lib/net8.0/Reko.Arch.Zilog.dll": {},
+          "lib/net8.0/Reko.Arch.i8051.dll": {},
+          "lib/net8.0/Reko.Arch.zSeries.dll": {},
+          "lib/net8.0/Reko.Core.dll": {
+            "related": ".xml"
+          },
+          "lib/net8.0/Reko.Decompiler.dll": {
+            "related": ".xml"
+          },
+          "lib/net8.0/Reko.Environments.AmigaOS.dll": {},
+          "lib/net8.0/Reko.Environments.AtariTOS.dll": {},
+          "lib/net8.0/Reko.Environments.BbcMicro.dll": {},
+          "lib/net8.0/Reko.Environments.C64.dll": {},
+          "lib/net8.0/Reko.Environments.Cpm.dll": {},
+          "lib/net8.0/Reko.Environments.Dreamcast.dll": {},
+          "lib/net8.0/Reko.Environments.Gameboy.dll": {},
+          "lib/net8.0/Reko.Environments.Hpux.dll": {},
+          "lib/net8.0/Reko.Environments.MacOS.dll": {},
+          "lib/net8.0/Reko.Environments.MorphOS.dll": {},
+          "lib/net8.0/Reko.Environments.Msdos.dll": {},
+          "lib/net8.0/Reko.Environments.NeoGeo.dll": {},
+          "lib/net8.0/Reko.Environments.OS2.dll": {},
+          "lib/net8.0/Reko.Environments.OpenVMS.dll": {},
+          "lib/net8.0/Reko.Environments.PalmOS.dll": {},
+          "lib/net8.0/Reko.Environments.Pdp10Env.dll": {},
+          "lib/net8.0/Reko.Environments.Ps3.dll": {},
+          "lib/net8.0/Reko.Environments.RT11.dll": {},
+          "lib/net8.0/Reko.Environments.RiscOS.dll": {},
+          "lib/net8.0/Reko.Environments.SegaGenesis.dll": {},
+          "lib/net8.0/Reko.Environments.Snes.dll": {},
+          "lib/net8.0/Reko.Environments.Switch.dll": {},
+          "lib/net8.0/Reko.Environments.SysV.dll": {},
+          "lib/net8.0/Reko.Environments.Trs80.dll": {},
+          "lib/net8.0/Reko.Environments.Wii.dll": {},
+          "lib/net8.0/Reko.Environments.Windows.dll": {},
+          "lib/net8.0/Reko.Environments.Xbox.dll": {},
+          "lib/net8.0/Reko.Environments.ZX81.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.AOut.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Archives.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.BinHex.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Coff.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.DiskImages.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Dol.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Elf.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.HpSom.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Hunk.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.IntelHex.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.LLVM.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Ldm.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.MachO.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.MzExe.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Nro.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.OdbgScript.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Omf.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Pef.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Srec.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.TekHex.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.TypeLib.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.VmsExe.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.WebAssembly.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Xbe.dll": {},
+          "lib/net8.0/Reko.ImageLoaders.Xex.dll": {},
+          "lib/net8.0/Reko.Libraries.Libc.dll": {},
+          "lib/net8.0/Reko.Libraries.MacsBug.dll": {},
+          "lib/net8.0/Reko.Libraries.Microchip.Utils.dll": {},
+          "lib/net8.0/Reko.Libraries.Python.dll": {},
+          "lib/net8.0/Reko.Scripts.Python.dll": {},
+          "lib/net8.0/Reko.Symbols.LGSymLoader.dll": {}
+        },
+        "contentFiles": {
+          "contentFiles/any/any/reko/C64.inc": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/C64.inc"
+          },
+          "contentFiles/any/any/reko/CoCoMemoryMap.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/CoCoMemoryMap.xml"
+          },
+          "contentFiles/any/any/reko/Exepack-3.60-unpacker.osc": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/Exepack-3.60-unpacker.osc"
+          },
+          "contentFiles/any/any/reko/IMAGE_FILE_MACHINE_AMD64.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/IMAGE_FILE_MACHINE_AMD64.xml"
+          },
+          "contentFiles/any/any/reko/IMAGE_FILE_MACHINE_ARM.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/IMAGE_FILE_MACHINE_ARM.xml"
+          },
+          "contentFiles/any/any/reko/IMAGE_FILE_MACHINE_I386.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/IMAGE_FILE_MACHINE_I386.xml"
+          },
+          "contentFiles/any/any/reko/IMAGE_FILE_MACHINE_IA64.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/IMAGE_FILE_MACHINE_IA64.xml"
+          },
+          "contentFiles/any/any/reko/LzExe-0.91-unpacker.osc": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/LzExe-0.91-unpacker.osc"
+          },
+          "contentFiles/any/any/reko/MacOSClassicInterfaces.p": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/MacOSClassicInterfaces.p"
+          },
+          "contentFiles/any/any/reko/PLATFORM_INDEPENDENT.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/PLATFORM_INDEPENDENT.xml"
+          },
+          "contentFiles/any/any/reko/PkLite-1.12-unpacker.osc": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/PkLite-1.12-unpacker.osc"
+          },
+          "contentFiles/any/any/reko/PkLite-1.50-unpacker.osc": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/PkLite-1.50-unpacker.osc"
+          },
+          "contentFiles/any/any/reko/RekoUnpacker_823.osc": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/RekoUnpacker_823.osc"
+          },
+          "contentFiles/any/any/reko/SegaGenesis.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/SegaGenesis.xml"
+          },
+          "contentFiles/any/any/reko/Trs80Rom.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/Trs80Rom.xml"
+          },
+          "contentFiles/any/any/reko/VaxUnix.inc": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/VaxUnix.inc"
+          },
+          "contentFiles/any/any/reko/Xlib.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/Xlib.xml"
+          },
+          "contentFiles/any/any/reko/advapi32.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/advapi32.xml"
+          },
+          "contentFiles/any/any/reko/atariTOS.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/atariTOS.xml"
+          },
+          "contentFiles/any/any/reko/bios_kbd.inc": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/bios_kbd.inc"
+          },
+          "contentFiles/any/any/reko/bios_video.inc": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/bios_video.inc"
+          },
+          "contentFiles/any/any/reko/comctl32.spec": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/comctl32.spec"
+          },
+          "contentFiles/any/any/reko/comdlg32.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/comdlg32.xml"
+          },
+          "contentFiles/any/any/reko/commctrl.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/commctrl.xml"
+          },
+          "contentFiles/any/any/reko/commdlg.dll16.spec": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/commdlg.dll16.spec"
+          },
+          "contentFiles/any/any/reko/coredll.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/coredll.def"
+          },
+          "contentFiles/any/any/reko/cpm_map.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/cpm_map.xml"
+          },
+          "contentFiles/any/any/reko/dpmi.inc": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/dpmi.inc"
+          },
+          "contentFiles/any/any/reko/exec.funcs": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/exec.funcs"
+          },
+          "contentFiles/any/any/reko/gdi.exe16.spec": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/gdi.exe16.spec"
+          },
+          "contentFiles/any/any/reko/gdi32.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/gdi32.xml"
+          },
+          "contentFiles/any/any/reko/kernel32.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/kernel32.xml"
+          },
+          "contentFiles/any/any/reko/krnl386.exe16.spec": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/krnl386.exe16.spec"
+          },
+          "contentFiles/any/any/reko/libc.so.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/libc.so.xml"
+          },
+          "contentFiles/any/any/reko/linux-syscalls-i386.inc": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/linux-syscalls-i386.inc"
+          },
+          "contentFiles/any/any/reko/lp32.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/lp32.xml"
+          },
+          "contentFiles/any/any/reko/lp64.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/lp64.xml"
+          },
+          "contentFiles/any/any/reko/macos_classic.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/macos_classic.xml"
+          },
+          "contentFiles/any/any/reko/msdos.inc": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/msdos.inc"
+          },
+          "contentFiles/any/any/reko/msvcrt.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/msvcrt.xml"
+          },
+          "contentFiles/any/any/reko/ntoskrnl.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/ntoskrnl.xml"
+          },
+          "contentFiles/any/any/reko/nx8_200_memory_map.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/nx8_200_memory_map.xml"
+          },
+          "contentFiles/any/any/reko/nx8_500_memory_map.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/nx8_500_memory_map.xml"
+          },
+          "contentFiles/any/any/reko/oleaut32.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/oleaut32.def"
+          },
+          "contentFiles/any/any/reko/oleaut32.spec": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/oleaut32.spec"
+          },
+          "contentFiles/any/any/reko/oleaut32.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/oleaut32.xml"
+          },
+          "contentFiles/any/any/reko/opengl.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/opengl.xml"
+          },
+          "contentFiles/any/any/reko/os-16/ANSICALL.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/ANSICALL.def"
+          },
+          "contentFiles/any/any/reko/os-16/BKSCALLS.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/BKSCALLS.def"
+          },
+          "contentFiles/any/any/reko/os-16/BMSCALLS.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/BMSCALLS.def"
+          },
+          "contentFiles/any/any/reko/os-16/BVH8514A.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/BVH8514A.def"
+          },
+          "contentFiles/any/any/reko/os-16/BVHCGA.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/BVHCGA.def"
+          },
+          "contentFiles/any/any/reko/os-16/BVHEGA.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/BVHEGA.def"
+          },
+          "contentFiles/any/any/reko/os-16/BVHINIT.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/BVHINIT.def"
+          },
+          "contentFiles/any/any/reko/os-16/BVHMPA.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/BVHMPA.def"
+          },
+          "contentFiles/any/any/reko/os-16/BVHVGA.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/BVHVGA.def"
+          },
+          "contentFiles/any/any/reko/os-16/BVHWNDW.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/BVHWNDW.def"
+          },
+          "contentFiles/any/any/reko/os-16/BVHXGA.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/BVHXGA.def"
+          },
+          "contentFiles/any/any/reko/os-16/BVSCALLS.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/BVSCALLS.def"
+          },
+          "contentFiles/any/any/reko/os-16/DOSCALLS.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/DOSCALLS.def"
+          },
+          "contentFiles/any/any/reko/os-16/DOSRFICO.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/DOSRFICO.def"
+          },
+          "contentFiles/any/any/reko/os-16/HELPMGR.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/HELPMGR.def"
+          },
+          "contentFiles/any/any/reko/os-16/KBDCALLS.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/KBDCALLS.def"
+          },
+          "contentFiles/any/any/reko/os-16/LOCKDLL.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/LOCKDLL.def"
+          },
+          "contentFiles/any/any/reko/os-16/MONCALLS.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/MONCALLS.def"
+          },
+          "contentFiles/any/any/reko/os-16/MOUCALLS.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/MOUCALLS.def"
+          },
+          "contentFiles/any/any/reko/os-16/MSG.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/MSG.def"
+          },
+          "contentFiles/any/any/reko/os-16/NAMPIPES.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/NAMPIPES.def"
+          },
+          "contentFiles/any/any/reko/os-16/NLS.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/NLS.def"
+          },
+          "contentFiles/any/any/reko/os-16/OS2SM.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/OS2SM.def"
+          },
+          "contentFiles/any/any/reko/os-16/OS2SMDUM.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/OS2SMDUM.def"
+          },
+          "contentFiles/any/any/reko/os-16/PMDRAG.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/PMDRAG.def"
+          },
+          "contentFiles/any/any/reko/os-16/PMGPI.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/PMGPI.def"
+          },
+          "contentFiles/any/any/reko/os-16/PMSHAPI.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/PMSHAPI.def"
+          },
+          "contentFiles/any/any/reko/os-16/PMSHLTKT.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/PMSHLTKT.def"
+          },
+          "contentFiles/any/any/reko/os-16/PMSPL.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/PMSPL.def"
+          },
+          "contentFiles/any/any/reko/os-16/PMTKT.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/PMTKT.def"
+          },
+          "contentFiles/any/any/reko/os-16/PMTRACE.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/PMTRACE.def"
+          },
+          "contentFiles/any/any/reko/os-16/PMVIOP.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/PMVIOP.def"
+          },
+          "contentFiles/any/any/reko/os-16/PMWIN.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/PMWIN.def"
+          },
+          "contentFiles/any/any/reko/os-16/PMWINDUM.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/PMWINDUM.def"
+          },
+          "contentFiles/any/any/reko/os-16/QUECALLS.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/QUECALLS.def"
+          },
+          "contentFiles/any/any/reko/os-16/REXX.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/REXX.def"
+          },
+          "contentFiles/any/any/reko/os-16/REXXAPI.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/REXXAPI.def"
+          },
+          "contentFiles/any/any/reko/os-16/SESMGR.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/SESMGR.def"
+          },
+          "contentFiles/any/any/reko/os-16/SPOOLCP.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/SPOOLCP.def"
+          },
+          "contentFiles/any/any/reko/os-16/VIOCALLS.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/VIOCALLS.def"
+          },
+          "contentFiles/any/any/reko/os-16/fsd.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/fsd.xml"
+          },
+          "contentFiles/any/any/reko/os-16/fsh.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/fsh.xml"
+          },
+          "contentFiles/any/any/reko/os-16/fsu.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/fsu.xml"
+          },
+          "contentFiles/any/any/reko/os-16/os2-16.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-16/os2-16.xml"
+          },
+          "contentFiles/any/any/reko/os-32/DOSCALLS.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/DOSCALLS.def"
+          },
+          "contentFiles/any/any/reko/os-32/bdcalls.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/bdcalls.def"
+          },
+          "contentFiles/any/any/reko/os-32/dive.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/dive.def"
+          },
+          "contentFiles/any/any/reko/os-32/ftpapi.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/ftpapi.def"
+          },
+          "contentFiles/any/any/reko/os-32/glut.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/glut.def"
+          },
+          "contentFiles/any/any/reko/os-32/helpmgr.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/helpmgr.def"
+          },
+          "contentFiles/any/any/reko/os-32/kbdcalls.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/kbdcalls.def"
+          },
+          "contentFiles/any/any/reko/os-32/libaux.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/libaux.def"
+          },
+          "contentFiles/any/any/reko/os-32/libtk.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/libtk.def"
+          },
+          "contentFiles/any/any/reko/os-32/libuni.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/libuni.def"
+          },
+          "contentFiles/any/any/reko/os-32/mciapi.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/mciapi.def"
+          },
+          "contentFiles/any/any/reko/os-32/mdm.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/mdm.def"
+          },
+          "contentFiles/any/any/reko/os-32/mmio.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/mmio.def"
+          },
+          "contentFiles/any/any/reko/os-32/moncalls.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/moncalls.def"
+          },
+          "contentFiles/any/any/reko/os-32/moucalls.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/moucalls.def"
+          },
+          "contentFiles/any/any/reko/os-32/msg.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/msg.def"
+          },
+          "contentFiles/any/any/reko/os-32/nampipes.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/nampipes.def"
+          },
+          "contentFiles/any/any/reko/os-32/nls.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/nls.def"
+          },
+          "contentFiles/any/any/reko/os-32/opengl.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/opengl.def"
+          },
+          "contentFiles/any/any/reko/os-32/pmctls.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/pmctls.def"
+          },
+          "contentFiles/any/any/reko/os-32/pmdrag.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/pmdrag.def"
+          },
+          "contentFiles/any/any/reko/os-32/pmgpi.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/pmgpi.def"
+          },
+          "contentFiles/any/any/reko/os-32/pmshapi.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/pmshapi.def"
+          },
+          "contentFiles/any/any/reko/os-32/pmspl.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/pmspl.def"
+          },
+          "contentFiles/any/any/reko/os-32/pmviop.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/pmviop.def"
+          },
+          "contentFiles/any/any/reko/os-32/pmwin.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/pmwin.def"
+          },
+          "contentFiles/any/any/reko/os-32/pmwp.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/pmwp.def"
+          },
+          "contentFiles/any/any/reko/os-32/quecalls.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/quecalls.def"
+          },
+          "contentFiles/any/any/reko/os-32/rexx.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/rexx.def"
+          },
+          "contentFiles/any/any/reko/os-32/rexxapi.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/rexxapi.def"
+          },
+          "contentFiles/any/any/reko/os-32/rtmidi.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/rtmidi.def"
+          },
+          "contentFiles/any/any/reko/os-32/sesmgr.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/sesmgr.def"
+          },
+          "contentFiles/any/any/reko/os-32/sw.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/sw.def"
+          },
+          "contentFiles/any/any/reko/os-32/tcpip32.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/tcpip32.def"
+          },
+          "contentFiles/any/any/reko/os-32/uconv.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/uconv.def"
+          },
+          "contentFiles/any/any/reko/os-32/upm32.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/upm32.def"
+          },
+          "contentFiles/any/any/reko/os-32/viocalls.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/os-32/viocalls.def"
+          },
+          "contentFiles/any/any/reko/picdb.zip": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/picdb.zip"
+          },
+          "contentFiles/any/any/reko/realmodeintservices.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/realmodeintservices.xml"
+          },
+          "contentFiles/any/any/reko/reko.config": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/reko.config"
+          },
+          "contentFiles/any/any/reko/rt11_services.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/rt11_services.xml"
+          },
+          "contentFiles/any/any/reko/shell32.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/shell32.xml"
+          },
+          "contentFiles/any/any/reko/sysv-sparc32-emulation.inc": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/sysv-sparc32-emulation.inc"
+          },
+          "contentFiles/any/any/reko/sysvcharacteristics.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/sysvcharacteristics.xml"
+          },
+          "contentFiles/any/any/reko/upx_ultimate.osc": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/upx_ultimate.osc"
+          },
+          "contentFiles/any/any/reko/user.exe16.spec": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/user.exe16.spec"
+          },
+          "contentFiles/any/any/reko/user32.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/user32.xml"
+          },
+          "contentFiles/any/any/reko/vmu.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/vmu.xml"
+          },
+          "contentFiles/any/any/reko/win16characteristics.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/win16characteristics.xml"
+          },
+          "contentFiles/any/any/reko/win32characteristics.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/win32characteristics.xml"
+          },
+          "contentFiles/any/any/reko/win64characteristics.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/win64characteristics.xml"
+          },
+          "contentFiles/any/any/reko/wince.inc": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/wince.inc"
+          },
+          "contentFiles/any/any/reko/windows32.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/windows32.xml"
+          },
+          "contentFiles/any/any/reko/windows64.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/windows64.xml"
+          },
+          "contentFiles/any/any/reko/windows_CE.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/windows_CE.xml"
+          },
+          "contentFiles/any/any/reko/wininet.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/wininet.xml"
+          },
+          "contentFiles/any/any/reko/winspool.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/winspool.xml"
+          },
+          "contentFiles/any/any/reko/wsock32.xml": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/wsock32.xml"
+          },
+          "contentFiles/any/any/reko/xbox360krnl.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/xbox360krnl.def"
+          },
+          "contentFiles/any/any/reko/xboxkernel.def": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "reko/xboxkernel.def"
+          }
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Reko.Decompiler.Runtime/0.12.1": {
+      "sha512": "tbUGmGDDWr0iZo5PiFoogI8LkQ8TeAnz8gEvdV3HS9Cfx8FxS9rk0fKzTkv9QzM57S/pKlM71j3rhLY3LGrXAw==",
+      "type": "package",
+      "path": "reko.decompiler.runtime/0.12.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "contentFiles/any/any/reko/C64.inc",
+        "contentFiles/any/any/reko/CoCoMemoryMap.xml",
+        "contentFiles/any/any/reko/Exepack-3.60-unpacker.osc",
+        "contentFiles/any/any/reko/IMAGE_FILE_MACHINE_AMD64.xml",
+        "contentFiles/any/any/reko/IMAGE_FILE_MACHINE_ARM.xml",
+        "contentFiles/any/any/reko/IMAGE_FILE_MACHINE_I386.xml",
+        "contentFiles/any/any/reko/IMAGE_FILE_MACHINE_IA64.xml",
+        "contentFiles/any/any/reko/LzExe-0.91-unpacker.osc",
+        "contentFiles/any/any/reko/MacOSClassicInterfaces.p",
+        "contentFiles/any/any/reko/PLATFORM_INDEPENDENT.xml",
+        "contentFiles/any/any/reko/PkLite-1.12-unpacker.osc",
+        "contentFiles/any/any/reko/PkLite-1.50-unpacker.osc",
+        "contentFiles/any/any/reko/RekoUnpacker_823.osc",
+        "contentFiles/any/any/reko/SegaGenesis.xml",
+        "contentFiles/any/any/reko/Trs80Rom.xml",
+        "contentFiles/any/any/reko/VaxUnix.inc",
+        "contentFiles/any/any/reko/Xlib.xml",
+        "contentFiles/any/any/reko/advapi32.xml",
+        "contentFiles/any/any/reko/atariTOS.xml",
+        "contentFiles/any/any/reko/bios_kbd.inc",
+        "contentFiles/any/any/reko/bios_video.inc",
+        "contentFiles/any/any/reko/comctl32.spec",
+        "contentFiles/any/any/reko/comdlg32.xml",
+        "contentFiles/any/any/reko/commctrl.xml",
+        "contentFiles/any/any/reko/commdlg.dll16.spec",
+        "contentFiles/any/any/reko/coredll.def",
+        "contentFiles/any/any/reko/cpm_map.xml",
+        "contentFiles/any/any/reko/dpmi.inc",
+        "contentFiles/any/any/reko/exec.funcs",
+        "contentFiles/any/any/reko/gdi.exe16.spec",
+        "contentFiles/any/any/reko/gdi32.xml",
+        "contentFiles/any/any/reko/kernel32.xml",
+        "contentFiles/any/any/reko/krnl386.exe16.spec",
+        "contentFiles/any/any/reko/libc.so.xml",
+        "contentFiles/any/any/reko/linux-syscalls-i386.inc",
+        "contentFiles/any/any/reko/lp32.xml",
+        "contentFiles/any/any/reko/lp64.xml",
+        "contentFiles/any/any/reko/macos_classic.xml",
+        "contentFiles/any/any/reko/msdos.inc",
+        "contentFiles/any/any/reko/msvcrt.xml",
+        "contentFiles/any/any/reko/ntoskrnl.xml",
+        "contentFiles/any/any/reko/nx8_200_memory_map.xml",
+        "contentFiles/any/any/reko/nx8_500_memory_map.xml",
+        "contentFiles/any/any/reko/oleaut32.def",
+        "contentFiles/any/any/reko/oleaut32.spec",
+        "contentFiles/any/any/reko/oleaut32.xml",
+        "contentFiles/any/any/reko/opengl.xml",
+        "contentFiles/any/any/reko/os-16/ANSICALL.def",
+        "contentFiles/any/any/reko/os-16/BKSCALLS.def",
+        "contentFiles/any/any/reko/os-16/BMSCALLS.def",
+        "contentFiles/any/any/reko/os-16/BVH8514A.def",
+        "contentFiles/any/any/reko/os-16/BVHCGA.def",
+        "contentFiles/any/any/reko/os-16/BVHEGA.def",
+        "contentFiles/any/any/reko/os-16/BVHINIT.def",
+        "contentFiles/any/any/reko/os-16/BVHMPA.def",
+        "contentFiles/any/any/reko/os-16/BVHVGA.def",
+        "contentFiles/any/any/reko/os-16/BVHWNDW.def",
+        "contentFiles/any/any/reko/os-16/BVHXGA.def",
+        "contentFiles/any/any/reko/os-16/BVSCALLS.def",
+        "contentFiles/any/any/reko/os-16/DOSCALLS.def",
+        "contentFiles/any/any/reko/os-16/DOSRFICO.def",
+        "contentFiles/any/any/reko/os-16/HELPMGR.def",
+        "contentFiles/any/any/reko/os-16/KBDCALLS.def",
+        "contentFiles/any/any/reko/os-16/LOCKDLL.def",
+        "contentFiles/any/any/reko/os-16/MONCALLS.def",
+        "contentFiles/any/any/reko/os-16/MOUCALLS.def",
+        "contentFiles/any/any/reko/os-16/MSG.def",
+        "contentFiles/any/any/reko/os-16/NAMPIPES.def",
+        "contentFiles/any/any/reko/os-16/NLS.def",
+        "contentFiles/any/any/reko/os-16/OS2SM.def",
+        "contentFiles/any/any/reko/os-16/OS2SMDUM.def",
+        "contentFiles/any/any/reko/os-16/PMDRAG.def",
+        "contentFiles/any/any/reko/os-16/PMGPI.def",
+        "contentFiles/any/any/reko/os-16/PMSHAPI.def",
+        "contentFiles/any/any/reko/os-16/PMSHLTKT.def",
+        "contentFiles/any/any/reko/os-16/PMSPL.def",
+        "contentFiles/any/any/reko/os-16/PMTKT.def",
+        "contentFiles/any/any/reko/os-16/PMTRACE.def",
+        "contentFiles/any/any/reko/os-16/PMVIOP.def",
+        "contentFiles/any/any/reko/os-16/PMWIN.def",
+        "contentFiles/any/any/reko/os-16/PMWINDUM.def",
+        "contentFiles/any/any/reko/os-16/QUECALLS.def",
+        "contentFiles/any/any/reko/os-16/REXX.def",
+        "contentFiles/any/any/reko/os-16/REXXAPI.def",
+        "contentFiles/any/any/reko/os-16/SESMGR.def",
+        "contentFiles/any/any/reko/os-16/SPOOLCP.def",
+        "contentFiles/any/any/reko/os-16/VIOCALLS.def",
+        "contentFiles/any/any/reko/os-16/fsd.xml",
+        "contentFiles/any/any/reko/os-16/fsh.xml",
+        "contentFiles/any/any/reko/os-16/fsu.xml",
+        "contentFiles/any/any/reko/os-16/os2-16.xml",
+        "contentFiles/any/any/reko/os-32/DOSCALLS.def",
+        "contentFiles/any/any/reko/os-32/bdcalls.def",
+        "contentFiles/any/any/reko/os-32/dive.def",
+        "contentFiles/any/any/reko/os-32/ftpapi.def",
+        "contentFiles/any/any/reko/os-32/glut.def",
+        "contentFiles/any/any/reko/os-32/helpmgr.def",
+        "contentFiles/any/any/reko/os-32/kbdcalls.def",
+        "contentFiles/any/any/reko/os-32/libaux.def",
+        "contentFiles/any/any/reko/os-32/libtk.def",
+        "contentFiles/any/any/reko/os-32/libuni.def",
+        "contentFiles/any/any/reko/os-32/mciapi.def",
+        "contentFiles/any/any/reko/os-32/mdm.def",
+        "contentFiles/any/any/reko/os-32/mmio.def",
+        "contentFiles/any/any/reko/os-32/moncalls.def",
+        "contentFiles/any/any/reko/os-32/moucalls.def",
+        "contentFiles/any/any/reko/os-32/msg.def",
+        "contentFiles/any/any/reko/os-32/nampipes.def",
+        "contentFiles/any/any/reko/os-32/nls.def",
+        "contentFiles/any/any/reko/os-32/opengl.def",
+        "contentFiles/any/any/reko/os-32/pmctls.def",
+        "contentFiles/any/any/reko/os-32/pmdrag.def",
+        "contentFiles/any/any/reko/os-32/pmgpi.def",
+        "contentFiles/any/any/reko/os-32/pmshapi.def",
+        "contentFiles/any/any/reko/os-32/pmspl.def",
+        "contentFiles/any/any/reko/os-32/pmviop.def",
+        "contentFiles/any/any/reko/os-32/pmwin.def",
+        "contentFiles/any/any/reko/os-32/pmwp.def",
+        "contentFiles/any/any/reko/os-32/quecalls.def",
+        "contentFiles/any/any/reko/os-32/rexx.def",
+        "contentFiles/any/any/reko/os-32/rexxapi.def",
+        "contentFiles/any/any/reko/os-32/rtmidi.def",
+        "contentFiles/any/any/reko/os-32/sesmgr.def",
+        "contentFiles/any/any/reko/os-32/sw.def",
+        "contentFiles/any/any/reko/os-32/tcpip32.def",
+        "contentFiles/any/any/reko/os-32/uconv.def",
+        "contentFiles/any/any/reko/os-32/upm32.def",
+        "contentFiles/any/any/reko/os-32/viocalls.def",
+        "contentFiles/any/any/reko/picdb.zip",
+        "contentFiles/any/any/reko/realmodeintservices.xml",
+        "contentFiles/any/any/reko/reko.config",
+        "contentFiles/any/any/reko/rt11_services.xml",
+        "contentFiles/any/any/reko/shell32.xml",
+        "contentFiles/any/any/reko/sysv-sparc32-emulation.inc",
+        "contentFiles/any/any/reko/sysvcharacteristics.xml",
+        "contentFiles/any/any/reko/upx_ultimate.osc",
+        "contentFiles/any/any/reko/user.exe16.spec",
+        "contentFiles/any/any/reko/user32.xml",
+        "contentFiles/any/any/reko/vmu.xml",
+        "contentFiles/any/any/reko/win16characteristics.xml",
+        "contentFiles/any/any/reko/win32characteristics.xml",
+        "contentFiles/any/any/reko/win64characteristics.xml",
+        "contentFiles/any/any/reko/wince.inc",
+        "contentFiles/any/any/reko/windows32.xml",
+        "contentFiles/any/any/reko/windows64.xml",
+        "contentFiles/any/any/reko/windows_CE.xml",
+        "contentFiles/any/any/reko/wininet.xml",
+        "contentFiles/any/any/reko/winspool.xml",
+        "contentFiles/any/any/reko/wsock32.xml",
+        "contentFiles/any/any/reko/xbox360krnl.def",
+        "contentFiles/any/any/reko/xboxkernel.def",
+        "docs/README.md",
+        "images/reko.png",
+        "lib/net8.0/K4os.Compression.LZ4.dll",
+        "lib/net8.0/Reko.Arch.Alpha.dll",
+        "lib/net8.0/Reko.Arch.Altera.dll",
+        "lib/net8.0/Reko.Arch.Angstrem.dll",
+        "lib/net8.0/Reko.Arch.Arc.dll",
+        "lib/net8.0/Reko.Arch.Arm.dll",
+        "lib/net8.0/Reko.Arch.Avr.dll",
+        "lib/net8.0/Reko.Arch.Blackfin.dll",
+        "lib/net8.0/Reko.Arch.C166.dll",
+        "lib/net8.0/Reko.Arch.CSky.dll",
+        "lib/net8.0/Reko.Arch.Cil.dll",
+        "lib/net8.0/Reko.Arch.CompactRisc.dll",
+        "lib/net8.0/Reko.Arch.Cray.dll",
+        "lib/net8.0/Reko.Arch.Etrax.dll",
+        "lib/net8.0/Reko.Arch.Fujitsu.dll",
+        "lib/net8.0/Reko.Arch.H8.dll",
+        "lib/net8.0/Reko.Arch.IA64.dll",
+        "lib/net8.0/Reko.Arch.Infineon.dll",
+        "lib/net8.0/Reko.Arch.LatticeMico.dll",
+        "lib/net8.0/Reko.Arch.Loongson.dll",
+        "lib/net8.0/Reko.Arch.M16C.dll",
+        "lib/net8.0/Reko.Arch.M6800.dll",
+        "lib/net8.0/Reko.Arch.M68k.dll",
+        "lib/net8.0/Reko.Arch.MCore.dll",
+        "lib/net8.0/Reko.Arch.MN103.dll",
+        "lib/net8.0/Reko.Arch.Maxim.dll",
+        "lib/net8.0/Reko.Arch.MicroBlaze.dll",
+        "lib/net8.0/Reko.Arch.MicrochipPIC.dll",
+        "lib/net8.0/Reko.Arch.MilStd1750.dll",
+        "lib/net8.0/Reko.Arch.Mips.dll",
+        "lib/net8.0/Reko.Arch.Mos6502.dll",
+        "lib/net8.0/Reko.Arch.Msp430.dll",
+        "lib/net8.0/Reko.Arch.Nec.dll",
+        "lib/net8.0/Reko.Arch.Oki.dll",
+        "lib/net8.0/Reko.Arch.OpenRISC.dll",
+        "lib/net8.0/Reko.Arch.PaRisc.dll",
+        "lib/net8.0/Reko.Arch.Padauk.dll",
+        "lib/net8.0/Reko.Arch.Pdp.dll",
+        "lib/net8.0/Reko.Arch.PowerPC.dll",
+        "lib/net8.0/Reko.Arch.Qualcomm.dll",
+        "lib/net8.0/Reko.Arch.RiscV.dll",
+        "lib/net8.0/Reko.Arch.Rl78.dll",
+        "lib/net8.0/Reko.Arch.Sparc.dll",
+        "lib/net8.0/Reko.Arch.SuperH.dll",
+        "lib/net8.0/Reko.Arch.Telink.dll",
+        "lib/net8.0/Reko.Arch.Tlcs.dll",
+        "lib/net8.0/Reko.Arch.Tms7000.dll",
+        "lib/net8.0/Reko.Arch.V850.dll",
+        "lib/net8.0/Reko.Arch.Vax.dll",
+        "lib/net8.0/Reko.Arch.WE32100.dll",
+        "lib/net8.0/Reko.Arch.X86.dll",
+        "lib/net8.0/Reko.Arch.XCore.dll",
+        "lib/net8.0/Reko.Arch.Xtensa.dll",
+        "lib/net8.0/Reko.Arch.Zilog.dll",
+        "lib/net8.0/Reko.Arch.i8051.dll",
+        "lib/net8.0/Reko.Arch.zSeries.dll",
+        "lib/net8.0/Reko.Core.dll",
+        "lib/net8.0/Reko.Core.xml",
+        "lib/net8.0/Reko.Decompiler.dll",
+        "lib/net8.0/Reko.Decompiler.xml",
+        "lib/net8.0/Reko.Environments.AmigaOS.dll",
+        "lib/net8.0/Reko.Environments.AtariTOS.dll",
+        "lib/net8.0/Reko.Environments.BbcMicro.dll",
+        "lib/net8.0/Reko.Environments.C64.dll",
+        "lib/net8.0/Reko.Environments.Cpm.dll",
+        "lib/net8.0/Reko.Environments.Dreamcast.dll",
+        "lib/net8.0/Reko.Environments.Gameboy.dll",
+        "lib/net8.0/Reko.Environments.Hpux.dll",
+        "lib/net8.0/Reko.Environments.MacOS.dll",
+        "lib/net8.0/Reko.Environments.MorphOS.dll",
+        "lib/net8.0/Reko.Environments.Msdos.dll",
+        "lib/net8.0/Reko.Environments.NeoGeo.dll",
+        "lib/net8.0/Reko.Environments.OS2.dll",
+        "lib/net8.0/Reko.Environments.OpenVMS.dll",
+        "lib/net8.0/Reko.Environments.PalmOS.dll",
+        "lib/net8.0/Reko.Environments.Pdp10Env.dll",
+        "lib/net8.0/Reko.Environments.Ps3.dll",
+        "lib/net8.0/Reko.Environments.RT11.dll",
+        "lib/net8.0/Reko.Environments.RiscOS.dll",
+        "lib/net8.0/Reko.Environments.SegaGenesis.dll",
+        "lib/net8.0/Reko.Environments.Snes.dll",
+        "lib/net8.0/Reko.Environments.Switch.dll",
+        "lib/net8.0/Reko.Environments.SysV.dll",
+        "lib/net8.0/Reko.Environments.Trs80.dll",
+        "lib/net8.0/Reko.Environments.Wii.dll",
+        "lib/net8.0/Reko.Environments.Windows.dll",
+        "lib/net8.0/Reko.Environments.Xbox.dll",
+        "lib/net8.0/Reko.Environments.ZX81.dll",
+        "lib/net8.0/Reko.ImageLoaders.AOut.dll",
+        "lib/net8.0/Reko.ImageLoaders.Archives.dll",
+        "lib/net8.0/Reko.ImageLoaders.BinHex.dll",
+        "lib/net8.0/Reko.ImageLoaders.Coff.dll",
+        "lib/net8.0/Reko.ImageLoaders.DiskImages.dll",
+        "lib/net8.0/Reko.ImageLoaders.Dol.dll",
+        "lib/net8.0/Reko.ImageLoaders.Elf.dll",
+        "lib/net8.0/Reko.ImageLoaders.HpSom.dll",
+        "lib/net8.0/Reko.ImageLoaders.Hunk.dll",
+        "lib/net8.0/Reko.ImageLoaders.IntelHex.dll",
+        "lib/net8.0/Reko.ImageLoaders.LLVM.dll",
+        "lib/net8.0/Reko.ImageLoaders.Ldm.dll",
+        "lib/net8.0/Reko.ImageLoaders.MachO.dll",
+        "lib/net8.0/Reko.ImageLoaders.MzExe.dll",
+        "lib/net8.0/Reko.ImageLoaders.Nro.dll",
+        "lib/net8.0/Reko.ImageLoaders.OdbgScript.dll",
+        "lib/net8.0/Reko.ImageLoaders.Omf.dll",
+        "lib/net8.0/Reko.ImageLoaders.Pef.dll",
+        "lib/net8.0/Reko.ImageLoaders.Srec.dll",
+        "lib/net8.0/Reko.ImageLoaders.TekHex.dll",
+        "lib/net8.0/Reko.ImageLoaders.TypeLib.dll",
+        "lib/net8.0/Reko.ImageLoaders.VmsExe.dll",
+        "lib/net8.0/Reko.ImageLoaders.WebAssembly.dll",
+        "lib/net8.0/Reko.ImageLoaders.Xbe.dll",
+        "lib/net8.0/Reko.ImageLoaders.Xex.dll",
+        "lib/net8.0/Reko.Libraries.Libc.dll",
+        "lib/net8.0/Reko.Libraries.MacsBug.dll",
+        "lib/net8.0/Reko.Libraries.Microchip.Utils.dll",
+        "lib/net8.0/Reko.Libraries.Python.dll",
+        "lib/net8.0/Reko.Scripts.Python.dll",
+        "lib/net8.0/Reko.Symbols.LGSymLoader.dll",
+        "reko.decompiler.runtime.0.12.1.nupkg.sha512",
+        "reko.decompiler.runtime.nuspec"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    "net9.0": []
+    "net9.0": [
+      "Reko.Decompiler.Runtime >= 0.12.1"
+    ]
   },
   "packageFolders": {
     "/home/user/.nuget/packages/": {}
@@ -49,6 +1493,12 @@
     "frameworks": {
       "net9.0": {
         "targetAlias": "net9.0",
+        "dependencies": {
+          "Reko.Decompiler.Runtime": {
+            "target": "Package",
+            "version": "[0.12.1, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",

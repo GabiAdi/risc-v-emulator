@@ -7,5 +7,9 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Reko.Decompiler.Runtime" Version="0.12.1" />
+    </ItemGroup>
     
 </Project>

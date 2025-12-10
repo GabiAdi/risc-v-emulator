@@ -1,4 +1,9 @@
 ﻿using risc_v;
+using Reko.Core;
+using Reko.Arch.RiscV;
+using Reko.Core.Hll.C;
+using Reko.Core.Memory;
+using System.Collections.Generic;
 
 byte[] uint_to_bytes(uint value)
 {
@@ -27,11 +32,14 @@ void WriteHex(uint[] data)
 
 string program_path = "../../../assembly/program";
 
-Memory memory = new Memory(1024*1024*300); // 300 MB
-
 ElfLoader loader = new ElfLoader(program_path);
 
 uint[] program_bytes = loader.GetExecutableWords();
+
+Dictionary<uint, string> symbols = loader.GetSymbols();
+
+
+Memory memory = new Memory(1024*1024*300); // 300 MB
 
 for (uint i = 0; i < program_bytes.Length; i+=4)
 {
@@ -43,21 +51,41 @@ Cpu cpu = new Cpu(bus);
 
 cpu.set_pc(loader.EntryPoint);
 
-Console.WriteLine($"Entry Point: 0x{loader.EntryPoint:X}");
-Console.WriteLine($"Execstart: " + loader.TextStart);
-Console.WriteLine("Execend: " + loader.TextEnd);
-
 SystemHandler system_handler = new SystemHandler(bus);
 cpu.syscall_occured += system_handler.handle_syscall;
 cpu.break_occured += system_handler.handle_breakpoint;
 
-Disassembler disassembler = new Disassembler(loader.GetSymbols());
+Disassembler disassembler = new Disassembler(loader.TextStart, symbols);
 
 while (true)
 {
-    cpu.step();
-    Console.Write(cpu.get_pc() + ": ");
-    Console.WriteLine(disassembler.Disassemble(cpu.get_current_instruction()));
+    string input = Console.ReadLine();
+    if (input == "e" || input == "q") break; // Exit
+    if (input == "s") cpu.step();  // Step
+    else if (input == "d") // Disassemble
+    { 
+        Console.WriteLine(disassembler.DisassembleInstruction(cpu.get_current_instruction(), cpu.get_pc()));
+    }
+    else if (input == "r") // Registers
+    {
+        for (int i = 0; i < 32; i++)
+        {
+            Console.WriteLine($"x{i}:\t0x{cpu.get_register(i):X8}");
+        }
+    }
+    else if (input.Split(" ")[0] == "m") // Memory
+    {
+        uint addr = Convert.ToUInt32(input.Split(" ")[1], 16);
+        for (uint i = addr; i < 32; i+=4)
+        {
+            Console.WriteLine($"0x{i:X8}:\t0x{bus.read(i, 4):X8}");
+        }
+    }
+    else if (input.Split(" ")[0] == "r")
+    {
+        int reg = Convert.ToInt32(input.Split(" ")[1]);
+        Console.WriteLine($"x{reg}:\t0x{cpu.get_register((int)reg):X8}");
+    }
 }
 
 Console.WriteLine("Press any key to exit...");
