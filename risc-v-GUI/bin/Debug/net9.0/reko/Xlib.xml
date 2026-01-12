@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8"?>
+<library xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemata.jklnet.org/Decompiler">
+  <Types>
+    <typedef name="Bool">
+      <prim domain="SignedInt" size="4" />
+    </typedef>
+    <typedef name="Display">
+      <struct name="_XDisplay" />
+    </typedef>
+    <typedef name="Status">
+      <prim domain="SignedInt" size="4" />
+    </typedef>
+    <typedef name="Colormap">
+      <ptr>
+        <void />
+      </ptr>
+    </typedef>
+    <typedef name="Window">
+      <ptr>
+        <void />
+      </ptr>
+    </typedef>
+    <typedef name="Atom">
+      <ptr>
+        <void />
+      </ptr>
+    </typedef>
+    <typedef name="Visual">
+      <ptr>
+        <void />
+      </ptr>
+    </typedef>
+    <typedef name="Drawable">
+      <ptr>
+        <void />
+      </ptr>
+    </typedef>
+    <struct name="_WMHints" />
+    <typedef name="XWMHints">
+      <struct name="_WMHints" />
+    </typedef>
+    <struct name="_XSetWindowAttributes" />
+    <typedef name="XSetWindowAttributes">
+      <struct name="_XSetWindowAttributes" />
+    </typedef>
+    <struct name="_XWindowChanges" />
+    <typedef name="XWindowChanges">
+      <struct name="_XWindowChanges" />
+    </typedef>
+    <struct name="_XStandardColormap" />
+    <typedef name="XStandardColormap">
+      <struct name="_XStandardColormap" />
+    </typedef>
+  </Types>
+  <procedure name="XtMalloc">
+    <signature>
+      <return>
+        <ptr>
+          <void />
+        </ptr>
+      </return>
+      <arg name="size">
+        <type>size_t</type>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XAllocColorCells">
+    <signature>
+      <return>
+        <type>Status</type>
+      </return>
+      <arg name="display">
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </arg>
+      <arg name="colormap">
+        <type>Colormap</type>
+      </arg>
+      <arg name="contig">
+        <type>Bool</type>
+      </arg>
+      <arg name="plane_masks_return">
+        <ptr>
+          <prim domain="UnsignedInt" size="4" />
+        </ptr>
+      </arg>
+      <arg name="nplanes">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="pixels_return">
+        <ptr>
+          <prim domain="UnsignedInt" size="4" />
+        </ptr>
+      </arg>
+      <arg name="npixels">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XAllocWMHints">
+    <signature>
+      <return>
+        <ptr>
+          <type>XWMHints</type>
+        </ptr>
+      </return>
+    </signature>
+  </procedure>
+  <procedure name="XChangeProperty">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="display">
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </arg>
+      <arg name="w">
+        <type>Window</type>
+      </arg>
+      <arg name="property">
+        <type>Atom</type>
+      </arg>
+      <arg name="type">
+        <type>Atom</type>
+      </arg>
+      <arg name="format">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+      <arg name="mode">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+      <arg name="data">
+        <ptr>
+          <prim domain="UnsignedInt" size="1" />
+        </ptr>
+      </arg>
+      <arg name="nelements">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XChangeWindowAttributes">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="display">
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </arg>
+      <arg name="w">
+        <type>Window</type>
+      </arg>
+      <arg name="valuemask">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="attributes">
+        <ptr>
+          <type>XSetWindowAttributes</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XConfigureWindow">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="display">
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </arg>
+      <arg name="w">
+        <type>Window</type>
+      </arg>
+      <arg name="value_mask">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="changes">
+        <ptr>
+          <type>XWindowChanges</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XCloseDisplay">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="display_name">
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XCreateColormap">
+    <signature>
+      <return>
+        <type>Colormap</type>
+      </return>
+      <arg name="display">
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </arg>
+      <arg name="w">
+        <type>Window</type>
+      </arg>
+      <arg name="visual">
+        <ptr>
+          <type>Visual</type>
+        </ptr>
+      </arg>
+      <arg name="alloc">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XCreateWindow">
+    <signature>
+      <return>
+        <type>Window</type>
+      </return>
+      <arg name="display">
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </arg>
+      <arg name="parent">
+        <type>Window</type>
+      </arg>
+      <arg name="x">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+      <arg name="y">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+      <arg name="width">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="height">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="border_width">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="depth">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+      <arg name="_class">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="visual">
+        <ptr>
+          <type>Visual</type>
+        </ptr>
+      </arg>
+      <arg name="valuemask">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="attributes">
+        <ptr>
+          <type>XSetWindowAttributes</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XDeleteProperty">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="display">
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </arg>
+      <arg name="w">
+        <type>Window</type>
+      </arg>
+      <arg name="property">
+        <type>Atom</type>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XDestroyWindow">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="display">
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </arg>
+      <arg name="w">
+        <type>Window</type>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XDisplayName">
+    <signature>
+      <return>
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </return>
+      <arg name="string">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XEventsQueued">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="display">
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </arg>
+      <arg name="mode">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XFlush">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="display">
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XFree">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="data">
+        <ptr>
+          <void />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XFreeColormap">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="display">
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </arg>
+      <arg name="colormap">
+        <type>Colormap</type>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XGetGeometry">
+    <signature>
+      <return>
+        <type>Status</type>
+      </return>
+      <arg name="display">
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </arg>
+      <arg name="d">
+        <type>Drawable</type>
+      </arg>
+      <arg name="root_return">
+        <ptr>
+          <type>Window</type>
+        </ptr>
+      </arg>
+      <arg name="x_return">
+        <ptr>
+          <prim domain="SignedInt" size="4" />
+        </ptr>
+      </arg>
+      <arg name="y_return">
+        <ptr>
+          <prim domain="SignedInt" size="4" />
+        </ptr>
+      </arg>
+      <arg name="width_return">
+        <ptr>
+          <prim domain="UnsignedInt" size="4" />
+        </ptr>
+      </arg>
+      <arg name="height_return">
+        <ptr>
+          <prim domain="UnsignedInt" size="4" />
+        </ptr>
+      </arg>
+      <arg name="border_width_return">
+        <ptr>
+          <prim domain="UnsignedInt" size="4" />
+        </ptr>
+      </arg>
+      <arg name="depth_return">
+        <ptr>
+          <prim domain="UnsignedInt" size="4" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XGetRGBColormaps">
+    <signature>
+      <return>
+        <type>Status</type>
+      </return>
+      <arg name="display">
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </arg>
+      <arg name="w">
+        <type>Window</type>
+      </arg>
+      <arg name="std_colormap_return">
+        <ptr>
+          <ptr>
+            <type>XStandardColormap</type>
+          </ptr>
+        </ptr>
+      </arg>
+      <arg name="count_return">
+        <ptr>
+          <prim domain="SignedInt" size="4" />
+        </ptr>
+      </arg>
+      <arg name="property">
+        <type>Atom</type>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XOpenDisplay">
+    <signature>
+      <return>
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </return>
+      <arg name="display_name">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XPending">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="display">
+        <ptr>
+          <type>Display</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="XtFree">
+    <signature>
+      <return>
+        <void />
+      </return>
+      <arg>
+        <ptr>
+          <void />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+</library>

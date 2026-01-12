@@ -1,0 +1,1104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<library xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemata.jklnet.org/Decompiler">
+  <Types>
+    <typedef name="size_t">
+      <prim domain="UnsignedInt" size="4" />
+    </typedef>
+    <typedef name="intptr_t">
+      <type>size_t</type>
+    </typedef>
+    <typedef name="PVFV">
+      <ptr>
+        <fn>
+          <return>
+            <void />
+          </return>
+        </fn>
+      </ptr>
+    </typedef>
+    <typedef name="_onexit_t">
+      <ptr>
+        <fn>
+          <return>
+            <prim domain="SignedInt" size="4" />
+          </return>
+        </fn>
+      </ptr>
+    </typedef>
+    <typedef name="time_t">
+      <prim domain="SignedInt" size="4" />
+    </typedef>
+    <typedef name="FILE">
+      <struct name="_iob" />
+    </typedef>
+    <typedef name="_HANDLE_MATH_ERROR">
+      <ptr>
+        <fn>
+          <return>
+            <prim domain="SignedInt" size="4" />
+          </return>
+          <arg>
+            <ptr>
+              <struct name="_exception" />
+            </ptr>
+          </arg>
+        </fn>
+      </ptr>
+    </typedef>
+  </Types>
+  <procedure name="malloc">
+    <signature>
+      <return>
+        <ptr>
+          <void />
+        </ptr>
+      </return>
+      <arg>
+        <type>size_t</type>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="free">
+    <signature>
+      <return>
+        <void />
+      </return>
+      <arg>
+        <ptr>
+          <void />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_ltoa">
+    <signature>
+      <return>
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </return>
+      <arg name="value">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+      <arg name="str">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="radix">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="rand">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+    </signature>
+  </procedure>
+  <procedure name="strncpy">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg>
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg>
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg>
+        <type>size_t</type>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="calloc">
+    <signature>
+      <return>
+        <ptr>
+          <void />
+        </ptr>
+      </return>
+      <arg>
+        <type>size_t</type>
+      </arg>
+      <arg>
+        <type>size_t</type>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="atol">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg>
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="time">
+    <signature>
+      <return>
+        <type>time_t</type>
+      </return>
+      <arg name="ptime">
+        <ptr>
+          <type>time_t</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="srand">
+    <signature>
+      <return>
+        <void />
+      </return>
+      <arg>
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_ftol">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+        <reg>eax</reg>
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="floor">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="puts">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="s">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="printf">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg>
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="..." />
+    </signature>
+  </procedure>
+  <procedure name="scanf">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="format">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="..." />
+    </signature>
+  </procedure>
+  <procedure name="sprintf">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg>
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg>
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="..." />
+    </signature>
+  </procedure>
+  <procedure name="fopen">
+    <signature>
+      <return>
+        <ptr>
+          <type>FILE</type>
+        </ptr>
+      </return>
+      <arg name="file">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="mode">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="fflush">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="fp">
+        <ptr>
+          <type>FILE</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="fprintf">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="fp">
+        <ptr>
+          <type>FILE</type>
+        </ptr>
+      </arg>
+      <arg name="format">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="..." />
+    </signature>
+  </procedure>
+  <procedure name="fputs">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="str">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="fp">
+        <ptr>
+          <type>FILE</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="fscanf">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="fp">
+        <ptr>
+          <type>FILE</type>
+        </ptr>
+      </arg>
+      <arg name="format">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="..." />
+    </signature>
+  </procedure>
+  <procedure name="fread">
+    <signature>
+      <return>
+        <type>size_t</type>
+      </return>
+      <arg name="buffer">
+        <ptr>
+          <void />
+        </ptr>
+      </arg>
+      <arg name="size">
+        <type>size_t</type>
+      </arg>
+      <arg name="count">
+        <type>size_t</type>
+      </arg>
+      <arg name="stream">
+        <ptr>
+          <type>FILE</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="fclose">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="fp">
+        <ptr>
+          <type>FILE</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_fcloseall">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+    </signature>
+  </procedure>
+  <procedure name="_mkdir">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="dirname">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="__iob_func">
+    <signature>
+      <return>
+        <ptr>
+          <type>FILE</type>
+        </ptr>
+      </return>
+    </signature>
+  </procedure>
+  <procedure name="_CIpow">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </arg>
+      <arg>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_CIacos">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_CIasin">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_CIatan">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_CIatan2">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </arg>
+      <arg>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_CIcos">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_CIfmod">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </arg>
+      <arg>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_CIsin">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_CIsqrt">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_CIexp">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+        <fpustack size="0" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="strncpy">
+    <signature>
+      <return>
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </return>
+      <arg>
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg>
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg>
+        <type>size_t</type>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_fpreset">
+    <signature>
+      <return>
+        <void />
+      </return>
+    </signature>
+  </procedure>
+  <procedure name="_controlfp">
+    <signature>
+      <return>
+        <prim domain="UnsignedInt" size="4" />
+      </return>
+      <arg name="new">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="mask">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_control87">
+    <signature>
+      <return>
+        <prim domain="UnsignedInt" size="4" />
+      </return>
+      <arg name="new">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="mask">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="__dllonexit">
+    <signature>
+      <return>
+        <type>_onexit_t</type>
+      </return>
+      <arg name="func">
+        <type>_onexit_t</type>
+      </arg>
+      <arg name="pbegin">
+        <ptr>
+          <ptr>
+            <type>PVFV</type>
+          </ptr>
+        </ptr>
+      </arg>
+      <arg name="pend">
+        <ptr>
+          <ptr>
+            <type>PVFV</type>
+          </ptr>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="__set_app_type">
+    <signature>
+      <return>
+        <void />
+      </return>
+      <arg>
+        <prim domain="SignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="__p__fmode">
+    <signature>
+      <return>
+        <ptr>
+          <prim domain="SignedInt" size="4" />
+        </ptr>
+      </return>
+    </signature>
+  </procedure>
+  <procedure name="__p__commode">
+    <signature>
+      <return>
+        <ptr>
+          <prim domain="SignedInt" size="4" />
+        </ptr>
+      </return>
+    </signature>
+  </procedure>
+  <procedure name="__getmainargs">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg>
+        <ptr>
+          <prim domain="SignedInt" size="4" />
+        </ptr>
+      </arg>
+      <arg>
+        <ptr>
+          <ptr>
+            <ptr>
+              <prim domain="Character" size="1" />
+            </ptr>
+          </ptr>
+        </ptr>
+      </arg>
+      <arg>
+        <ptr>
+          <ptr>
+            <ptr>
+              <prim domain="Character" size="1" />
+            </ptr>
+          </ptr>
+        </ptr>
+      </arg>
+      <arg>
+        <prim domain="SignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="__setusermatherr">
+    <signature>
+      <return>
+        <void />
+      </return>
+      <arg name="pf">
+        <type>_HANDLE_MATH_ERROR</type>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="exit">
+    <signature>
+      <return>
+        <void />
+      </return>
+      <arg name="code">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_assert">
+    <signature>
+      <return>
+        <void />
+      </return>
+      <arg name="cond">
+        <prim domain="Character" size="1" />
+      </arg>
+      <arg name="file">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="line">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="signal">
+    <signature convention="__cdecl">
+      <return>
+        <ptr>
+          <fn convention="__cdecl">
+            <return>
+              <void />
+            </return>
+            <arg>
+              <prim domain="SignedInt" size="4" />
+            </arg>
+          </fn>
+        </ptr>
+      </return>
+      <arg name="sig">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+      <arg name="func">
+        <ptr>
+          <fn convention="__cdecl">
+            <return>
+              <void />
+            </return>
+            <arg>
+              <prim domain="SignedInt" size="4" />
+            </arg>
+            <arg name="..." />
+          </fn>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_amsg_exit">
+    <signature>
+      <return>
+        <void />
+      </return>
+      <arg name="n">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_initterm">
+    <signature>
+      <return>
+        <void />
+      </return>
+      <arg name="fStart">
+        <ptr>
+          <type>PVFV</type>
+        </ptr>
+      </arg>
+      <arg name="fEnd">
+        <ptr>
+          <type>PVFV</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_initterm_e">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="fStart">
+        <ptr>
+          <type>PVFV</type>
+        </ptr>
+      </arg>
+      <arg name="fEnd">
+        <ptr>
+          <type>PVFV</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_encoded_null">
+    <signature>
+      <return>
+        <ptr>
+          <void />
+        </ptr>
+      </return>
+    </signature>
+  </procedure>
+  <procedure name="_decode_pointer">
+    <signature>
+      <return>
+        <ptr>
+          <void />
+        </ptr>
+      </return>
+      <arg>
+        <ptr>
+          <void />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_chdir">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="dirname">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_findfirst">
+    <signature>
+      <return>
+        <type>intptr_t</type>
+      </return>
+      <arg name="filespec">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="fileinfo">
+        <ptr>
+          <struct name="_finddata_t" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_findnext">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="handle">
+        <type>intptr_t</type>
+      </arg>
+      <arg name="fileinfo">
+        <ptr>
+          <struct name="_finddata_t" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_getcwd">
+    <signature>
+      <return>
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </return>
+      <arg name="buffer">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="maxlen">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_isnan">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="x">
+        <prim domain="Real" size="8" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="_stat">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg name="path">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="buffer">
+        <ptr>
+          <struct name="_stat" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="cos">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="fabs">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="fgetc">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg>
+        <ptr>
+          <type>FILE</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="fgets">
+    <signature>
+      <return>
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </return>
+      <arg name="buf">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="size">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+      <arg>
+        <ptr>
+          <type>FILE</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="fputc">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg>
+        <prim domain="SignedInt" size="4" />
+      </arg>
+      <arg>
+        <ptr>
+          <type>FILE</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="fseek">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg>
+        <ptr>
+          <type>FILE</type>
+        </ptr>
+      </arg>
+      <arg name="offset">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+      <arg name="origin">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="ftell">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg>
+        <ptr>
+          <type>FILE</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="fwrite">
+    <signature>
+      <return>
+        <type>size_t</type>
+      </return>
+      <arg>
+        <ptr>
+          <void />
+        </ptr>
+      </arg>
+      <arg name="size">
+        <type>size_t</type>
+      </arg>
+      <arg name="count">
+        <type>size_t</type>
+      </arg>
+      <arg>
+        <ptr>
+          <type>FILE</type>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="ldexp">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+      </arg>
+      <arg>
+        <prim domain="SignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="log">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="pow">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+      </arg>
+      <arg>
+        <prim domain="Real" size="8" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="setlocale">
+    <signature>
+      <return>
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </return>
+      <arg name="category">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+      <arg name="locale">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="sin">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="sqrt">
+    <signature>
+      <return>
+        <prim domain="Real" size="8" />
+      </return>
+      <arg>
+        <prim domain="Real" size="8" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="sscanf">
+    <signature>
+      <return>
+        <prim domain="SignedInt" size="4" />
+      </return>
+      <arg>
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="fmt">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="..." />
+    </signature>
+  </procedure>
+</library>

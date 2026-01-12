@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using risc_v;
 
 public class ElfLoader
 {
@@ -86,6 +87,51 @@ public class ElfLoader
         }
 
         return words.ToArray();
+    }
+    
+    public uint GetFirstExecutableAddress()
+    {
+        // 1. Get entry point from ELF header
+        uint entryPoint = BitConverter.ToUInt32(elfData, 0x18);
+    
+        // 2. Find program headers
+        ushort phoff = BitConverter.ToUInt16(elfData, 0x1C);
+        ushort phentsize = BitConverter.ToUInt16(elfData, 0x2A);
+        ushort phnum = BitConverter.ToUInt16(elfData, 0x2C);
+
+        // 3. Find which segment contains the entry point
+        for (int i = 0; i < phnum; i++)
+        {
+            int headerOffset = (int)(phoff + i * phentsize);
+        
+            // Read segment fields
+            uint p_type = BitConverter.ToUInt32(elfData, headerOffset + 0);
+            uint p_offset = BitConverter.ToUInt32(elfData, headerOffset + 4);
+            uint p_vaddr = BitConverter.ToUInt32(elfData, headerOffset + 8);
+            uint p_filesz = BitConverter.ToUInt32(elfData, headerOffset + 16);
+            uint p_flags = BitConverter.ToUInt32(elfData, headerOffset + 24);
+        
+            const uint PT_LOAD = 1; // Loadable segment
+            const uint PF_X = 1;    // Executable flag
+        
+            // Check if it's a loadable, executable segment containing entry point
+            if (p_type == PT_LOAD && 
+                (p_flags & PF_X) != 0 && 
+                entryPoint >= p_vaddr && 
+                entryPoint < p_vaddr + p_filesz)
+            {
+                // 4. Calculate file offset of first instruction
+                // file_offset = segment_file_offset + (entry_point - segment_vaddr)
+                uint fileOffset = p_offset + (entryPoint - p_vaddr);
+            
+                // Verify it's within file bounds
+                if (fileOffset + 4 <= elfData.Length)
+                {
+                    return fileOffset;
+                }
+            }
+        }
+        throw new InvalidOperationException("Entry point not found in any loadable executable segment");
     }
 
     private int RvaToOffset(uint vaddr)
@@ -176,5 +222,13 @@ public class ElfLoader
             i++;
         }
         return Encoding.ASCII.GetString(bytes.ToArray());
+    }
+
+    public void WriteToMem(Memory memory)
+    {
+        for (uint i = 0; i < elfData.Length; i++)
+        {
+            memory.write_byte(i, elfData[i]);
+        }
     }
 }

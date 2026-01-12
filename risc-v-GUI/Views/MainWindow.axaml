@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:risc_v_GUI.ViewModels"
+        x:Class="risc_v_GUI.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="risc_v_GUI"
+        Width="800" Height="450">
+
+    <StackPanel Spacing="10" Margin="20">
+
+        <Button Content="Step" Click="step"/>
+
+        <ListBox ItemsSource="{Binding Output}" Height="350">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" FontFamily="Consolas"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+    </StackPanel>
+</Window>

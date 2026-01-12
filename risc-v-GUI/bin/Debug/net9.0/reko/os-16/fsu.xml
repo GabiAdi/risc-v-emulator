@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<library xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemata.jklnet.org/Decompiler">
+  <Types />
+  <procedure name="CHKDSK">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="argc">
+        <prim domain="SignedInt" size="2" />
+      </arg>
+      <arg name="argv">
+        <ptr>
+          <ptr>
+            <prim domain="Character" size="1" />
+          </ptr>
+        </ptr>
+      </arg>
+      <arg name="envp">
+        <ptr>
+          <ptr>
+            <prim domain="Character" size="1" />
+          </ptr>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FORMAT">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="argc">
+        <prim domain="SignedInt" size="2" />
+      </arg>
+      <arg name="argv">
+        <ptr>
+          <ptr>
+            <prim domain="Character" size="1" />
+          </ptr>
+        </ptr>
+      </arg>
+      <arg name="envp">
+        <ptr>
+          <ptr>
+            <prim domain="Character" size="1" />
+          </ptr>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="SYS">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="argc">
+        <prim domain="SignedInt" size="2" />
+      </arg>
+      <arg name="argv">
+        <ptr>
+          <ptr>
+            <prim domain="Character" size="1" />
+          </ptr>
+        </ptr>
+      </arg>
+      <arg name="envp">
+        <ptr>
+          <ptr>
+            <prim domain="Character" size="1" />
+          </ptr>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="RECOVER">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="argc">
+        <prim domain="SignedInt" size="2" />
+      </arg>
+      <arg name="argv">
+        <ptr>
+          <ptr>
+            <prim domain="Character" size="1" />
+          </ptr>
+        </ptr>
+      </arg>
+      <arg name="envp">
+        <ptr>
+          <ptr>
+            <prim domain="Character" size="1" />
+          </ptr>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+</library>

@@ -5,10 +5,12 @@ namespace risc_v;
 public class SystemHandler
 {
     private Bus bus;
+    private uint word_start;
     
-    public SystemHandler(Bus bus)
+    public SystemHandler(Bus bus, uint word_start)
     {
         this.bus = bus;
+        this.word_start = word_start;
     }
 
     public void handle_syscall(object sender, SyscallEventArgs e)
@@ -19,7 +21,7 @@ public class SystemHandler
                 Console.Write(e.args[0]);
                 break;
             case 4: // print string
-                uint addr = e.args[0];
+                uint addr = e.args[0] - word_start;
                 StringBuilder sb = new StringBuilder();
                 uint b;
                 while ((b = bus.read(addr++, 1)) != 0)

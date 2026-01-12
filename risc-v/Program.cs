@@ -34,24 +34,18 @@ string program_path = "../../../assembly/program";
 
 ElfLoader loader = new ElfLoader(program_path);
 
-uint[] program_bytes = loader.GetExecutableWords();
-
 Dictionary<uint, string> symbols = loader.GetSymbols();
-
 
 Memory memory = new Memory(1024*1024*300); // 300 MB
 
-for (uint i = 0; i < program_bytes.Length; i+=4)
-{
-    memory.write_word(i, program_bytes[i]);
-}
+loader.WriteToMem(memory);
 
 Bus bus = new Bus(memory);
 Cpu cpu = new Cpu(bus);
 
-cpu.set_pc(loader.EntryPoint);
+cpu.set_pc(loader.GetFirstExecutableAddress());
 
-SystemHandler system_handler = new SystemHandler(bus);
+SystemHandler system_handler = new SystemHandler(bus, loader.GetFirstExecutableAddress());
 cpu.syscall_occured += system_handler.handle_syscall;
 cpu.break_occured += system_handler.handle_breakpoint;
 

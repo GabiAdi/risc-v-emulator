@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="utf-8"?>
+<library xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemata.jklnet.org/Decompiler">
+  <Types>
+    <typedef name="HEV">
+      <prim domain="UnsignedInt" size="4" />
+    </typedef>
+    <typedef name="PHEV">
+      <ptr>
+        <prim domain="UnsignedInt" size="4" />
+      </ptr>
+    </typedef>
+  </Types>
+  <procedure name="FSH_ADDSHARE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pName">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="mode">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="hVPB">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="phShare">
+        <ptr>
+          <prim domain="UnsignedInt" size="4" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_CALLDRIVER">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pPkt">
+        <ptr>
+          <void />
+        </ptr>
+      </arg>
+      <arg name="hVPB">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="fControl">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_CANONICALIZE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pPathName">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbPathBuf">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pPathBuf">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="pFl">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_CHECKEANAME">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="iLevel">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="cbEAName">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="szEAN">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_CRITERROR">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="cbMessage">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pMessage">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="nSubs">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pSubs">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="fAll">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_DEVIOCTL">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="flag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="hDev">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="sfn">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="cat">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="func">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pParm">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbParm">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbData">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_DOVOLIO">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="operation">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="fAllowed">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="hVPB">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="pcSec">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+      <arg name="iSec">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_DOVOLIO2">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="hDev">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="sfn">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="cat">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="func">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pParm">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbParm">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbData">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_FINDCHAR">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="nChars">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pChars">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="ppStr">
+        <ptr>
+          <ptr>
+            <prim domain="Character" size="1" />
+          </ptr>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_FINDDUPHVPB">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="hVPB">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="phVPB">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_FORCENOSWAP">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="sel">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_GETPRIORITY">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+    </signature>
+  </procedure>
+  <procedure name="FSH_GETOVERLAPBUF">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="hVPB">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="iSec">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="iSec2">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="pisecBuf">
+        <ptr>
+          <prim domain="UnsignedInt" size="4" />
+        </ptr>
+      </arg>
+      <arg name="ppBuf">
+        <ptr>
+          <ptr>
+            <prim domain="Character" size="1" />
+          </ptr>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_GETVOLPARM">
+    <signature convention="__pascal">
+      <return>
+        <void />
+      </return>
+      <arg name="hVPB">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="ppVPBfsi">
+        <ptr>
+          <ptr>
+            <struct name="vpfsi" />
+          </ptr>
+        </ptr>
+      </arg>
+      <arg name="ppVPBfsd">
+        <ptr>
+          <ptr>
+            <struct name="vpfsd" />
+          </ptr>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_INTERR">
+    <signature convention="__pascal">
+      <return>
+        <void />
+      </return>
+      <arg name="pMsg">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbMsg">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_IOBOOST">
+    <signature convention="__pascal">
+      <return>
+        <void />
+      </return>
+    </signature>
+  </procedure>
+  <procedure name="FSH_IOSEMCLEAR">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pSem">
+        <type>HEV</type>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_ISCURDIRPREFIX">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pMsg">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_LOADCHAR">
+    <signature convention="__pascal">
+      <return>
+        <void />
+      </return>
+      <arg name="ppStr">
+        <ptr>
+          <ptr>
+            <prim domain="Character" size="1" />
+          </ptr>
+        </ptr>
+      </arg>
+      <arg name="pChar">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_NAMEFROMSFN">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="sfn">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pName">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="pcbName">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_PREVCHAR">
+    <signature convention="__pascal">
+      <return>
+        <void />
+      </return>
+      <arg name="pBeg">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="ppStr">
+        <ptr>
+          <ptr>
+            <prim domain="Character" size="1" />
+          </ptr>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_PROBEBUF">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="operation">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbData">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_QSYSINFO">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="index">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbData">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_REGISTERPERFCTRS">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pDataBlk">
+        <ptr>
+          <void />
+        </ptr>
+      </arg>
+      <arg name="pTextBlk">
+        <ptr>
+          <void />
+        </ptr>
+      </arg>
+      <arg name="fsFlags">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_REMOVESHARE">
+    <signature convention="__pascal">
+      <return>
+        <void />
+      </return>
+      <arg name="hShare">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_SEGALLOC">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="flags">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="cbSeg">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="pSel">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_SEGFREE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="sel">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_SEGREALLOC">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="sel">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="cbSeg">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_SEMCLEAR">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pSem">
+        <ptr>
+          <void />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_SEMREQUEST">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pSem">
+        <ptr>
+          <void />
+        </ptr>
+      </arg>
+      <arg name="cmsTimeout">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_SEMSET">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pSem">
+        <ptr>
+          <void />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_SEMSETWAIT">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pSem">
+        <ptr>
+          <void />
+        </ptr>
+      </arg>
+      <arg name="cmsTimeout">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_SEMWAIT">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pSem">
+        <ptr>
+          <void />
+        </ptr>
+      </arg>
+      <arg name="cmsTimeout">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_SETVOLUME">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="hVPB">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="fControl">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_STORECHAR">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="chDBCS">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="ppStr">
+        <ptr>
+          <ptr>
+            <prim domain="Character" size="1" />
+          </ptr>
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_UPPERCASE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="szPathName">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbPathBuf">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pPathBuf">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_WILDMATCH">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pPat">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="pStr">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FSH_YIELD">
+    <signature convention="__pascal">
+      <return>
+        <void />
+      </return>
+    </signature>
+  </procedure>
+</library>

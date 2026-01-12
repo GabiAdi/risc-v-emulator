@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<library xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemata.jklnet.org/Decompiler">
+  <Types>
+    <typedef name="size_t">
+      <prim domain="UnsignedInt" size="4" />
+    </typedef>
+    <typedef name="ssize_t">
+      <prim domain="SignedInt" size="4" />
+    </typedef>
+    <typedef name="off_t">
+      <prim domain="SignedInt" size="8" />
+    </typedef>
+  </Types>
+</library>

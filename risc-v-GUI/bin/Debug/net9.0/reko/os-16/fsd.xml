@@ -1,0 +1,1880 @@
+<?xml version="1.0" encoding="utf-8"?>
+<library xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemata.jklnet.org/Decompiler">
+  <Types>
+    <struct name="vpfsi" size="42">
+      <field offset="0" name="vpi_vid">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+      <field offset="4" name="vpi_hDEV">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+      <field offset="8" name="vpi_bsize">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="12" name="vpi_totsec">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+      <field offset="16" name="vpi_trksec">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="18" name="vpi_nhead">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="20" name="vpi_text">
+        <arr length="12">
+          <prim domain="Character" size="1" />
+        </arr>
+      </field>
+      <field offset="32" name="vpi_pDCS">
+        <ptr>
+          <void />
+        </ptr>
+      </field>
+      <field offset="36" name="vpi_pVCS">
+        <ptr>
+          <void />
+        </ptr>
+      </field>
+      <field offset="40" name="vpi_drive">
+        <prim domain="UnsignedInt" size="1" />
+      </field>
+      <field offset="41" name="vpi_unit">
+        <prim domain="UnsignedInt" size="1" />
+      </field>
+    </struct>
+    <struct name="vpfsd" size="36">
+      <field offset="0" name="vpd_work">
+        <arr length="36">
+          <prim domain="Character" size="1" />
+        </arr>
+      </field>
+    </struct>
+    <struct name="cdfsi" size="265">
+      <field offset="0" name="cdi_hVPB">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="2" name="cdi_end">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="4" name="cdi_flags">
+        <prim domain="Character" size="1" />
+      </field>
+      <field offset="5" name="cdi_curdir">
+        <arr length="260">
+          <prim domain="Character" size="1" />
+        </arr>
+      </field>
+    </struct>
+    <struct name="cdfsd" size="8">
+      <field offset="0" name="cdd_work">
+        <arr length="8">
+          <prim domain="Character" size="1" />
+        </arr>
+      </field>
+    </struct>
+    <struct name="sffsi" size="45">
+      <field offset="0" name="sfi_mode">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+      <field offset="4" name="sfi_hVPB">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="6" name="sfi_ctime">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="8" name="sfi_cdate">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="10" name="sfi_atime">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="12" name="sfi_adate">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="14" name="sfi_mtime">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="16" name="sfi_mdate">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="20" name="sfi_size">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+      <field offset="24" name="sfi_position">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+      <field offset="28" name="sfi_UID">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="30" name="sfi_PID">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="32" name="sfi_PDB">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="34" name="sfi_selfsfn">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="36" name="sfi_tstamp">
+        <prim domain="UnsignedInt" size="1" />
+      </field>
+      <field offset="38" name="sfi_type">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="40" name="sfi_pPVDBFil">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+      <field offset="44" name="sfi_DOSattr">
+        <prim domain="UnsignedInt" size="1" />
+      </field>
+    </struct>
+    <struct name="sffsd" size="30">
+      <field offset="0" name="sfd_work">
+        <arr length="30">
+          <prim domain="Character" size="1" />
+        </arr>
+      </field>
+    </struct>
+    <struct name="fsfsi" size="2">
+      <field offset="0" name="fsi_hVPB">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+    </struct>
+    <struct name="fsfsd" size="24">
+      <field offset="0" name="fsd_work">
+        <arr length="24">
+          <prim domain="Character" size="1" />
+        </arr>
+      </field>
+    </struct>
+    <struct name="FileLock" size="8">
+      <field offset="0" name="FileOffset">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+      <field offset="4" name="RangeLength">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+    </struct>
+    <struct name="PageCmdHeader" size="16">
+      <field offset="0" name="InFlags">
+        <prim domain="UnsignedInt" size="1" />
+      </field>
+      <field offset="1" name="OutFlags">
+        <prim domain="UnsignedInt" size="1" />
+      </field>
+      <field offset="2" name="OpCount">
+        <prim domain="UnsignedInt" size="1" />
+      </field>
+      <field offset="3" name="Pad">
+        <prim domain="UnsignedInt" size="1" />
+      </field>
+      <field offset="4" name="Reserved1">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+      <field offset="8" name="Reserved2">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+      <field offset="12" name="Reserved3">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+      <field offset="16" name="PageCmdList">
+        <struct name="PageCmd" />
+      </field>
+    </struct>
+    <struct name="PageCmd" size="12">
+      <field offset="0" name="Cmd">
+        <prim domain="UnsignedInt" size="1" />
+      </field>
+      <field offset="1" name="Priority">
+        <prim domain="UnsignedInt" size="1" />
+      </field>
+      <field offset="2" name="Status">
+        <prim domain="UnsignedInt" size="1" />
+      </field>
+      <field offset="3" name="Error">
+        <prim domain="UnsignedInt" size="1" />
+      </field>
+      <field offset="4" name="Addr">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+      <field offset="8" name="FileOffset">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+    </struct>
+    <struct name="CmdLock" size="8">
+      <field offset="0" name="Cmd">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="2" name="LockCnt">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="4" name="TimeOut">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+    </struct>
+    <struct name="Lock" size="12">
+      <field offset="0" name="Share">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="4" name="Start">
+        <prim domain="SignedInt" size="4" />
+      </field>
+      <field offset="8" name="Length">
+        <prim domain="SignedInt" size="4" />
+      </field>
+    </struct>
+    <struct name="CmdUnlock" size="4">
+      <field offset="0" name="Cmd">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="2" name="UnlockCnt">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+    </struct>
+    <struct name="UnLock" size="8">
+      <field offset="0" name="Start">
+        <prim domain="SignedInt" size="4" />
+      </field>
+      <field offset="4" name="Length">
+        <prim domain="SignedInt" size="4" />
+      </field>
+    </struct>
+    <struct name="CmdSeek" size="12">
+      <field offset="0" name="Cmd">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="2" name="Method">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="4" name="Position">
+        <prim domain="SignedInt" size="4" />
+      </field>
+      <field offset="8" name="Actual">
+        <prim domain="SignedInt" size="4" />
+      </field>
+    </struct>
+    <struct name="CmdIO" size="12">
+      <field offset="0" name="Cmd">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="4" name="Buffer">
+        <ptr>
+          <void />
+        </ptr>
+      </field>
+      <field offset="8" name="BufferLen">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="10" name="Actual">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+    </struct>
+    <struct name="FileFindBuf" size="23">
+      <field offset="0" name="dateCreate">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="2" name="timeCreate">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="4" name="dateAccess">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="6" name="timeAccess">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="8" name="dateWrite">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="10" name="timeWrite">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="12" name="cbEOF">
+        <prim domain="SignedInt" size="4" />
+      </field>
+      <field offset="16" name="cbAlloc">
+        <prim domain="SignedInt" size="4" />
+      </field>
+      <field offset="20" name="attr">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="22" name="cbName">
+        <prim domain="UnsignedInt" size="1" />
+      </field>
+      <field offset="23" name="szName">
+        <arr>
+          <prim domain="UnsignedInt" size="1" />
+        </arr>
+      </field>
+    </struct>
+    <struct name="FileFromFindBuf" size="27">
+      <field offset="0" name="position">
+        <prim domain="SignedInt" size="4" />
+      </field>
+      <field offset="4" name="dateCreate">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="6" name="timeCreate">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="8" name="dateAccess">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="10" name="timeAccess">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="12" name="dateWrite">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="14" name="timeWrite">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="16" name="cbEOF">
+        <prim domain="SignedInt" size="4" />
+      </field>
+      <field offset="20" name="cbAlloc">
+        <prim domain="SignedInt" size="4" />
+      </field>
+      <field offset="24" name="attr">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="26" name="cbName">
+        <prim domain="UnsignedInt" size="1" />
+      </field>
+      <field offset="27" name="szName">
+        <arr>
+          <prim domain="UnsignedInt" size="1" />
+        </arr>
+      </field>
+    </struct>
+    <struct name="sf" size="8">
+      <field offset="0" name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </field>
+      <field offset="4" name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </field>
+    </struct>
+    <struct name="cd" size="14">
+      <field offset="0" name="pcdfsi">
+        <ptr>
+          <struct name="cdfsi" />
+        </ptr>
+      </field>
+      <field offset="4" name="pcdfsd">
+        <ptr>
+          <struct name="cdfsd" />
+        </ptr>
+      </field>
+      <field offset="8" name="pPath">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </field>
+      <field offset="12" name="iCurDirEnd">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+    </struct>
+    <union name="argdat" size="14">
+      <alt>
+        <struct name="sf" />
+      </alt>
+      <alt>
+        <struct name="cd" />
+      </alt>
+    </union>
+    <struct name="EASizeBufStruc" size="8">
+      <field offset="0" name="easb_MaxEASize">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="4" name="easb_MaxEAListSize">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+    </struct>
+    <union name="npoper">
+      <alt name="phs">
+        <struct name="phs_param" />
+      </alt>
+      <alt name="npi">
+        <struct name="npi_param" />
+      </alt>
+      <alt name="npr">
+        <struct name="npr_param" />
+      </alt>
+      <alt name="npw">
+        <struct name="npw_param" />
+      </alt>
+      <alt name="npq">
+        <struct name="npq_param" />
+      </alt>
+      <alt name="npx">
+        <struct name="npx_param" />
+      </alt>
+      <alt name="npp">
+        <struct name="npp_param" />
+      </alt>
+      <alt name="npt">
+        <struct name="npt_param" />
+      </alt>
+      <alt name="qnps">
+        <struct name="qnps_param" />
+      </alt>
+      <alt name="npc">
+        <struct name="npc_param" />
+      </alt>
+      <alt name="npd">
+        <struct name="npd_param" />
+      </alt>
+    </union>
+    <struct name="phs_param" size="6">
+      <field offset="0" name="phs_len">
+        <prim domain="SignedInt" size="2" />
+      </field>
+      <field offset="2" name="phs_dlen">
+        <prim domain="SignedInt" size="2" />
+      </field>
+      <field offset="4" name="phs_pmode">
+        <prim domain="SignedInt" size="2" />
+      </field>
+    </struct>
+    <struct name="npi_param" size="6">
+      <field offset="0" name="npi_len">
+        <prim domain="SignedInt" size="2" />
+      </field>
+      <field offset="2" name="npi_dlen">
+        <prim domain="SignedInt" size="2" />
+      </field>
+      <field offset="4" name="npi_level">
+        <prim domain="SignedInt" size="2" />
+      </field>
+    </struct>
+    <struct name="npr_param" size="6">
+      <field offset="0" name="npr_len">
+        <prim domain="SignedInt" size="2" />
+      </field>
+      <field offset="2" name="npr_dlen">
+        <prim domain="SignedInt" size="2" />
+      </field>
+      <field offset="4" name="npr_nbyt">
+        <prim domain="SignedInt" size="2" />
+      </field>
+    </struct>
+    <struct name="npw_param" size="6">
+      <field offset="0" name="npw_len">
+        <prim domain="SignedInt" size="2" />
+      </field>
+      <field offset="2" name="npw_dlen">
+        <prim domain="SignedInt" size="2" />
+      </field>
+      <field offset="4" name="npw_nbyt">
+        <prim domain="SignedInt" size="2" />
+      </field>
+    </struct>
+    <struct name="npq_param" size="10">
+      <field offset="0" name="npq_len">
+        <prim domain="SignedInt" size="2" />
+      </field>
+      <field offset="2" name="npq_dlen">
+        <prim domain="SignedInt" size="2" />
+      </field>
+      <field offset="4" name="npq_timeo">
+        <prim domain="SignedInt" size="4" />
+      </field>
+      <field offset="8" name="npq_prio">
+        <prim domain="SignedInt" size="2" />
+      </field>
+    </struct>
+    <struct name="npx_param" size="16">
+      <field offset="0" name="npx_len">
+        <prim domain="SignedInt" size="2" />
+      </field>
+      <field offset="2" name="npx_ilen">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="4" name="npx_obuf">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </field>
+      <field offset="8" name="npx_ilen">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="10" name="npx_nbyt">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="12" name="npx_timeo">
+        <prim domain="SignedInt" size="4" />
+      </field>
+    </struct>
+    <struct name="npp_param" size="12">
+      <field offset="0" name="npp_len">
+        <prim domain="SignedInt" size="2" />
+      </field>
+      <field offset="2" name="npp_dlen">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="4" name="npp_nbyt">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="6" name="npp_av10">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="8" name="npp_av11">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="10" name="npp_state">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+    </struct>
+    <struct name="npt_param" size="12">
+      <field offset="0" name="npt_len">
+        <prim domain="SignedInt" size="2" />
+      </field>
+      <field offset="2" name="npt_ilen">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="4" name="npt_obuf">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </field>
+      <field offset="8" name="npt_olen">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="10" name="npt_nbyt">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+    </struct>
+    <struct name="qnps_param" size="10">
+      <field offset="0" name="qnps_len">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="2" name="qnps_dlen">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="4" name="qnps_semh">
+        <prim domain="SignedInt" size="4" />
+      </field>
+      <field offset="8" name="qnps_nbyt">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+    </struct>
+    <struct name="npc_param" size="4">
+      <field offset="0" name="npc_len">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="2" name="npc_dlen">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+    </struct>
+    <struct name="npd_param" size="4">
+      <field offset="0" name="npd_len">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+      <field offset="2" name="npd_dlen">
+        <prim domain="UnsignedInt" size="2" />
+      </field>
+    </struct>
+    <struct name="filelock" size="8">
+      <field offset="0" name="FileOffset">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+      <field offset="4" name="RangeLength">
+        <prim domain="UnsignedInt" size="4" />
+      </field>
+    </struct>
+  </Types>
+  <procedure name="FS_ALLOCATEPAGESPACE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+      <arg name="ulsize">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="ulWantContig">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_ATTACH">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="flag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pDev">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="pvpfsd">
+        <ptr>
+          <struct name="vpfsd" />
+        </ptr>
+      </arg>
+      <arg name="pcdfsd">
+        <ptr>
+          <struct name="cdfsd" />
+        </ptr>
+      </arg>
+      <arg name="pParm">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="pLen">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_CANCELLOCKREQUEST">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+      <arg name="pLockRange">
+        <ptr>
+          <struct name="filelock" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_CHDIR">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="flag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pcdfsi">
+        <ptr>
+          <struct name="cdsfi" />
+        </ptr>
+      </arg>
+      <arg name="pcdfsd">
+        <ptr>
+          <struct name="cdfsd" />
+        </ptr>
+      </arg>
+      <arg name="pDir">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="iCurDirEnd">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_CHGFILEPTR">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+      <arg name="offset">
+        <prim domain="SignedInt" size="4" />
+      </arg>
+      <arg name="type">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="IOflag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_CLOSE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="type">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="IOflag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_COMMIT">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="type">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="IOflag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_COPY">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="flag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pcdfsi">
+        <ptr>
+          <struct name="cdfsi" />
+        </ptr>
+      </arg>
+      <arg name="pcdfsd">
+        <ptr>
+          <struct name="cdfsd" />
+        </ptr>
+      </arg>
+      <arg name="pSrc">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="iSrcCurDirEnd">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pDst">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="iDstCurDirEnd">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="nameType">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_DELETE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pcdfsi">
+        <ptr>
+          <struct name="cdfsi" />
+        </ptr>
+      </arg>
+      <arg name="pcdfsd">
+        <ptr>
+          <struct name="cdfsd" />
+        </ptr>
+      </arg>
+      <arg name="pFile">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="iCurDirEnd">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_DOPAGEIO">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+      <arg name="pList">
+        <ptr>
+          <struct name="PageCmdHeader" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_EXIT">
+    <signature convention="__pascal">
+      <return>
+        <void />
+      </return>
+      <arg name="uid">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pid">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pdb">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_FILEATTRIBUTE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="flag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pcdfsi">
+        <ptr>
+          <struct name="cdfsi" />
+        </ptr>
+      </arg>
+      <arg name="pcdfsd">
+        <ptr>
+          <struct name="cdfsd" />
+        </ptr>
+      </arg>
+      <arg name="pName">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="iCurDirEnd">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pAttr">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_FILEINFO">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="flag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+      <arg name="level">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbData">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="IOflag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_FILEIO">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+      <arg name="pCmdList">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbCmdList">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="poError">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+      <arg name="IOflag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_FINDFIRST">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pcdfsi">
+        <ptr>
+          <struct name="cdfsi" />
+        </ptr>
+      </arg>
+      <arg name="pcdfsd">
+        <ptr>
+          <struct name="cdfsd" />
+        </ptr>
+      </arg>
+      <arg name="pName">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="iCurDirEnd">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="attr">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pfsfsi">
+        <ptr>
+          <struct name="fsfsi" />
+        </ptr>
+      </arg>
+      <arg name="pfsfsd">
+        <ptr>
+          <struct name="fsfsd" />
+        </ptr>
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbData">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pcMatch">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+      <arg name="level">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="flags">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_FINDFROMNAME">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pfsfsi">
+        <ptr>
+          <struct name="fsfsi" />
+        </ptr>
+      </arg>
+      <arg name="pfsfsd">
+        <ptr>
+          <struct name="fsfsd" />
+        </ptr>
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbData">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pcMatch">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+      <arg name="level">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="position">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="pName">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="flags">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_FINDNEXT">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pfsfsi">
+        <ptr>
+          <struct name="fsfsi" />
+        </ptr>
+      </arg>
+      <arg name="pfsfsd">
+        <ptr>
+          <struct name="fsfsd" />
+        </ptr>
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbData">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pcMatch">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+      <arg name="level">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="flags">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_FINDNOTIFYCLOSE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="handle">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_FINDNOTIFYFIRST">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pcdfsi">
+        <ptr>
+          <struct name="cdfsi" />
+        </ptr>
+      </arg>
+      <arg name="pcdfsd">
+        <ptr>
+          <struct name="cdfsd" />
+        </ptr>
+      </arg>
+      <arg name="pName">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="iCurDirEnd">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="attr">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pHandle">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbData">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pMatch">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+      <arg name="level">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="timeout">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_FINDNOTIFYNEXT">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="handle">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbData">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pcMatch">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+      <arg name="level">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="timeout">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_FLUSHBUF">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="hVPB">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="flag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_FSCTL">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pArgDat">
+        <ptr>
+          <union name="argdat" size="14">
+            <alt>
+              <struct name="sf" />
+            </alt>
+            <alt>
+              <struct name="cd" />
+            </alt>
+          </union>
+        </ptr>
+      </arg>
+      <arg name="iArgType">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="func">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pParm">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="lenParm">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="plenParmIO">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="lenData">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="plenDataIO">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_FSINFO">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="flag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="hVPB">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbData">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="level">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_INIT">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="szParm">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="DevHelp">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="pMiniFSD">
+        <ptr>
+          <prim domain="UnsignedInt" size="4" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_IOCTL">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+      <arg name="cat">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="func">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pParm">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="lenMaxParm">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="plenInOutParm">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="lenMaxData">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="plenInOutData">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_MKDIR">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pcdfsi">
+        <ptr>
+          <struct name="cdfsi" />
+        </ptr>
+      </arg>
+      <arg name="pcdfsd">
+        <ptr>
+          <struct name="cdfsd" />
+        </ptr>
+      </arg>
+      <arg name="pName">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="iCurDirEnd">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pEABuf">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="flags">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_MOVE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pcdfsi">
+        <ptr>
+          <struct name="cdfsi" />
+        </ptr>
+      </arg>
+      <arg name="pcdfsd">
+        <ptr>
+          <struct name="cdfsd" />
+        </ptr>
+      </arg>
+      <arg name="pSrc">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="iSrcCurDirEnd">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pDst">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="iDstCurDirEnd">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="flags">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_NEWSIZE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+      <arg name="len">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="IOflag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_NMPIPE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+      <arg name="OpType">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pOpRec">
+        <ptr>
+          <union name="npoper">
+            <alt name="phs">
+              <struct name="phs_param" />
+            </alt>
+            <alt name="npi">
+              <struct name="npi_param" />
+            </alt>
+            <alt name="npr">
+              <struct name="npr_param" />
+            </alt>
+            <alt name="npw">
+              <struct name="npw_param" />
+            </alt>
+            <alt name="npq">
+              <struct name="npq_param" />
+            </alt>
+            <alt name="npx">
+              <struct name="npx_param" />
+            </alt>
+            <alt name="npp">
+              <struct name="npp_param" />
+            </alt>
+            <alt name="npt">
+              <struct name="npt_param" />
+            </alt>
+            <alt name="qnps">
+              <struct name="qnps_param" />
+            </alt>
+            <alt name="npc">
+              <struct name="npc_param" />
+            </alt>
+            <alt name="npd">
+              <struct name="npd_param" />
+            </alt>
+          </union>
+        </ptr>
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="pName">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_OPENCREATE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pcdfsi">
+        <ptr>
+          <struct name="cdfsi" />
+        </ptr>
+      </arg>
+      <arg name="pcdfsd">
+        <ptr>
+          <struct name="cdfsd" />
+        </ptr>
+      </arg>
+      <arg name="pName">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="iCurDirEnd">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+      <arg name="ulOpenMode">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="usOpenFlag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pusAction">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+      <arg name="usAttr">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pcEABuf">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="pfgenflag">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_OPENPAGEFILE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pFlag">
+        <ptr>
+          <prim domain="UnsignedInt" size="4" />
+        </ptr>
+      </arg>
+      <arg name="pcMaxReq">
+        <ptr>
+          <prim domain="UnsignedInt" size="4" />
+        </ptr>
+      </arg>
+      <arg name="pName">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+      <arg name="usOpenMode">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="usOpenFlag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="usAttr">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="Reserved">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_PATHINFO">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="flag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pcdfsi">
+        <ptr>
+          <struct name="cdfsi" />
+        </ptr>
+      </arg>
+      <arg name="pcdfsd">
+        <ptr>
+          <struct name="cdfsd" />
+        </ptr>
+      </arg>
+      <arg name="pName">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="iCurDirEnd">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="level">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="cbData">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_PROCESSNAME">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pNameBuf">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_READ">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="pLen">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+      <arg name="IOflag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_RMDIR">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pcdfsi">
+        <ptr>
+          <struct name="cdfsi" />
+        </ptr>
+      </arg>
+      <arg name="pcdfsd">
+        <ptr>
+          <struct name="cdfsd" />
+        </ptr>
+      </arg>
+      <arg name="pName">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="iCurDirEnd">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_SETSWAP">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_SHUTDOWN">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="type">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="reserved">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_VERIFYUNCNAME">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="flag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pName">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_WRITE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+      <arg name="pData">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+      <arg name="pLen">
+        <ptr>
+          <prim domain="UnsignedInt" size="2" />
+        </ptr>
+      </arg>
+      <arg name="IOflag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_MOUNT">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="flag">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pvpfsi">
+        <ptr>
+          <struct name="vpfsi" />
+        </ptr>
+      </arg>
+      <arg name="pvpfsd">
+        <ptr>
+          <struct name="vpfsd" />
+        </ptr>
+      </arg>
+      <arg name="hVPB">
+        <prim domain="UnsignedInt" size="2" />
+      </arg>
+      <arg name="pBoot">
+        <ptr>
+          <prim domain="Character" size="1" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_FINDCLOSE">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="pfsfsi">
+        <ptr>
+          <struct name="fsfsi" />
+        </ptr>
+      </arg>
+      <arg name="pfsfsd">
+        <ptr>
+          <struct name="fsfsd" />
+        </ptr>
+      </arg>
+    </signature>
+  </procedure>
+  <procedure name="FS_FILELOCKS">
+    <signature convention="__pascal">
+      <return>
+        <prim domain="SignedInt" size="2" />
+      </return>
+      <arg name="psffsi">
+        <ptr>
+          <struct name="sffsi" />
+        </ptr>
+      </arg>
+      <arg name="psffsd">
+        <ptr>
+          <struct name="sffsd" />
+        </ptr>
+      </arg>
+      <arg name="pUnLockRange">
+        <ptr>
+          <struct name="filelock" />
+        </ptr>
+      </arg>
+      <arg name="pLockRange">
+        <ptr>
+          <struct name="filelock" />
+        </ptr>
+      </arg>
+      <arg name="timeout">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+      <arg name="flags">
+        <prim domain="UnsignedInt" size="4" />
+      </arg>
+    </signature>
+  </procedure>
+</library>

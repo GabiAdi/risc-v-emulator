@@ -95,6 +95,8 @@ public class Cpu
         }
     }
     
+    private bool halted;
+    
     private uint[] reg = new uint[32]; // 32 General registers
     private uint pc; // Program counter
     private uint current_ins; // Current instruction being executed
@@ -604,6 +606,8 @@ public class Cpu
     public Cpu(Bus bus)
     {
         this.bus = bus;
+
+        halted = false;
         
         reg[0] = 0; // Register 0x0 is always zero and cannot be written to
         pc = 0;
@@ -639,9 +643,21 @@ public class Cpu
     {
         return current_ins;
     }
+    
+    public void halt()
+    {
+        halted = true;
+    }
+    
+    public void resume()
+    {
+        halted = false;
+    }
 
     public void step()
     {
+        if (halted) return;
+        
         current_ins = bus.read(pc, 4); // Fetch
         uint current_pc = pc;
         pc += 4; // Increment PC by 4 bytes
