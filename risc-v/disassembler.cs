@@ -51,7 +51,7 @@ public class Disassembler
             // Replace exact addresses in operands only
             foreach (var kvp in symbols)
             {
-                string addrHex = $"0x{kvp.Key:X}";   // format like 0xADDR
+                string addrHex = $"0x{kvp.Key:X}"; // format like 0xADDR
                 operands = operands.Replace(addrHex, kvp.Value);
             }
 
@@ -59,8 +59,7 @@ public class Disassembler
             int addrWidth = 10;
             int mnemonicWidth = 10;
 
-            string text = $"{ins.Address:X8}".PadRight(addrWidth) +
-                          $"{mnemonic}".PadRight(mnemonicWidth) +
+            string text = $"{mnemonic}".PadRight(mnemonicWidth)+
                           $"{operands}";
 
             // Advance current address

@@ -9,6 +9,7 @@
       "risc-v-GUI/1.0.0": {
         "dependencies": {
           "Avalonia": "11.3.10",
+          "Avalonia.Controls.DataGrid": "11.3.10",
           "Avalonia.Desktop": "11.3.10",
           "Avalonia.Diagnostics": "11.3.10",
           "Avalonia.Fonts.Inter": "11.3.10",
@@ -101,6 +102,17 @@
         },
         "runtime": {
           "lib/net8.0/Avalonia.Controls.ColorPicker.dll": {
+            "assemblyVersion": "11.3.10.0",
+            "fileVersion": "11.3.10.0"
+          }
+        }
+      },
+      "Avalonia.Controls.DataGrid/11.3.10": {
+        "dependencies": {
+          "Avalonia": "11.3.10"
+        },
+        "runtime": {
+          "lib/net8.0/Avalonia.Controls.DataGrid.dll": {
             "assemblyVersion": "11.3.10.0",
             "fileVersion": "11.3.10.0"
           }
@@ -1019,6 +1031,13 @@
       "sha512": "sha512-KRlU3aPinqxcgP2471m73qi+qj+XZ24/d/vPwnpmA0Jy977h8iWDzDafnv4PCv8RTvnyt3duVmGTdxJHMmvoow==",
       "path": "avalonia.controls.colorpicker/11.3.10",
       "hashPath": "avalonia.controls.colorpicker.11.3.10.nupkg.sha512"
+    },
+    "Avalonia.Controls.DataGrid/11.3.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KSwme0XOL8594fFvoQ37s5rnSo9vCKutCpufCEmd0R7x/fRWOjK3g3su1Z3nukgbobryPVjQvZxi/E92DPPYpw==",
+      "path": "avalonia.controls.datagrid/11.3.10",
+      "hashPath": "avalonia.controls.datagrid.11.3.10.nupkg.sha512"
     },
     "Avalonia.Desktop/11.3.10": {
       "type": "package",

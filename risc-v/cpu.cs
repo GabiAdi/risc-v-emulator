@@ -628,6 +628,11 @@ public class Cpu
         if (index > reg.Length) throw new IndexOutOfRangeException();
         reg[index] = value;
     }
+
+    public uint[] get_registers()
+    {
+        return reg;
+    }
     
     public void set_pc(uint address)
     {

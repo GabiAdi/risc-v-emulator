@@ -8,12 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Models\"/>
         <AvaloniaResource Include="Assets\**"/>
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="11.3.10"/>
+        <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.10" />
         <PackageReference Include="Avalonia.Desktop" Version="11.3.10"/>
         <PackageReference Include="Avalonia.ReactiveUI" Version="11.3.8" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.10"/>
@@ -28,5 +28,9 @@
 
     <ItemGroup>
       <ProjectReference Include="..\risc-v\risc-v.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Converters\" />
     </ItemGroup>
 </Project>

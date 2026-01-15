@@ -1,19 +1,34 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Avalonia.Threading;
+using risc_v_GUI.Models;
 using risc_v_GUI.Services;
 
 namespace risc_v_GUI.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public ObservableCollection<string> Output { get; } = new ObservableCollection<string>();
+        private string _outputText = "";
+
+        public string OutputText
+        {
+            get => _outputText;
+            set
+            {
+                _outputText = value;
+                OnPropertyChanged();
+            }
+        }
+        public ObservableCollection<string> Status { get; } = new ObservableCollection<string>();
+        public ObservableCollection<MemoryRow> Memory { get; } = new ObservableCollection<MemoryRow>();
 
         public EmulatorService Emulator { get; }
 
         public MainWindowViewModel(EmulatorService emulator)
         {
             Emulator = emulator ?? throw new System.ArgumentNullException(nameof(emulator));
+            
+            UpdateMemoryView();
 
             Emulator.system_handler.OutputProduced += OnOutputProduced;
             Emulator.system_handler.StatusChanged += OnStatusChanged;
@@ -25,16 +40,78 @@ namespace risc_v_GUI.ViewModels
             {
                 Emulator.cpu.step();
             });
+            UpdateMemoryView();
         }
         
         private void OnOutputProduced(string output)
         {
-            Dispatcher.UIThread.Post(() => Output.Add(output));
+            // Dispatcher.UIThread.Post(() => Output.Add(output));
+            Dispatcher.UIThread.Post(() => OutputText += output);
         }
 
         private void OnStatusChanged(string status)
         {
-            Dispatcher.UIThread.Post(() => Output.Add(status));
+            Dispatcher.UIThread.Post(() => Status.Add(status));
+        }
+        
+        private string GetAsciiRepresentation(uint value)
+        {
+            char[] chars = new char[4];
+            for (int i = 0; i < 4; i++)
+            {
+                byte b = (byte)((value >> (i * 8)) & 0xFF);
+                chars[i] = (b >= 32 && b <= 126) ? (char)b : '.';
+            }
+            return new string(chars);
+        }
+        
+        private string GetRegisterPointer(uint address)
+        {
+            string registers_string = "";
+
+            uint[] regs = Emulator.cpu.get_registers();
+
+            if (Emulator.cpu.get_pc() == address)
+            {
+                registers_string += "PC, ";
+            }
+            
+            for(int i=0; i<regs.Length; i++)
+            {
+                if (regs[i] == address || regs[i] - 1 == address || regs[i] - 2 == address || regs[i] - 3 == address)
+                {
+                    registers_string += $"x{i}, ";
+                }
+            }
+
+            if (registers_string.Length > 2)
+            {
+                registers_string = registers_string.Substring(0, registers_string.Length - 2);
+            }
+            
+            return registers_string;
+        }
+        
+        private void UpdateMemoryView()
+        {
+            uint x=32;
+            if (Emulator.cpu.get_pc() < 32)
+            {
+                x = Emulator.cpu.get_pc();
+            }
+            Memory.Clear();
+            for(uint i=Emulator.cpu.get_pc()-x; i<Emulator.cpu.get_pc()+(64-x); i+=4)
+            {
+                uint value = Emulator.memory.read_word(i);
+                Memory.Add(new MemoryRow()
+                {
+                    Address = (i).ToString("X8"),
+                    Value = value.ToString("X8"),
+                    Ascii = GetAsciiRepresentation(value),
+                    Disassembly = Emulator.disassembler.DisassembleInstruction(value, i),
+                    Register = GetRegisterPointer(i),
+                });                
+            }
         }
     }
 }

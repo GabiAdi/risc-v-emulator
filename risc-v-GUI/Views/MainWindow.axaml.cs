@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using risc_v_GUI.Services;
 using risc_v_GUI.ViewModels;
 using risc_v;
 using SystemHandler = risc_v_GUI.Services.SystemHandler;

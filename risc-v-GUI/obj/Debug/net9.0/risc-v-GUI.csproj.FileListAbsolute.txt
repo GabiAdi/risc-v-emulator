@@ -351,3 +351,4 @@
 /home/user/RiderProjects/risc-v/risc-v-GUI/obj/Debug/net9.0/risc-v-GUI.csproj.Up2Date
 /home/user/RiderProjects/risc-v/risc-v-GUI/obj/Debug/net9.0/risc-v-GUI.genruntimeconfig.cache
 /home/user/RiderProjects/risc-v/risc-v-GUI/obj/Debug/net9.0/ref/risc-v-GUI.dll
+/home/user/RiderProjects/risc-v/risc-v-GUI/bin/Debug/net9.0/Avalonia.Controls.DataGrid.dll

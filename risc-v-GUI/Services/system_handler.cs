@@ -35,8 +35,8 @@ public class SystemHandler
                 }
                 OutputProduced?.Invoke(sb.ToString());
                 break;
-            case 11:
-                OutputProduced?.Invoke(e.args[0].ToString());
+            case 11: // print char
+                OutputProduced?.Invoke(((char)e.args[0]).ToString());
                 break;
             case 10:
             case 93:

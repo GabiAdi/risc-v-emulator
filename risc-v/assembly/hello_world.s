@@ -4,6 +4,8 @@ msg: .string "Hello, World!\n"
 .text
 .globl _start
 _start:
+    li x5, 0x1012
+
     la a0, msg       # Load address of string into a0
     li a7, 4         # Syscall 4 = print string
     ecall            # print "Hello, World!\n"

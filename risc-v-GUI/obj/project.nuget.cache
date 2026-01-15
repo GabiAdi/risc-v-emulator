@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "k1PLQomVBJo=",
+  "dgSpecHash": "uYP0RMEIMFk=",
   "success": true,
   "projectFilePath": "/home/user/RiderProjects/risc-v/risc-v-GUI/risc-v-GUI.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "/home/user/.nuget/packages/avalonia.angle.windows.natives/2.1.25547.20250602/avalonia.angle.windows.natives.2.1.25547.20250602.nupkg.sha512",
     "/home/user/.nuget/packages/avalonia.buildservices/11.3.2/avalonia.buildservices.11.3.2.nupkg.sha512",
     "/home/user/.nuget/packages/avalonia.controls.colorpicker/11.3.10/avalonia.controls.colorpicker.11.3.10.nupkg.sha512",
+    "/home/user/.nuget/packages/avalonia.controls.datagrid/11.3.10/avalonia.controls.datagrid.11.3.10.nupkg.sha512",
     "/home/user/.nuget/packages/avalonia.desktop/11.3.10/avalonia.desktop.11.3.10.nupkg.sha512",
     "/home/user/.nuget/packages/avalonia.diagnostics/11.3.10/avalonia.diagnostics.11.3.10.nupkg.sha512",
     "/home/user/.nuget/packages/avalonia.fonts.inter/11.3.10/avalonia.fonts.inter.11.3.10.nupkg.sha512",
