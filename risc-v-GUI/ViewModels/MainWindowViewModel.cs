@@ -21,6 +21,7 @@ namespace risc_v_GUI.ViewModels
         }
         public ObservableCollection<string> Status { get; } = new ObservableCollection<string>();
         public ObservableCollection<MemoryRow> Memory { get; } = new ObservableCollection<MemoryRow>();
+        public ObservableCollection<RegisterRow> Registers { get; } = new ObservableCollection<RegisterRow>();
 
         public EmulatorService Emulator { get; }
 
@@ -29,6 +30,7 @@ namespace risc_v_GUI.ViewModels
             Emulator = emulator ?? throw new System.ArgumentNullException(nameof(emulator));
             
             UpdateMemoryView();
+            UpdateRegistersView();
 
             Emulator.system_handler.OutputProduced += OnOutputProduced;
             Emulator.system_handler.StatusChanged += OnStatusChanged;
@@ -41,6 +43,7 @@ namespace risc_v_GUI.ViewModels
                 Emulator.cpu.step();
             });
             UpdateMemoryView();
+            UpdateRegistersView();
         }
         
         private void OnOutputProduced(string output)
@@ -90,6 +93,25 @@ namespace risc_v_GUI.ViewModels
             }
             
             return registers_string;
+        }
+
+        private void UpdateRegistersView()
+        {
+            Registers.Clear();
+            uint[] regs = Emulator.cpu.get_registers();
+            Registers.Add(new RegisterRow()
+            {
+                Register = "PC",
+                Value = Emulator.cpu.get_pc().ToString("X8"),
+            });
+            for (int i = 0; i < regs.Length; i++)
+            {
+                Registers.Add(new RegisterRow()
+                {
+                    Register = $"x{i}",
+                    Value = regs[i].ToString("X8"),
+                });
+            }
         }
         
         private void UpdateMemoryView()

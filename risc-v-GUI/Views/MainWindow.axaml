@@ -8,19 +8,24 @@
         Width="1200" Height="800"
         Background="#FF1E1E1E">
 
-    <Grid Margin="20" RowDefinitions="Auto,200,*" ColumnDefinitions="500,*">
+    
+    <LayoutTransformControl>
+        <LayoutTransformControl.LayoutTransform>
+            <ScaleTransform ScaleX="0.7" ScaleY="0.85"></ScaleTransform>
+        </LayoutTransformControl.LayoutTransform>
+        
+        <Grid Margin="20" RowDefinitions="Auto,300,400,100" ColumnDefinitions="800,*">
 
         <Button Grid.ColumnSpan="2" Grid.Row="0" Content="Step" Click="step" Margin="5"/>
 
         <TextBox Grid.Row="1" Grid.Column="0" FontFamily="Consolas" IsReadOnly="True" AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding OutputText}"/>
-        
-        <ListBox Margin="5" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Status}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding}" FontFamily="Consolas"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+      
+        <DataGrid Grid.Row="1" Grid.Column="1" Foreground="White" Margin="5" ItemsSource="{Binding Registers}" IsReadOnly="True" AutoGenerateColumns="False" GridLinesVisibility="All" FontFamily="Consolas" RowHeight="22">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Register" Binding="{Binding Register}" Width="200"/>
+                <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
         
         <DataGrid  Grid.ColumnSpan="2" Grid.Row="2" Foreground="White" Margin="5" ItemsSource="{Binding Memory}" IsReadOnly="True" AutoGenerateColumns="False"  GridLinesVisibility="All" FontFamily="Consolas" RowHeight="22">
             <DataGrid.Columns>
@@ -31,6 +36,15 @@
                 <DataGridTextColumn Header="Ascii" Binding="{Binding Ascii}" Width="100"/>
             </DataGrid.Columns>
         </DataGrid>
+        
+        <ListBox Margin="5" Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{Binding Status}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" FontFamily="Consolas"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
     </Grid>
+    </LayoutTransformControl>
 </Window>
