@@ -4,12 +4,47 @@ namespace risc_v;
 
 public class Cpu
 {
+    private const ushort CSR_MSTATUS  = 0x300;
+    private const ushort CSR_MIE      = 0x304;
+    private const ushort CSR_MTVEC    = 0x305;
+    private const ushort CSR_MSCRATCH = 0x340;
+    private const ushort CSR_MEPC     = 0x341;
+    private const ushort CSR_MCAUSE   = 0x342;
+    private const ushort CSR_MTVAL    = 0x343;
+    private const ushort CSR_MIP      = 0x344;
+    
+    private const uint MSTATUS_MIE  = 1u << 3;
+    private const uint MSTATUS_MPIE = 1u << 7;
+
+    private const uint MIE_MSIE = 1u << 3;
+    private const uint MIE_MTIE = 1u << 7;
+    private const uint MIE_MEIE = 1u << 11;
+
+
     private enum OpType
     {
         LR,
         SC,
         AMO,
+        CSR,
         OTHER,
+    }
+    private struct CsrIns
+    {
+        public int instruction;
+        public uint val_rs1;
+        public uint csr;
+        public int rd;
+        public uint zimm;
+        
+        public CsrIns(int instruction, uint val_rs1, uint csr, int rd, uint zimm)
+        {
+            this.instruction = instruction;
+            this.val_rs1 = val_rs1;
+            this.csr = csr;
+            this.rd = rd;
+            this.zimm = zimm;
+        }
     }
     private struct AtomicIns
     {
@@ -56,6 +91,8 @@ public class Cpu
     
     private struct ExecResult
     {
+        public uint instruction; // Original instruction word
+        
         // Register write
         public int dest;         // Destination register number (0 = none)
         public uint result;      // Value to write to that register
@@ -68,8 +105,12 @@ public class Cpu
         public uint mem_write_val;
         public int mem_width;     // 1=byte, 2=half, 4=word (optional)
         
-        // For atomics
+        // For atomics / CSRs
+        public uint csr;          // Destination CSR register (0 = none)
+        public int rs1;
+        public uint val_rs1;
         public uint val_rs2;
+        public int funct3;
         public int funct7; 
         public OpType op;
 
@@ -79,7 +120,9 @@ public class Cpu
 
         public ExecResult()
         {
+            instruction = 0;
             dest = 0;
+            csr = 0;
             result = 0;
             write_to_memory = false;
             read_from_memory = false;
@@ -89,10 +132,26 @@ public class Cpu
             mem_width = 0;
             branch_taken = false;
             new_pc = 0;
+            funct3 = 0;
             funct7 = 0;
             op = OpType.OTHER;
+            rs1 = 0;
+            val_rs1 = 0;
             val_rs2 = 0;
         }
+    }
+
+    private struct Csrs
+    {
+        public uint MStatus;    // 0x300
+        public uint Mie;        // 0x304
+        public uint Mip;        // 0x344
+        
+        public uint Mtvec;      // 0x305
+        public uint Mepc;       // 0x341
+        public uint Mcause;     // 0x342
+        public uint Mtval;      // 0x343
+        public uint Mscratch;   // 0x340
     }
     
     private bool halted;
@@ -100,6 +159,8 @@ public class Cpu
     private uint[] reg = new uint[32]; // 32 General registers
     private uint pc; // Program counter
     private uint current_ins; // Current instruction being executed
+
+    private Csrs csrs; // Control and Status Registers
     
     private uint reservation_addr; // Reserved address for atomic operations
     private bool reservation_valid; // Is the reservation valid?
@@ -139,7 +200,7 @@ public class Cpu
             case 0x13: // I-type (ADDI, ANDI, ORI, etc.)
             case 0x03: // Loads
             case 0x67: // JALR
-            case 0x73:
+            case 0x73: // SYSTEM
                 imm = (int)instr >> 20; // bits [31:20] -> sign-extended
                 break;
 
@@ -184,6 +245,8 @@ public class Cpu
     private ExecResult execute(DecIns d, uint pc)
     {
         ExecResult r = new ExecResult();
+
+        r.instruction = d.ins;
 
         switch (d.opcode)
         {
@@ -498,16 +561,70 @@ public class Cpu
                 break;
             
             case 0x73: // SYSTEM
-                if (d.imm == 0) // ECALL
+                if (d.imm == 0 && d.funct3 == 0x0) // ECALL
                 {
                     uint syscall = get_register(17);
                     uint[] args = new uint[7];
                     Array.Copy(reg, 10, args, 0, 7);
                     on_syscall(syscall, args);
                 }
-                else if (d.imm == 1) // EBREAK
+                else if (d.imm == 1 && d.funct3 == 0x0) // EBREAK
                 {
                     on_break(pc);
+                }
+                else if (d.funct3 == 0x0 && d.imm == 0x105) // WFI
+                {
+                    // Not implemented
+                }
+                else if (d.funct3 == 0x0 && d.imm == 0x302) // MRET
+                {
+                    // Not implemented
+                }
+                else if (d.funct3 == 0x1) // CSRRW
+                {
+                    r.op = OpType.CSR;
+                    r.dest = d.rd;
+                    r.csr = d.imm;
+                    r.val_rs1 = d.val_rs1;
+                    r.funct3 = d.funct3;
+                }
+                else if (d.funct3 == 0x2) // CSRRS
+                {
+                    r.op = OpType.CSR;
+                    r.dest = d.rd;
+                    r.rs1 = d.rs1;
+                    r.csr = d.imm;
+                    r.val_rs1 = d.val_rs1;
+                    r.funct3 = d.funct3;
+                }
+                else if (d.funct3 == 0x3) // CSRRC
+                {
+                    r.op = OpType.CSR;
+                    r.dest = d.rd;
+                    r.csr = d.imm;
+                    r.val_rs1 = d.val_rs1;
+                    r.funct3 = d.funct3;
+                }
+                else if (d.funct3 == 0x5) // CSRRWI
+                {
+                    r.op = OpType.CSR;
+                    r.dest = d.rd;
+                    r.csr = d.imm;
+                    r.funct3 = d.funct3;
+                }
+                else if (d.funct3 == 0x6) // CSRRSI
+                {
+                    r.op = OpType.CSR;
+                    r.dest = d.rd;
+                    r.csr = d.imm;
+                    r.funct3 = d.funct3;
+                }
+                else if (d.funct3 == 0x7) // CSRRCI
+                {
+                    r.op = OpType.CSR;
+                    r.dest = d.rd;
+                    r.csr = d.imm;
+                    r.funct3 = d.funct3;
                 }
                 break;
             default:
@@ -515,6 +632,117 @@ public class Cpu
                 break;
         }
         return r;
+    }
+    
+    private uint get_csr(uint csr)
+    {
+        return csr switch
+        {
+            CSR_MSTATUS  => csrs.MStatus,
+            CSR_MIE      => csrs.Mie,
+            CSR_MIP      => csrs.Mip,
+            CSR_MTVEC    => csrs.Mtvec,
+            CSR_MEPC     => csrs.Mepc,
+            CSR_MCAUSE   => csrs.Mcause,
+            CSR_MTVAL    => csrs.Mtval,
+            CSR_MSCRATCH => csrs.Mscratch,
+            _ => throw new Exception($"Read from unsupported CSR 0x{csr:X3}")
+        };
+    }
+    
+    private void set_csr(uint csr, uint value)
+    {
+        switch (csr)
+        {
+            case CSR_MSTATUS:
+                // Only allow MIE and MPIE for now
+                csrs.MStatus =
+                    value & (MSTATUS_MIE | MSTATUS_MPIE);
+                break;
+
+            case CSR_MIE:
+                csrs.Mie =
+                    value & (MIE_MSIE | MIE_MTIE | MIE_MEIE);
+                break;
+
+            case CSR_MIP:
+                // Usually read-only
+                csrs.Mip =
+                    value & (MIE_MSIE | MIE_MTIE | MIE_MEIE);
+                break;
+
+            case CSR_MTVEC:
+                // Must be aligned, mode bits ignored
+                csrs.Mtvec = value & ~0x3u;
+                break;
+
+            case CSR_MEPC:
+                csrs.Mepc = value;
+                break;
+
+            case CSR_MCAUSE:
+                // mcause is typically read-only
+                break;
+
+            case CSR_MTVAL:
+                csrs.Mtval = value;
+                break;
+
+            case CSR_MSCRATCH:
+                csrs.Mscratch = value;
+                break;
+
+            default:
+                throw new Exception($"Write to unsupported CSR 0x{csr:X3}");
+        }
+    }
+
+
+    private void csr_op(CsrIns c)
+    {
+        uint old_csr = get_csr(c.csr);
+        switch (c.instruction)
+        {
+            case 0x1: // CSRRW
+                set_csr(c.csr, c.val_rs1);
+                if (c.rd != 0)
+                    set_reg(c.rd, old_csr);
+                break;
+            
+            case 0x2: // CSRRS
+                if(c.val_rs1 != 0)
+                    set_csr(c.csr, old_csr | c.val_rs1);
+                if (c.rd != 0)
+                    set_reg(c.rd, old_csr);
+                break;
+            
+            case 0x3: // CSRRC
+                if(c.val_rs1 != 0)
+                    set_csr(c.csr, old_csr & ~c.val_rs1);
+                if (c.rd != 0)
+                    set_reg(c.rd, old_csr);
+                break;
+            
+            case 0x5: // CSRRWI
+                set_csr(c.csr, c.zimm);
+                if (c.rd != 0)
+                    set_reg(c.rd, old_csr);
+                break;
+            
+            case 0x6: // CSRRSI
+                if(c.zimm != 0)
+                    set_csr(c.csr, old_csr | c.zimm);
+                if (c.rd != 0)
+                    set_reg(c.rd, old_csr);
+                break;
+                
+            case 0x7: // CSRRCI
+                if(c.zimm != 0)
+                    set_csr(c.csr, old_csr & ~c.zimm);
+                if(c.rd != 0)
+                    set_reg(c.rd, old_csr);
+                break;
+        }
     }
 
     private uint atomic_op(AtomicIns a)
@@ -579,6 +807,10 @@ public class Cpu
             
             r.result = old_val;
         }
+        else if (r.op == OpType.CSR)
+        {
+            csr_op(new CsrIns(r.funct3, r.val_rs1, r.csr, r.dest, (r.instruction >> 15) & 0x1F));
+        }
         else if (r.op == OpType.OTHER)
         {
             if (r.read_from_memory) {
@@ -613,6 +845,8 @@ public class Cpu
         pc = 0;
         reservation_addr = 0;
         reservation_valid = false;
+
+        csrs = new Csrs();
     }
 
     public uint get_register(int index)
