@@ -19,8 +19,7 @@ public class Cpu
     private const uint MIE_MSIE = 1u << 3;
     private const uint MIE_MTIE = 1u << 7;
     private const uint MIE_MEIE = 1u << 11;
-
-
+    
     private enum OpType
     {
         LR,
@@ -29,6 +28,7 @@ public class Cpu
         CSR,
         OTHER,
     }
+    
     private struct CsrIns
     {
         public int instruction;
@@ -46,6 +46,7 @@ public class Cpu
             this.zimm = zimm;
         }
     }
+    
     private struct AtomicIns
     {
         public int instruction;
@@ -59,6 +60,7 @@ public class Cpu
             this.rs2 = rs2;
         }
     }
+    
     private struct DecIns // Decoded instruction
     {
         public uint ins;    // Instruction word
@@ -161,6 +163,7 @@ public class Cpu
     private uint current_ins; // Current instruction being executed
 
     private Csrs csrs; // Control and Status Registers
+    private bool waiting_for_interrupt;
     
     private uint reservation_addr; // Reserved address for atomic operations
     private bool reservation_valid; // Is the reservation valid?
@@ -574,10 +577,13 @@ public class Cpu
                 }
                 else if (d.funct3 == 0x0 && d.imm == 0x105) // WFI
                 {
-                    // Not implemented
+                    r.op = OpType.CSR;
+                    r.funct3 = (int)d.imm;
                 }
                 else if (d.funct3 == 0x0 && d.imm == 0x302) // MRET
                 {
+                    r.op = OpType.CSR;
+                    r.funct3 = (int)d.imm;
                     // Not implemented
                 }
                 else if (d.funct3 == 0x1) // CSRRW
@@ -632,6 +638,54 @@ public class Cpu
                 break;
         }
         return r;
+    }
+    
+    public void external_interrupt()
+    {
+        csrs.Mip |= MIE_MEIE;
+    }
+    
+    public void clear_external_interrupt()
+    {
+        csrs.Mip &= ~MIE_MEIE;
+    }
+
+    private bool interrupt_pending()
+    {
+        bool global_enabled = (csrs.MStatus & MSTATUS_MIE) != 0;
+        bool external_enabled = (csrs.Mie & MIE_MEIE) != 0;
+        bool external_pending = (csrs.Mip & MIE_MEIE) != 0;
+
+        return global_enabled && external_enabled && external_pending;
+    }
+
+
+    private uint get_interrupt_cause()
+    {
+        uint pending = csrs.Mie & csrs.Mip;
+        if ((pending & MIE_MEIE) != 0) return 11; // Machine external interrupt
+        if ((pending & MIE_MTIE) != 0) return 7;  // Machine timer interrupt
+        if ((pending & MIE_MSIE) != 0) return 3;  // Machine software interrupt
+        
+        throw new Exception("Invalid interrupt cause");
+    }
+
+    private void handle_interrupt(uint interrupt_code)
+    {
+        waiting_for_interrupt = false;
+        csrs.Mepc = pc & ~0x3u;
+        csrs.Mcause = (1u << 31) | interrupt_code;
+        
+        bool mie = (csrs.MStatus & MSTATUS_MIE) != 0;
+        
+        if(mie) csrs.MStatus |= MSTATUS_MPIE;
+        else csrs.MStatus &= ~MSTATUS_MPIE;
+        
+        csrs.MStatus &= ~MSTATUS_MIE;
+        
+        csrs.Mtval = 0;
+        
+        pc = csrs.Mtvec & ~0x3u;
     }
     
     private uint get_csr(uint csr)
@@ -700,7 +754,9 @@ public class Cpu
 
     private void csr_op(CsrIns c)
     {
-        uint old_csr = get_csr(c.csr);
+        uint old_csr = 0;
+        if(c.instruction != 0x302 && c.instruction != 0x105) old_csr = get_csr(c.csr);
+        
         switch (c.instruction)
         {
             case 0x1: // CSRRW
@@ -741,6 +797,20 @@ public class Cpu
                     set_csr(c.csr, old_csr & ~c.zimm);
                 if(c.rd != 0)
                     set_reg(c.rd, old_csr);
+                break;
+            
+            case 0x105: // WFI
+                waiting_for_interrupt = true;
+                break;
+            
+            case 0x302: // MRET
+                bool mpie = (csrs.MStatus & MSTATUS_MPIE) != 0;
+                if(mpie) csrs.MStatus |= MSTATUS_MIE;
+                else csrs.MStatus &= ~MSTATUS_MIE;
+                
+                csrs.MStatus |= MSTATUS_MPIE;
+
+                pc = csrs.Mepc;
                 break;
         }
     }
@@ -822,7 +892,7 @@ public class Cpu
             }
         }
         
-        if (r.dest != 0) set_reg(r.dest, r.result); // Cannot write to 0x0
+        if (r.dest != 0 && r.op != OpType.CSR) set_reg(r.dest, r.result); // Cannot write to 0x0
         if (r.branch_taken) pc = r.new_pc;
     }
 
@@ -846,6 +916,7 @@ public class Cpu
         reservation_addr = 0;
         reservation_valid = false;
 
+        waiting_for_interrupt = false;
         csrs = new Csrs();
     }
 
@@ -896,6 +967,8 @@ public class Cpu
     public void step()
     {
         if (halted) return;
+        if(interrupt_pending()) handle_interrupt(get_interrupt_cause());
+        // if (waiting_for_interrupt) return;
         
         current_ins = bus.read(pc, 4); // Fetch
         uint current_pc = pc;

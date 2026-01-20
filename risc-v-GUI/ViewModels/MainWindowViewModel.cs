@@ -46,6 +46,26 @@ namespace risc_v_GUI.ViewModels
             UpdateRegistersView();
         }
         
+        public async Task interrupt()
+        {
+            await Task.Run(() =>
+            {
+                Emulator.cpu.external_interrupt();
+            });
+            UpdateMemoryView();
+            UpdateRegistersView();
+        }
+        
+        public async Task clear_interrupt()
+        {
+            await Task.Run(() =>
+            {
+                Emulator.cpu.clear_external_interrupt();
+            });
+            UpdateMemoryView();
+            UpdateRegistersView();
+        }
+        
         private void OnOutputProduced(string output)
         {
             // Dispatcher.UIThread.Post(() => Output.Add(output));
