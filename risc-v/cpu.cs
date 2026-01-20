@@ -26,6 +26,7 @@ public class Cpu
         SC,
         AMO,
         CSR,
+        INTERRUPT,
         OTHER,
     }
     
@@ -107,13 +108,14 @@ public class Cpu
         public uint mem_write_val;
         public int mem_width;     // 1=byte, 2=half, 4=word (optional)
         
-        // For atomics / CSRs
+        // For atomics / CSRs / interrupts
         public uint csr;          // Destination CSR register (0 = none)
         public int rs1;
         public uint val_rs1;
         public uint val_rs2;
         public int funct3;
-        public int funct7; 
+        public int funct7;
+        public uint imm;
         public OpType op;
 
         // Control flow
@@ -577,14 +579,13 @@ public class Cpu
                 }
                 else if (d.funct3 == 0x0 && d.imm == 0x105) // WFI
                 {
-                    r.op = OpType.CSR;
-                    r.funct3 = (int)d.imm;
+                    r.op = OpType.INTERRUPT;
+                    r.imm = d.imm;
                 }
                 else if (d.funct3 == 0x0 && d.imm == 0x302) // MRET
                 {
-                    r.op = OpType.CSR;
-                    r.funct3 = (int)d.imm;
-                    // Not implemented
+                    r.op = OpType.INTERRUPT;
+                    r.imm = d.imm;
                 }
                 else if (d.funct3 == 0x1) // CSRRW
                 {
@@ -754,8 +755,7 @@ public class Cpu
 
     private void csr_op(CsrIns c)
     {
-        uint old_csr = 0;
-        if(c.instruction != 0x302 && c.instruction != 0x105) old_csr = get_csr(c.csr);
+        uint old_csr = get_csr(c.csr);
         
         switch (c.instruction)
         {
@@ -798,7 +798,13 @@ public class Cpu
                 if(c.rd != 0)
                     set_reg(c.rd, old_csr);
                 break;
-            
+        }
+    }
+
+    private void interrupt_op(uint instruction)
+    {
+        switch (instruction)
+        {
             case 0x105: // WFI
                 waiting_for_interrupt = true;
                 break;
@@ -881,6 +887,10 @@ public class Cpu
         {
             csr_op(new CsrIns(r.funct3, r.val_rs1, r.csr, r.dest, (r.instruction >> 15) & 0x1F));
         }
+        else if (r.op == OpType.INTERRUPT)
+        {
+            interrupt_op(r.imm);
+        }
         else if (r.op == OpType.OTHER)
         {
             if (r.read_from_memory) {
@@ -892,7 +902,7 @@ public class Cpu
             }
         }
         
-        if (r.dest != 0 && r.op != OpType.CSR) set_reg(r.dest, r.result); // Cannot write to 0x0
+        if (r.dest != 0 && r.op != OpType.CSR && r.op != OpType.INTERRUPT) set_reg(r.dest, r.result); // Cannot write to 0x0
         if (r.branch_taken) pc = r.new_pc;
     }
 
