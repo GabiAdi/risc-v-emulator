@@ -23,7 +23,7 @@ public class SystemHandler
         switch (e.syscall_number) 
         {
             case 1: // print int
-                OutputProduced?.Invoke(e.args[0].ToString());
+                OutputProduced?.Invoke(DateTime.Now + ": " + e.args[0].ToString());
                 break;
             case 4: // print string
                 uint addr = e.args[0] - word_start;
@@ -33,10 +33,10 @@ public class SystemHandler
                 {
                     sb.Append((char)b);
                 }
-                OutputProduced?.Invoke(sb.ToString());
+                OutputProduced?.Invoke(DateTime.Now + ": " + sb.ToString());
                 break;
             case 11: // print char
-                OutputProduced?.Invoke(((char)e.args[0]).ToString());
+                OutputProduced?.Invoke(DateTime.Now + ": " + ((char)e.args[0]).ToString());
                 break;
             case 10:
             case 93:

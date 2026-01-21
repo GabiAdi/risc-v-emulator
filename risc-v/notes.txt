@@ -15,16 +15,39 @@ H - Halfword    16b
 W - Word        32b
 D - Doubleword  64b
 
-Added instructions:
-
-ANDI
-ORI
-XORI
-ADD
-SUB
-AND
-OR
-XOR
-SW
-SH
-SB
++-----+-------+-------------------------------+
+| x   | Name  | Description                   |
++-----+-------+-------------------------------+
+| x0  | zero  | Hardwired zero (always 0)     |
+| x1  | ra    | Return address                |
+| x2  | sp    | Stack pointer                 |
+| x3  | gp    | Global pointer                |
+| x4  | tp    | Thread pointer                |
+| x5  | t0    | Temporary / scratch (caller)  |
+| x6  | t1    | Temporary / scratch (caller)  |
+| x7  | t2    | Temporary / scratch (caller)  |
+| x8  | s0/fp | Saved register / frame ptr    |
+| x9  | s1    | Saved register (callee)       |
+| x10 | a0    | Function arg / return value   |
+| x11 | a1    | Function arg / return value   |
+| x12 | a2    | Function argument             |
+| x13 | a3    | Function argument             |
+| x14 | a4    | Function argument             |
+| x15 | a5    | Function argument             |
+| x16 | a6    | Function argument             |
+| x17 | a7    | Function arg / syscall number |
+| x18 | s2    | Saved register (callee)       |
+| x19 | s3    | Saved register (callee)       |
+| x20 | s4    | Saved register (callee)       |
+| x21 | s5    | Saved register (callee)       |
+| x22 | s6    | Saved register (callee)       |
+| x23 | s7    | Saved register (callee)       |
+| x24 | s8    | Saved register (callee)       |
+| x25 | s9    | Saved register (callee)       |
+| x26 | s10   | Saved register (callee)       |
+| x27 | s11   | Saved register (callee)       |
+| x28 | t3    | Temporary / scratch (caller)  |
+| x29 | t4    | Temporary / scratch (caller)  |
+| x30 | t5    | Temporary / scratch (caller)  |
+| x31 | t6    | Temporary / scratch (caller)  |
++-----+-------+-------------------------------+

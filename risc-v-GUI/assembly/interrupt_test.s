@@ -24,6 +24,7 @@ _start:
 loop:
     addi t1, t1, 1
     sw t1, 0(t2)       # store counter in memory
+    # wfi
     j loop
 
 # ----------------------------

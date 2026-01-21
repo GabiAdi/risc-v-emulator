@@ -2,32 +2,62 @@ namespace risc_v;
 
 public class Bus
 {
-    private Memory mem;
+    private List<IMemoryDevice> devices = new List<IMemoryDevice>();
 
-    public Bus(Memory mem)
+    public Bus(List<IMemoryDevice> devices)
     {
-        this.mem = mem;
+        this.devices = devices;
+
+        foreach (IMemoryDevice d1 in devices)
+        {
+            foreach (IMemoryDevice d2 in devices)
+            {
+                if(d1 != d2)
+                {
+                    if (d1.start_addr < d2.end_addr && d2.start_addr < d1.end_addr)
+                    {
+                        throw new Exception("Memory devices have overlapping address ranges");
+                    }
+                }
+            }
+        }
+    }
+
+    private IMemoryDevice get_device(uint addr)
+    {
+        foreach (IMemoryDevice device in devices)
+        {
+            if(addr >= device.start_addr && addr < device.end_addr)
+            {
+                return device;
+            }
+        }
+        throw new Exception("No device");
     }
 
     public uint read(uint addr, int size)
     {
+        IMemoryDevice device = get_device(addr);
+        
         if (size == 1)
-            return mem.read_byte(addr);
+            return device.read_byte(addr-device.start_addr);
         if (size == 2)
-            return mem.read_halfword(addr);
+            return device.read_halfword(addr-device.start_addr);
         if (size == 4)
-            return mem.read_word(addr);
+            return device.read_word(addr-device.start_addr);
         throw new Exception($"Bus size {size} not supported");
     }
 
     public void write(uint addr, uint value, int size)
     {
+        IMemoryDevice device = get_device(addr);
+        
         if (size == 1)
-            mem.write_byte(addr, value);
+            device.write_byte(addr-device.start_addr, value);
         else if (size == 2)
-            mem.write_halfword(addr, value);
+            device.write_halfword(addr-device.start_addr, value);
         else if (size == 4)
-            mem.write_word(addr, value);
+            device.write_word(addr-device.start_addr, value);
         else
             throw new Exception($"Bus size {size} not supported");
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using risc_v_GUI.Models;
@@ -34,6 +35,7 @@ namespace risc_v_GUI.ViewModels
 
             Emulator.system_handler.OutputProduced += OnOutputProduced;
             Emulator.system_handler.StatusChanged += OnStatusChanged;
+            Emulator.devices.OfType<IODevice>().First().OutputWritten += io_written;
         }
 
         public async Task StepAsync()
@@ -66,10 +68,25 @@ namespace risc_v_GUI.ViewModels
             UpdateRegistersView();
         }
         
+        public async Task run_until_break()
+        {
+            await Task.Run(() =>
+            {
+                Emulator.cpu.run_until_halt();
+                Emulator.cpu.resume();
+            });
+            UpdateMemoryView();
+            UpdateRegistersView();
+        }
+        
+        private void io_written(string output)
+        {
+            Dispatcher.UIThread.Post(() => OutputText += output);
+        }
+        
         private void OnOutputProduced(string output)
         {
-            // Dispatcher.UIThread.Post(() => Output.Add(output));
-            Dispatcher.UIThread.Post(() => OutputText += output);
+            Dispatcher.UIThread.Post(() => Status.Add(output));
         }
 
         private void OnStatusChanged(string status)

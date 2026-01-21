@@ -17,9 +17,31 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
+    private async void run_until_break(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is not MainWindowViewModel viewModel) return;
+        
+        if (sender is Button b1)
+            b1.IsEnabled = false;
+        
+        try
+        {
+            await viewModel.run_until_break();
+        }
+        finally
+        {
+            if (sender is Button b2)
+                b2.IsEnabled = true;
+        }
+    }
+
     private async void interrupt(object? sender, RoutedEventArgs e)
     {
         if (DataContext is not MainWindowViewModel viewModel) return;
+        
+        if (sender is Button b1)
+            b1.IsEnabled = false;
+        
         try
         {
             await viewModel.interrupt();
@@ -34,6 +56,10 @@ public partial class MainWindow : Window
     private async void clear_interrupt(object? sender, RoutedEventArgs e)
     {
         if (DataContext is not MainWindowViewModel viewModel) return;
+        
+        if (sender is Button b1)
+            b1.IsEnabled = false;
+        
         try
         {
             await viewModel.clear_interrupt();

@@ -1,2 +1,3 @@
-riscv32-linux-gnu-as -march=rv32imazicsr -o program.o interrupt_test.s
-riscv32-linux-gnu-ld -T linker.ld -o program program.o # Linker uses linker.ld to set absolute addresses
+riscv32-linux-gnu-as -march=rv32imazicsr -o bios.o bios.s
+riscv32-linux-gnu-as -march=rv32imazicsr -o program.o io_test.s
+riscv32-linux-gnu-ld -T linker.ld bios.o program.o -o program

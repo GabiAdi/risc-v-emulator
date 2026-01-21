@@ -1,14 +1,13 @@
-.data
-msg: .string "Hello, World!\n"
+.section .data
+msg: 
+    .string "Hello, World!\n\0"
+    .byte 0
 
 .text
 .globl _start
 _start:
-    li x25, 0x1014
-
-    la a0, msg       # Load address of string into a0
-    li a7, 4         # Syscall 4 = print string
-    ecall            # print "Hello, World!\n"
+    la a0, msg    
+    jal ra, bios_puts
 
     ebreak           # Trigger a breakpoint for debugging
 

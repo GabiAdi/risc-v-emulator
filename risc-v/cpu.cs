@@ -158,7 +158,8 @@ public class Cpu
         public uint Mscratch;   // 0x340
     }
     
-    private bool halted;
+    public bool halted { get; private set; }
+    public bool halt_on_break { get; set; }
     
     private uint[] reg = new uint[32]; // 32 General registers
     private uint pc; // Program counter
@@ -183,6 +184,7 @@ public class Cpu
     private void on_break(uint pc)
     {
         break_occured?.Invoke(this, new BreakEventArgs(pc));
+        halted = halt_on_break;
     }
     
     private uint get_reg(int index)
@@ -920,6 +922,7 @@ public class Cpu
         this.bus = bus;
 
         halted = false;
+        halt_on_break = false;
         
         reg[0] = 0; // Register 0x0 is always zero and cannot be written to
         pc = 0;
@@ -978,7 +981,7 @@ public class Cpu
     {
         if (halted) return;
         if(interrupt_pending()) handle_interrupt(get_interrupt_cause());
-        // if (waiting_for_interrupt) return;
+        if (waiting_for_interrupt) return;
         
         current_ins = bus.read(pc, 4); // Fetch
         uint current_pc = pc;
@@ -987,5 +990,13 @@ public class Cpu
         var decoded = decode(current_ins);
         var exec = execute(decoded, current_pc);
         write_back(exec);
+    }
+
+    public void run_until_halt()
+    {
+        while (!halted)
+        {
+            step();
+        }
     }
 }

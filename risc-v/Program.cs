@@ -36,11 +36,16 @@ ElfLoader loader = new ElfLoader(program_path);
 
 Dictionary<uint, string> symbols = loader.GetSymbols();
 
-Memory memory = new Memory(1024*1024*300); // 300 MB
+Memory memory = new Memory(1024*1024*300, 0x0); // 300 MB
+IODevice io_device = new IODevice(1024, 0x20000000); // I/O device at 0x20000000
 
 loader.WriteToMem(memory);
 
-Bus bus = new Bus(memory);
+List<IMemoryDevice> devices = new List<IMemoryDevice>();
+devices.Add(memory);
+devices.Add(io_device);
+
+Bus bus = new Bus(devices);
 Cpu cpu = new Cpu(bus);
 
 cpu.set_pc(loader.GetFirstExecutableAddress());

@@ -1,12 +1,19 @@
 namespace risc_v;
 
-public class Memory
+public class Memory : IMemoryDevice
 {
     private byte[] mem;
+    public uint size { get; }
+    public uint start_addr { get; }
+    public uint end_addr { get; }
 
-    public Memory(int size)
+    public Memory(uint size, uint start_addr)
     {
         mem = new byte[size];
+        
+        this.size = size;
+        this.start_addr = start_addr;
+        this.end_addr = start_addr + size;
     }
 
     public uint read_word(uint addr)
