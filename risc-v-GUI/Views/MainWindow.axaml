@@ -16,11 +16,13 @@
         
         <Grid Margin="20" RowDefinitions="Auto,300,400,100" ColumnDefinitions="800,*">
 
-        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpacing="2" ColumnDefinitions="100, 150, 100, 150">
+        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpacing="2" ColumnDefinitions="100, 150, 100, 150, 100, 100">
             <Button Grid.Column="0" Grid.Row="0" Content="Step" Click="step" Margin="5" Name="bt_step"/>
             <Button Grid.Column="1" Grid.Row="0" Content="Run until break" Click="run_until_break" Margin="5" Name="bt_run"/>
             <Button Grid.Column="2" Grid.Row="0" Content="Interrupt" Click="interrupt" Margin="5" Name="bt_int"/>
             <Button Grid.Column="3" Grid.Row="0" Content="Clear interrupt" Click="clear_interrupt" Margin="5" Name="bt_clr"/>
+            <Button Grid.Column="4" Grid.Row="0" Content="Halt" Click="halt" Margin="5" Name="bt_halt"/>
+            <Button Grid.Column="5" Grid.Row="0" Content="Unhalt" Click="unhalt" Margin="5" Name="bt_unhalt"/>
         </Grid>
 
 

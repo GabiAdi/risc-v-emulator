@@ -921,6 +921,8 @@ public class Cpu
     {
         this.bus = bus;
 
+        bus.clear_interrupt += clear_external_interrupt;
+
         halted = false;
         halt_on_break = false;
         

@@ -4,6 +4,7 @@
     .globl bios_putw
     .globl bios_putu
     .globl bios_puts
+    .globl bios_clear_interrupt
 
 # MMIO console
 .equ MMIO_CONSOLE, 0x20000000
@@ -83,6 +84,18 @@ bios_putu:
     addi t1, t1, -1
     bnez t1, 2b
 
+    ret
+    
+# --------------------------------------------------
+# bios_clear_interrupt()
+# Clears the interrupt in the BIOS console
+# Clobbers: t0, t1
+# --------------------------------------------------
+bios_clear_interrupt:
+    li   t0, MMIO_CONSOLE
+    li   t1, 0x00000000
+    sw   t1, 4(t0)      # write to interrupt clear register
+    
     ret
 
     .section .bss

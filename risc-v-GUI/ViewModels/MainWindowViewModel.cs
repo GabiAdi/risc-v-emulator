@@ -37,6 +37,22 @@ namespace risc_v_GUI.ViewModels
             Emulator.system_handler.StatusChanged += OnStatusChanged;
             Emulator.devices.OfType<IODevice>().First().OutputWritten += io_written;
         }
+        
+        public async Task halt()
+        {
+            await Task.Run(() =>
+            {
+                Emulator.cpu.halt();
+            });
+        }
+        
+        public async Task unhalt()
+        {
+            await Task.Run(() =>
+            {
+                Emulator.cpu.resume();
+            });
+        }
 
         public async Task StepAsync()
         {
@@ -54,8 +70,6 @@ namespace risc_v_GUI.ViewModels
             {
                 Emulator.cpu.external_interrupt();
             });
-            UpdateMemoryView();
-            UpdateRegistersView();
         }
         
         public async Task clear_interrupt()
@@ -64,8 +78,6 @@ namespace risc_v_GUI.ViewModels
             {
                 Emulator.cpu.clear_external_interrupt();
             });
-            UpdateMemoryView();
-            UpdateRegistersView();
         }
         
         public async Task run_until_break()

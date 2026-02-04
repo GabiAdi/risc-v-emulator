@@ -3,13 +3,16 @@ using risc_v;
 
 namespace risc_v_GUI.Services;
 
-public class IODevice : IMemoryDevice
+public class IODevice : IMemoryDevice, IInterruptDevice
 {
     public event Action<string>? OutputWritten;
     
     public uint size { get; }
     public uint start_addr { get; }
     public uint end_addr { get; }
+    
+    public event Action? interrupt_requested;
+    public event Action? interrupt_cleared;
     
     public IODevice(uint size, uint start_addr)
     {
@@ -54,6 +57,10 @@ public class IODevice : IMemoryDevice
         if (addr == 0)
         {
             OutputWritten?.Invoke((char)(value & 0xFF) + "" + (char)((value >> 8) & 0xFF) + "" + (char)((value >> 16) & 0xFF) + "" + (char)((value >> 24) & 0xFF));
+        }
+        if (addr == 4 && value == 0)
+        {
+            interrupt_cleared?.Invoke();
         }
     }
 }

@@ -5,6 +5,9 @@ counter_val:
     .section .text
     .globl _start
     .globl trap_handler
+    
+reg_save_area:
+    .word 0, 0, 0 # space for t0, t1, t2
 
 _start:
     # Set mtvec to trap handler
@@ -34,9 +37,26 @@ loop:
 trap_handler:
     la t2, counter_val  # reload address of counter_val
     lw a0, 0(t2)        # load counter into a0
-
-    li a7, 1            # syscall 1 = print integer
-    ecall
+    
+    la a5, reg_save_area
+    sw t0, 0(a5)      # save t0
+    sw t1, 4(a5)      # save t1
+    sw t2, 8(a5)      # save t2
+    
+    ebreak
+    
+    jal ra, bios_putu  # print counter value
+        
+    ebreak
+        
+    jal ra, bios_clear_interrupt  # clear interrupt in BIOS
+        
+    la a5, reg_save_area
+    lw t0, 0(a5)      # restore t0
+    lw t1, 4(a5)      # restore t1
+    lw t2, 8(a5)      # restore t2
+        
+    ebreak
 
     # Clear pending external interrupt
     li t0, 11           # MEIP bit = 11

@@ -3,24 +3,39 @@ namespace risc_v;
 public class Bus
 {
     private List<IMemoryDevice> devices = new List<IMemoryDevice>();
+    public event Action? clear_interrupt;
+    public event Action? request_interrupt;
 
     public Bus(List<IMemoryDevice> devices)
     {
         this.devices = devices;
-
+        
         foreach (IMemoryDevice d1 in devices)
         {
+            if (d1 is IInterruptDevice)
+            {
+                IInterruptDevice interrupt_device = (IInterruptDevice)d1;
+                interrupt_device.interrupt_requested += external_interrupt;
+                interrupt_device.interrupt_cleared += clear_external_interrupt;
+            }
             foreach (IMemoryDevice d2 in devices)
             {
-                if(d1 != d2)
+                if(d1 != d2 && d1.start_addr < d2.end_addr && d2.start_addr < d1.end_addr)
                 {
-                    if (d1.start_addr < d2.end_addr && d2.start_addr < d1.end_addr)
-                    {
-                        throw new Exception("Memory devices have overlapping address ranges");
-                    }
+                    throw new Exception("Memory devices have overlapping address ranges");
                 }
             }
         }
+    }
+
+    private void external_interrupt()
+    {
+        request_interrupt?.Invoke();
+    }
+    
+    private void clear_external_interrupt()
+    {
+        clear_interrupt?.Invoke();
     }
 
     private IMemoryDevice get_device(uint addr)
