@@ -7,7 +7,29 @@
         Title="risc_v_GUI"
         Width="1200" Height="800"
         Background="#FF1E1E1E">
-
+    
+        
+    <DockPanel LastChildFill="True">
+        <Menu DockPanel.Dock="Top" Background="#FF2D2D2D">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open" />
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Copy" />
+                <MenuItem Header="_Paste" />
+            </MenuItem>
+            <MenuItem Header="_Tools">
+                <MenuItem Header="_Memory view" />
+            </MenuItem>
+            <MenuItem Header="_Cpu settings">
+                <MenuItem Header="_Halt on ebreak" Command="{Binding toggle_halt_on_ebreak}">
+                    <MenuItem.Icon>
+                        <CheckBox IsChecked="{Binding halt_on_ebreak }" Margin="0"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
     
     <LayoutTransformControl>
         <LayoutTransformControl.LayoutTransform>
@@ -25,8 +47,7 @@
             <Button Grid.Column="5" Grid.Row="0" Content="Unhalt" Click="unhalt" Margin="5" Name="bt_unhalt"/>
         </Grid>
 
-
-        <TextBox Grid.Row="1" Grid.Column="0" FontFamily="Consolas" IsReadOnly="True" AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding OutputText}"/>
+        <TextBox Grid.Row="1" Grid.Column="0" FontFamily="Consolas" IsReadOnly="True" AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding OutputText}" KeyDown="on_key_down"/>
       
         <DataGrid Grid.Row="1" Grid.Column="1" Foreground="White" Margin="5" ItemsSource="{Binding Registers}" IsReadOnly="True" AutoGenerateColumns="False" GridLinesVisibility="All" FontFamily="Consolas" RowHeight="22">
             <DataGrid.Columns>
@@ -55,4 +76,5 @@
 
     </Grid>
     </LayoutTransformControl>
+    </DockPanel>
 </Window>

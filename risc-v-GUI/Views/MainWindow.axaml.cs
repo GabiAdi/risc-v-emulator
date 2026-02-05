@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using risc_v_GUI.Services;
 using risc_v_GUI.ViewModels;
@@ -123,5 +125,12 @@ public partial class MainWindow : Window
             if (sender is Button b2)
                 b2.IsEnabled = true;
         }
+    }
+
+    private async void on_key_down(Object? sender, KeyEventArgs e)
+    {
+        if (DataContext is not MainWindowViewModel viewModel) return;
+
+        await viewModel.key_pressed(e.Key);
     }
 }

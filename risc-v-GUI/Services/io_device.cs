@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using risc_v;
 
 namespace risc_v_GUI.Services;
@@ -14,11 +17,19 @@ public class IODevice : IMemoryDevice, IInterruptDevice
     public event Action? interrupt_requested;
     public event Action? interrupt_cleared;
     
+    private Queue<char> input_buffer = new Queue<Char>();
+    
     public IODevice(uint size, uint start_addr)
     {
         this.size = size;
         this.start_addr = start_addr;
         this.end_addr = start_addr + size;
+    }
+
+    public void key_pressed(char key)
+    { 
+        input_buffer.Enqueue(key);
+        interrupt_requested?.Invoke();
     }
     
     public uint read_word(uint addr)
@@ -33,7 +44,16 @@ public class IODevice : IMemoryDevice, IInterruptDevice
     
     public uint read_byte(uint addr) 
     {
-        throw new NotImplementedException();
+        if (addr == 8)
+        {
+            if (input_buffer.Count > 0)
+            {
+                char key = input_buffer.Dequeue();
+                return key;
+            }
+            return 0;
+        }
+        throw new Exception("Invalid read address: " + addr);
     }
     
     public void write_byte(uint addr, uint value)

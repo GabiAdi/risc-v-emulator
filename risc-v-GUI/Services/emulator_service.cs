@@ -22,7 +22,7 @@ public class EmulatorService
         loader.WriteToMem(memory);
         devices = new List<IMemoryDevice>();
         devices.Add(memory); // 300 MB main memory
-        devices.Add(new IODevice(8, 0x20000000));
+        devices.Add(new IODevice(12, 0x20000000));
         bus = new Bus(devices);
         cpu = new Cpu(bus);
         cpu.set_pc(loader.GetFirstExecutableAddress());

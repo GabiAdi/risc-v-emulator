@@ -5,6 +5,7 @@
     .globl bios_putu
     .globl bios_puts
     .globl bios_clear_interrupt
+    .globl bios_getc
 
 # MMIO console
 .equ MMIO_CONSOLE, 0x20000000
@@ -80,7 +81,7 @@ bios_putu:
 
 2:  addi t2, t2, -1
     lb   t3, 0(t2)
-    sb   t3, 0(t5)      # direct MMIO write (no call)
+    sb   t3, 0(t5)
     addi t1, t1, -1
     bnez t1, 2b
 
@@ -96,6 +97,17 @@ bios_clear_interrupt:
     li   t1, 0x00000000
     sw   t1, 4(t0)      # write to interrupt clear register
     
+    ret
+
+# --------------------------------------------------
+# bios_getc()
+# Reads a character from the console input register
+# Clobbers: t0
+# Returns: a0 = character read (low byte)
+# --------------------------------------------------
+bios_getc:
+    li   t0, MMIO_CONSOLE
+    lb   a0, 8(t0)      # read from input register
     ret
 
     .section .bss

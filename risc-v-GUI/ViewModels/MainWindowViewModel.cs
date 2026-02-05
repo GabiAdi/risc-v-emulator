@@ -1,9 +1,15 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Avalonia.Input;
 using Avalonia.Threading;
+using CommunityToolkit.Mvvm.Input;
 using risc_v_GUI.Models;
 using risc_v_GUI.Services;
+using risc_v;
+using IODevice = risc_v_GUI.Services.IODevice;
 
 namespace risc_v_GUI.ViewModels
 {
@@ -20,11 +26,30 @@ namespace risc_v_GUI.ViewModels
                 OnPropertyChanged();
             }
         }
+        
+        private bool _halt_on_ebreak = true;
+
+        public bool halt_on_ebreak
+        {
+            get => _halt_on_ebreak;
+            set
+            {
+                _halt_on_ebreak = value;
+                Emulator.cpu.halt_on_break = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        public ICommand toggle_halt_on_ebreak { get; }
+        
+        
         public ObservableCollection<string> Status { get; } = new ObservableCollection<string>();
         public ObservableCollection<MemoryRow> Memory { get; } = new ObservableCollection<MemoryRow>();
         public ObservableCollection<RegisterRow> Registers { get; } = new ObservableCollection<RegisterRow>();
 
         public EmulatorService Emulator { get; }
+
+        public event Action<char>? on_key_pressed;
 
         public MainWindowViewModel(EmulatorService emulator)
         {
@@ -36,6 +61,34 @@ namespace risc_v_GUI.ViewModels
             Emulator.system_handler.OutputProduced += OnOutputProduced;
             Emulator.system_handler.StatusChanged += OnStatusChanged;
             Emulator.devices.OfType<IODevice>().First().OutputWritten += io_written;
+            foreach (IODevice ioDevice in Emulator.devices.OfType<IODevice>())
+            {
+                on_key_pressed += ioDevice.key_pressed;
+            }
+            
+            toggle_halt_on_ebreak = new RelayCommand(() =>
+            {
+                halt_on_ebreak = !halt_on_ebreak;
+            });
+        }
+        
+        private char? KeyToChar(Key key) => key switch
+        {
+            >= Key.A and <= Key.Z => (char)('A' + (key - Key.A)),
+            >= Key.D0 and <= Key.D9 => (char)('0' + (key - Key.D0)),
+            >= Key.NumPad0 and <= Key.NumPad9 => (char)('0' + (key - Key.NumPad0)),
+            Key.Space => ' ',
+            Key.Enter => '\n',
+            Key.Tab => '\t',
+            Key.Back => '\b',
+            _ => null, // Not a printable character
+        };
+
+        public async Task key_pressed(Key key)
+        {
+            char? c = KeyToChar(key);
+            if (c.HasValue)
+                on_key_pressed.Invoke(c.Value);
         }
         
         public async Task halt()
