@@ -35,6 +35,9 @@ public partial class MainWindow : Window
             if (sender is Button b2)
                 b2.IsEnabled = true;
         }
+
+        bt_halt.IsEnabled = false;
+        bt_unhalt.IsEnabled = true;
     }
 
     private async void unhalt(object? sender, RoutedEventArgs e)
@@ -53,6 +56,9 @@ public partial class MainWindow : Window
             if (sender is Button b2)
                 b2.IsEnabled = true;
         }
+        
+        bt_halt.IsEnabled = true;
+        bt_unhalt.IsEnabled = false;
     }
 
     private async void run_until_break(object? sender, RoutedEventArgs e)
@@ -61,6 +67,8 @@ public partial class MainWindow : Window
         
         if (sender is Button b1)
             b1.IsEnabled = false;
+        
+        bt_step.IsEnabled = false;
         
         try
         {
@@ -71,6 +79,8 @@ public partial class MainWindow : Window
             if (sender is Button b2)
                 b2.IsEnabled = true;
         }
+        
+        bt_step.IsEnabled = true;
     }
 
     private async void interrupt(object? sender, RoutedEventArgs e)
@@ -116,6 +126,8 @@ public partial class MainWindow : Window
         if (sender is Button b1)
             b1.IsEnabled = false;
     
+        bt_run.IsEnabled = false;
+        
         try
         {
             await viewModel.StepAsync();
@@ -125,6 +137,8 @@ public partial class MainWindow : Window
             if (sender is Button b2)
                 b2.IsEnabled = true;
         }
+        
+        bt_run.IsEnabled = true;
     }
 
     private async void on_key_down(Object? sender, KeyEventArgs e)

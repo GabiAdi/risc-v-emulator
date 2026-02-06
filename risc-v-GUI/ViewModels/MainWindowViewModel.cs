@@ -41,7 +41,8 @@ namespace risc_v_GUI.ViewModels
         }
         
         public ICommand toggle_halt_on_ebreak { get; }
-        
+        public ICommand enter_pressed { get; }
+        public ICommand back_pressed { get; }
         
         public ObservableCollection<string> Status { get; } = new ObservableCollection<string>();
         public ObservableCollection<MemoryRow> Memory { get; } = new ObservableCollection<MemoryRow>();
@@ -69,6 +70,14 @@ namespace risc_v_GUI.ViewModels
             toggle_halt_on_ebreak = new RelayCommand(() =>
             {
                 halt_on_ebreak = !halt_on_ebreak;
+            });
+            enter_pressed = new RelayCommand(() =>
+            {
+                on_key_pressed.Invoke('\n');
+            });
+            back_pressed = new RelayCommand(() =>
+            {
+                on_key_pressed.Invoke('\b');
             });
         }
         
@@ -146,6 +155,11 @@ namespace risc_v_GUI.ViewModels
         
         private void io_written(string output)
         {
+            if (output == "\b" && OutputText.Length > 0)
+            {
+                Dispatcher.UIThread.Post(() => OutputText = OutputText.Substring(0, OutputText.Length - 1));
+                return;
+            }
             Dispatcher.UIThread.Post(() => OutputText += output);
         }
         
@@ -204,6 +218,7 @@ namespace risc_v_GUI.ViewModels
             Registers.Add(new RegisterRow()
             {
                 Register = "PC",
+                Name = "PC",
                 Value = Emulator.cpu.get_pc().ToString("X8"),
             });
             for (int i = 0; i < regs.Length; i++)
@@ -211,7 +226,17 @@ namespace risc_v_GUI.ViewModels
                 Registers.Add(new RegisterRow()
                 {
                     Register = $"x{i}",
+                    Name = Enum.GetName(typeof(Cpu.register_names), i),
                     Value = regs[i].ToString("X8"),
+                });
+            }
+            foreach (uint i in (uint[])Enum.GetValues(typeof(Cpu.CSR)))
+            {
+                Registers.Add(new RegisterRow()
+                {
+                    Register = i.ToString("X3"),
+                    Name = Enum.GetName(typeof(Cpu.CSR), i),
+                    Value = "0x" + Emulator.cpu.get_csr(i).ToString("X8"),
                 });
             }
         }

@@ -33,7 +33,7 @@ public class SystemHandler
                 {
                     sb.Append((char)b);
                 }
-                OutputProduced?.Invoke(DateTime.Now + ": " + sb.ToString());
+                OutputProduced?.Invoke(DateTime.Now.ToString("HH:mm:ss.fff") + ": " + sb.ToString());
                 break;
             case 11: // print char
                 OutputProduced?.Invoke(DateTime.Now + ": " + ((char)e.args[0]).ToString());

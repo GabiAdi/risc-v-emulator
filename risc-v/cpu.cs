@@ -19,6 +19,54 @@ public class Cpu
     private const uint MIE_MSIE = 1u << 3;
     private const uint MIE_MTIE = 1u << 7;
     private const uint MIE_MEIE = 1u << 11;
+
+    public enum register_names
+    {
+        zero = 0,
+        ra = 1,
+        sp = 2,
+        gp = 3,
+        tp = 4,
+        t0 = 5,
+        t1 = 6,
+        t2 = 7,
+        s0 = 8,
+        s1 = 9,
+        a0 = 10,
+        a1 = 11,
+        a2 = 12,
+        a3 = 13,
+        a4 = 14,
+        a5 = 15,
+        a6 = 16,
+        a7 = 17,
+        s2 = 18,
+        s3 = 19,
+        s4 = 20,
+        s5 = 21,
+        s6 = 22,
+        s7 = 23,
+        s8 = 24,
+        s9 = 25,
+        s10 = 26,
+        s11 = 27,
+        t3 = 28,
+        t4 = 29,
+        t5 = 30,
+        t6 = 31
+    }
+    
+    public enum CSR
+    {
+        MStatus = 0x300,
+        Mie = 0x304,
+        Mtvec = 0x305,
+        Mscratch = 0x340,
+        Mepc = 0x341,
+        Mcause = 0x342,
+        Mtval = 0x343,
+        Mip = 0x344
+    }
     
     private enum OpType
     {
@@ -145,7 +193,7 @@ public class Cpu
         }
     }
 
-    private struct Csrs
+    public struct Csrs
     {
         public uint MStatus;    // 0x300
         public uint Mie;        // 0x304
@@ -166,6 +214,7 @@ public class Cpu
     private uint current_ins; // Current instruction being executed
 
     private Csrs csrs; // Control and Status Registers
+    public ref readonly Csrs CSRs => ref csrs; // Expose CSRs for external inspection
     private bool waiting_for_interrupt;
     
     private uint reservation_addr; // Reserved address for atomic operations
@@ -691,7 +740,7 @@ public class Cpu
         pc = csrs.Mtvec & ~0x3u;
     }
     
-    private uint get_csr(uint csr)
+    public uint get_csr(uint csr)
     {
         return csr switch
         {
