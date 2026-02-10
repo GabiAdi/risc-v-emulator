@@ -36,6 +36,8 @@ public partial class MainWindow : Window
                 b2.IsEnabled = true;
         }
 
+        bt_step.IsEnabled = false;
+        bt_run.IsEnabled = false;
         bt_halt.IsEnabled = false;
         bt_unhalt.IsEnabled = true;
     }
@@ -56,7 +58,9 @@ public partial class MainWindow : Window
             if (sender is Button b2)
                 b2.IsEnabled = true;
         }
-        
+
+        bt_step.IsEnabled = true;
+        bt_run.IsEnabled = true;
         bt_halt.IsEnabled = true;
         bt_unhalt.IsEnabled = false;
     }
@@ -69,6 +73,8 @@ public partial class MainWindow : Window
             b1.IsEnabled = false;
         
         bt_step.IsEnabled = false;
+        bt_halt.IsEnabled = true;
+        bt_unhalt.IsEnabled = false;
         
         try
         {
@@ -77,10 +83,11 @@ public partial class MainWindow : Window
         finally
         {
             if (sender is Button b2)
-                b2.IsEnabled = true;
+                b2.IsEnabled = false;
         }
-        
-        bt_step.IsEnabled = true;
+
+        bt_unhalt.IsEnabled = true;
+        bt_halt.IsEnabled = false;
     }
 
     private async void interrupt(object? sender, RoutedEventArgs e)

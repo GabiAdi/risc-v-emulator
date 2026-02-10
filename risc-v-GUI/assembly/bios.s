@@ -1,14 +1,21 @@
+    .include "bios_macros.s"
+   
     .section .text
     .globl bios_putc
     .globl bios_puth
     .globl bios_putw
     .globl bios_putu
     .globl bios_puts
-    .globl bios_clear_interrupt
+    .globl bios_clin
     .globl bios_getc
+    .globl _start
 
 # MMIO console
 .equ MMIO_CONSOLE, 0x20000000
+
+_start:
+    la sp, stack_top
+    jal main
 
 # --------------------------------------------------
 # bios_putc(char c)
@@ -49,13 +56,19 @@ bios_putw:
 # Returns: ret (ra preserved)
 # --------------------------------------------------
 bios_puts:
-    li   t0, MMIO_CONSOLE   # console address in t0
-1:  lb   t1, 0(a0)          # load byte from string
-    beq  t1, zero, 2f       # if null terminator, done
-    sb   t1, 0(t0)          # write byte to console
-    addi a0, a0, 1          # move pointer to next char
+    PUSH ra
+    PUSH s0
+    
+    mv s0, a0
+
+1:  lb   a0, 0(s0)          # load byte from string
+    beq  a0, zero, 2f       # if null terminator, done
+    jal bios_putc           # print character
+    addi s0, s0, 1          # move pointer to next char
     j    1b
-2:  ret
+2:  POP s0
+    POP ra
+    ret
 
 # --------------------------------------------------
 # bios_putu(uint32 value)
@@ -65,26 +78,25 @@ bios_puts:
 # Uses digit_buf (bss) as temporary buffer
 # --------------------------------------------------
 bios_putu:
+    PUSH ra
     li   t0, 10        # divisor
     li   t1, 0         # digit count
-    la   t2, digit_buf # pointer into buffer
 
-1:  remu t3, a0, t0
+1:  remu t2, a0, t0
     divu a0, a0, t0
-    addi t3, t3, '0'
-    sb   t3, 0(t2)
-    addi t2, t2, 1
+    addi t2, t2, '0'
+    PUSH t2
     addi t1, t1, 1
     bnez a0, 1b
 
-    li   t5, MMIO_CONSOLE
-
-2:  addi t2, t2, -1
-    lb   t3, 0(t2)
-    sb   t3, 0(t5)
+2:  POP a0
+    PUSH t1
+    jal bios_putc
+    POP t1
     addi t1, t1, -1
     bnez t1, 2b
 
+    POP ra
     ret
     
 # --------------------------------------------------
@@ -92,7 +104,7 @@ bios_putu:
 # Clears the interrupt in the BIOS console
 # Clobbers: t0, t1
 # --------------------------------------------------
-bios_clear_interrupt:
+bios_clin:
     li   t0, MMIO_CONSOLE
     li   t1, 0x00000000
     sw   t1, 4(t0)      # write to interrupt clear register
@@ -114,3 +126,7 @@ bios_getc:
     .align 4
 digit_buf:
     .space 12
+    
+stack_bottom:
+    .space 1024
+stack_top:

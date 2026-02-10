@@ -147,7 +147,6 @@ namespace risc_v_GUI.ViewModels
             await Task.Run(() =>
             {
                 Emulator.cpu.run_until_halt();
-                Emulator.cpu.resume();
             });
             UpdateMemoryView();
             UpdateRegistersView();
@@ -160,7 +159,8 @@ namespace risc_v_GUI.ViewModels
                 Dispatcher.UIThread.Post(() => OutputText = OutputText.Substring(0, OutputText.Length - 1));
                 return;
             }
-            Dispatcher.UIThread.Post(() => OutputText += output);
+            if(output != "\b")
+                Dispatcher.UIThread.Post(() => OutputText += output);
         }
         
         private void OnOutputProduced(string output)

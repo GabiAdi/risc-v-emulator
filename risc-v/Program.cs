@@ -30,6 +30,10 @@ void WriteHex(uint[] data)
     }
 }
 
+Assembler.assemble("hello_world.s", "program", "../../../","linker.ld");
+
+return;
+
 string program_path = "../../../assembly/program";
 
 ElfLoader loader = new ElfLoader(program_path);
