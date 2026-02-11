@@ -33,4 +33,11 @@
     <ItemGroup>
       <Folder Include="Converters\" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Views\MemoryView.axaml.cs">
+        <DependentUpon>MemoryView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
 </Project>

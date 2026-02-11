@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
@@ -43,9 +46,11 @@ namespace risc_v_GUI.ViewModels
         public ICommand toggle_halt_on_ebreak { get; }
         public ICommand enter_pressed { get; }
         public ICommand back_pressed { get; }
+        public ICommand open_memory_view { get; }
         
         public ObservableCollection<string> Status { get; } = new ObservableCollection<string>();
         public ObservableCollection<MemoryRow> Memory { get; } = new ObservableCollection<MemoryRow>();
+        public ObservableCollection<MemoryRow> MemoryView { get; } = new ObservableCollection<MemoryRow>();  
         public ObservableCollection<RegisterRow> Registers { get; } = new ObservableCollection<RegisterRow>();
 
         public EmulatorService Emulator { get; }
@@ -55,8 +60,8 @@ namespace risc_v_GUI.ViewModels
         public MainWindowViewModel(EmulatorService emulator)
         {
             Emulator = emulator ?? throw new System.ArgumentNullException(nameof(emulator));
-            
-            UpdateMemoryView();
+
+            GetMemoryView(Emulator.cpu.get_pc(), Memory);
             UpdateRegistersView();
 
             Emulator.system_handler.OutputProduced += OnOutputProduced;
@@ -78,6 +83,24 @@ namespace risc_v_GUI.ViewModels
             back_pressed = new RelayCommand(() =>
             {
                 on_key_pressed.Invoke('\b');
+            });
+            open_memory_view = new RelayCommand(() =>
+            {
+                if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                {
+                    var existing_window = desktop.Windows.OfType<MemoryView>().FirstOrDefault();
+
+                    if (existing_window != null)
+                    {
+                        existing_window.Activate();
+                    }
+                    else
+                    {
+                        MemoryView memoryView = new MemoryView();
+                        memoryView.DataContext = this;
+                        memoryView.Show();
+                    }
+                }
             });
         }
         
@@ -122,7 +145,7 @@ namespace risc_v_GUI.ViewModels
             {
                 Emulator.cpu.step();
             });
-            UpdateMemoryView();
+            GetMemoryView(Emulator.cpu.get_pc(), Memory);
             UpdateRegistersView();
         }
         
@@ -148,8 +171,13 @@ namespace risc_v_GUI.ViewModels
             {
                 Emulator.cpu.run_until_halt();
             });
-            UpdateMemoryView();
+            GetMemoryView(Emulator.cpu.get_pc(), Memory);
             UpdateRegistersView();
+        }
+        
+        public async Task update_memory_view(uint address, uint range_before, uint range_after)
+        {
+            GetMemoryView(address, MemoryView, range_before, range_after);
         }
         
         private void io_written(string output)
@@ -241,25 +269,23 @@ namespace risc_v_GUI.ViewModels
             }
         }
         
-        private void UpdateMemoryView()
+        private void GetMemoryView(uint address, ObservableCollection<MemoryRow> memory_view, uint range_before = 16, uint range_after = 16)
         {
-            uint x=32;
-            if (Emulator.cpu.get_pc() < 32)
-            {
-                x = Emulator.cpu.get_pc();
-            }
-            Memory.Clear();
-            for(uint i=Emulator.cpu.get_pc()-x; i<Emulator.cpu.get_pc()+(64-x); i+=4)
+            memory_view.Clear();
+            
+            if(address < range_before) throw new Exception("Address is too low to display the requested range.");
+            
+            for (uint i = address - range_before; i < address + range_after; i += 4)
             {
                 uint value = Emulator.memory.read_word(i);
-                Memory.Add(new MemoryRow()
+                memory_view.Add(new MemoryRow()
                 {
                     Address = (i).ToString("X8"),
                     Value = value.ToString("X8"),
                     Ascii = GetAsciiRepresentation(value),
                     Disassembly = Emulator.disassembler.DisassembleInstruction(value, i),
                     Register = GetRegisterPointer(i),
-                });                
+                });
             }
         }
     }
