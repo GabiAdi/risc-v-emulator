@@ -11,21 +11,21 @@
         Background="#FF1E1E1E">
         
         <Grid Margin="20" RowDefinitions="50, 50, *" ColumnDefinitions="100, *, 100, 100, 100">
-                <Button Grid.Column="0" Grid.Row="0" Content="Refresh" Margin="2" Click="refresh"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Height="20" Margin="2" Name="tb_entry">32</TextBox>
-                <TextBlock Grid.Row="0" Grid.Column="2" Height="20" Margin="2">Bytes</TextBlock>
-                <TextBox Grid.Row="0" Grid.Column="3" Height="20" Margin="2" Name="tb_address">0000</TextBox>
-                <Button Grid.Row="0" Grid.Column="4" Content="Goto" Margin="2" Click="goto_addr"/>
-                <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Height="20" Margin="2" Name="tb_search"/>
-                <Button Grid.Row="1" Grid.Column="3" Margin="2" Content="Search" Click="search"/>
-                <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Foreground="White" ItemsSource="{Binding MemoryView}" IsReadOnly="True" AutoGenerateColumns="False" GridLinesVisibility="All" FontFamily="Consolas" RowHeight="22">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="120"/>
-                        <DataGridTextColumn Header="Register" Binding="{Binding Register}" Width="100"/>
-                        <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="220"/>
-                        <DataGridTextColumn Header="Disassembly" Binding="{Binding Disassembly}" Width="*"/>
-                        <DataGridTextColumn Header="Ascii" Binding="{Binding Ascii}" Width="100"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+            <Button Grid.Column="0" Grid.Row="0" Content="Refresh" Margin="2" Click="refresh"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Height="20" Margin="2" Name="tb_entry">32</TextBox>
+            <TextBlock Grid.Row="0" Grid.Column="2" Height="20" Margin="2">Bytes</TextBlock>
+            <TextBox Grid.Row="0" Grid.Column="3" Height="20" Margin="2" Name="tb_address">0000</TextBox>
+            <Button Grid.Row="0" Grid.Column="4" Content="Goto" Margin="2" Click="goto_addr"/>
+            <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Height="20" Margin="2" Name="tb_search"/>
+            <Button Grid.Row="1" Grid.Column="3" Margin="2" Content="Search" Click="search" Name="bt_search"/>
+            <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Foreground="White" ItemsSource="{Binding MemoryView}" IsReadOnly="True" AutoGenerateColumns="False" GridLinesVisibility="All" FontFamily="Consolas" RowHeight="22">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="120"/>
+                    <DataGridTextColumn Header="Register" Binding="{Binding Register}" Width="100"/>
+                    <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="220"/>
+                    <DataGridTextColumn Header="Disassembly" Binding="{Binding Disassembly}" Width="*"/>
+                    <DataGridTextColumn Header="Ascii" Binding="{Binding Ascii}" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
 </Window>

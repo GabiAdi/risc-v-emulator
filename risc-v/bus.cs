@@ -6,12 +6,15 @@ public class Bus
     public event Action? clear_interrupt;
     public event Action? request_interrupt;
 
+    public uint max_addr { get; private set; } = 0;
+
     public Bus(List<IMemoryDevice> devices)
     {
         this.devices = devices;
         
         foreach (IMemoryDevice d1 in devices)
         {
+            if(d1.end_addr > max_addr) max_addr = d1.end_addr;
             if (d1 is IInterruptDevice)
             {
                 IInterruptDevice interrupt_device = (IInterruptDevice)d1;

@@ -18,6 +18,7 @@ public class IODevice : IMemoryDevice, IInterruptDevice
     public event Action? interrupt_cleared;
     
     private Queue<char> input_buffer = new Queue<Char>();
+    private char[] output_buffer = new char[4] { '\0', '\0', '\0', '\0' };
     
     public IODevice(uint size, uint start_addr)
     {
@@ -34,16 +35,22 @@ public class IODevice : IMemoryDevice, IInterruptDevice
     
     public uint read_word(uint addr)
     {
-        throw new NotImplementedException();
+        if(addr < 4) return (uint)(output_buffer[0] | (output_buffer[1] << 8) | (output_buffer[2] << 16) | (output_buffer[3] << 24));
+        return 0;
     }
     
     public uint read_halfword(uint addr)
     {
-        throw new NotImplementedException();
+        if(addr < 2) return (uint)(output_buffer[addr] | (output_buffer[addr+1] << 8));
+        return 0;
     }
     
     public uint read_byte(uint addr) 
     {
+        if (addr < 4)
+        {
+            return (uint)output_buffer[addr];
+        }
         if (addr == 8)
         {
             if (input_buffer.Count > 0)
@@ -53,6 +60,7 @@ public class IODevice : IMemoryDevice, IInterruptDevice
             }
             return 0;
         }
+        return 0;
         throw new Exception("Invalid read address: " + addr);
     }
     

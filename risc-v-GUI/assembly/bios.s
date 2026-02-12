@@ -11,7 +11,7 @@
     .globl _start
 
 # MMIO console
-.equ MMIO_CONSOLE, 0x20000000
+.equ MMIO_CONSOLE, 0x12C00000
 
 _start:
     la sp, stack_top

@@ -4,7 +4,11 @@
 counter_val:
     .word 0
 
-    .section .text
+test:
+    .string "Hello, World!\n\0"
+    .byte 0
+
+.section .text
     .globl main
     .globl trap_handler
     

@@ -1,3 +1,4 @@
+using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -35,8 +36,26 @@ public partial class MemoryView : Window
         await viewModel.update_memory_view(current_addr, 0, current_range);
     }
 
-    private void search(object? sender, RoutedEventArgs e)
+    private async void search(object? sender, RoutedEventArgs e)
     {
+        if(DataContext is not MainWindowViewModel viewModel) return;
+        if(tb_search.Text.Length == 0) return;
         
+        bt_search.IsEnabled = false;
+
+        byte[] search_bytes;
+        
+        if (tb_search.Text.Length > 2 && tb_search.Text.Substring(0, 2) == "0x")
+        {
+            search_bytes = Convert.FromHexString(tb_search.Text.Substring(2, tb_search.Text.Length-2));
+        } else
+        {
+            search_bytes = System.Text.Encoding.ASCII.GetBytes(tb_search.Text);
+            Array.Reverse(search_bytes);
+        }
+        
+        await viewModel.search_memory(search_bytes);
+        
+        bt_search.IsEnabled = true;
     }
 }

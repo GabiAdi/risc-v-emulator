@@ -180,6 +180,42 @@ namespace risc_v_GUI.ViewModels
             GetMemoryView(address, MemoryView, range_before, range_after);
         }
         
+        public async Task search_memory(byte[] search_bytes)
+        {
+            MemoryView.Clear();
+            Array.Reverse(search_bytes);
+            // for (uint i = 0; i < Emulator.bus.max_addr; i++)
+            for(uint i=0; i < 40000; i++)
+            {
+                bool match = true;
+                if (i == 0x1000)
+                {
+                    int a = 0;
+                }
+                for (uint j = 0; j < search_bytes.Length; j++)
+                {
+                    if (search_bytes[j] != (byte)Emulator.bus.read(i+j, 1))
+                    {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match)
+                {
+                    uint addr = i - (i % 4);
+                    uint value = Emulator.bus.read(addr,4);
+                    MemoryView.Add(new MemoryRow()
+                    {
+                        Address = (addr).ToString("X8"),
+                        Value = value.ToString("X8"),
+                        Ascii = GetAsciiRepresentation(value),
+                        Disassembly = Emulator.disassembler.DisassembleInstruction(value, addr),
+                        Register = GetRegisterPointer(addr),
+                    });
+                }
+            }
+        }
+        
         private void io_written(string output)
         {
             if (output == "\b" && OutputText.Length > 0)
@@ -269,15 +305,17 @@ namespace risc_v_GUI.ViewModels
             }
         }
         
-        private void GetMemoryView(uint address, ObservableCollection<MemoryRow> memory_view, uint range_before = 16, uint range_after = 16)
+        private void GetMemoryView(uint address, ObservableCollection<MemoryRow> memory_view, uint range_before = 32, uint range_after = 32)
         {
             memory_view.Clear();
             
             if(address < range_before) throw new Exception("Address is too low to display the requested range.");
             
-            for (uint i = address - range_before; i < address + range_after; i += 4)
+            if(address + range_after > Emulator.bus.max_addr) range_after = Emulator.bus.max_addr - address;
+            
+            for (uint i = address - range_before; i <= address + range_after; i += 4)
             {
-                uint value = Emulator.memory.read_word(i);
+                uint value = Emulator.bus.read(i,4);
                 memory_view.Add(new MemoryRow()
                 {
                     Address = (i).ToString("X8"),
