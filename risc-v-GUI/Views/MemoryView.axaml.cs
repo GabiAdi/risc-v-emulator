@@ -48,10 +48,10 @@ public partial class MemoryView : Window
         if (tb_search.Text.Length > 2 && tb_search.Text.Substring(0, 2) == "0x")
         {
             search_bytes = Convert.FromHexString(tb_search.Text.Substring(2, tb_search.Text.Length-2));
+            Array.Reverse(search_bytes);
         } else
         {
             search_bytes = System.Text.Encoding.ASCII.GetBytes(tb_search.Text);
-            Array.Reverse(search_bytes);
         }
         
         await viewModel.search_memory(search_bytes);

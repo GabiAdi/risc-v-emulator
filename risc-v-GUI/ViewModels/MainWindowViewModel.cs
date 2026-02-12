@@ -183,7 +183,6 @@ namespace risc_v_GUI.ViewModels
         public async Task search_memory(byte[] search_bytes)
         {
             MemoryView.Clear();
-            Array.Reverse(search_bytes);
             // for (uint i = 0; i < Emulator.bus.max_addr; i++)
             for(uint i=0; i < 40000; i++)
             {
