@@ -51,3 +51,12 @@ D - Doubleword  64b
 | x30 | t5    | Temporary / scratch (caller)  |
 | x31 | t6    | Temporary / scratch (caller)  |
 +-----+-------+-------------------------------+
+
+TODO
+1. Assembler window
+2. Light GPU and display support
+3. File system support
+4. Device manager
+5. RISCV privileged architecture support
+6. Add support for compressed instructions (16-bit)
+7. UI improvements

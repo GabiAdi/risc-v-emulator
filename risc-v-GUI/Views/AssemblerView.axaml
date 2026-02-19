@@ -1,0 +1,26 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:risc_v_GUI.ViewModels"
+        x:Class="risc_v_GUI.Views.AssemblerView"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="AssemblerView"
+        Width="800" Height="600"
+        Background="#FF1E1E1E">
+        
+        <DockPanel LastChildFill="True">
+                <Menu DockPanel.Dock="Top" Background="#FF2D2D2D">
+                        <MenuItem Header="_File">
+                                <MenuItem Header="_New"/>
+                                <MenuItem Header="_Open"/>
+                                <MenuItem Header="_Save" />
+                                <MenuItem Header="Save _as" />
+                        </MenuItem>
+                </Menu>
+                <Grid Margin="20" RowDefinitions="430, 100" ColumnDefinitions="500, 200">
+                        <TextBox Margin="2" Grid.Row="0" Grid.Column="0" Name="tb_edit"/>
+                        <Button Margin="2" Grid.Row="0" Grid.Column="1">Assemble</Button>
+                        <TextBox Margin="2" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="tb_output"></TextBox>
+                </Grid>
+        </DockPanel>
+</Window>

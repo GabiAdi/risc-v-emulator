@@ -11,6 +11,7 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using risc_v_GUI.Models;
 using risc_v_GUI.Services;
+using risc_v_GUI.Views;
 using risc_v;
 using IODevice = risc_v_GUI.Services.IODevice;
 
@@ -29,7 +30,7 @@ namespace risc_v_GUI.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         private bool _halt_on_ebreak = true;
 
         public bool halt_on_ebreak
@@ -42,14 +43,27 @@ namespace risc_v_GUI.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
+        private string? _selectedSearch = "String";
+        public string? SelectedSearch
+        {
+            get => _selectedSearch;
+            set
+            {
+                _selectedSearch = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand toggle_halt_on_ebreak { get; }
         public ICommand enter_pressed { get; }
         public ICommand back_pressed { get; }
         public ICommand open_memory_view { get; }
-        
+        public ICommand open_assembler_view { get; }
+
         public ObservableCollection<string> Status { get; } = new ObservableCollection<string>();
-        public ObservableCollection<MemoryRow> Memory { get; } = new ObservableCollection<MemoryRow>();
+        public ObservableCollection<string> Search { get; } = new ObservableCollection<string>() {"String", "Binary", "Decimal", "Hexadecimal"};
+    public ObservableCollection<MemoryRow> Memory { get; } = new ObservableCollection<MemoryRow>();
         public ObservableCollection<MemoryRow> MemoryView { get; } = new ObservableCollection<MemoryRow>();  
         public ObservableCollection<RegisterRow> Registers { get; } = new ObservableCollection<RegisterRow>();
 
@@ -99,6 +113,24 @@ namespace risc_v_GUI.ViewModels
                         MemoryView memoryView = new MemoryView();
                         memoryView.DataContext = this;
                         memoryView.Show();
+                    }
+                }
+            });
+            open_assembler_view = new RelayCommand(() =>
+            {
+                if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                {
+                    var existing_window = desktop.Windows.OfType<AssemblerView>().FirstOrDefault();
+
+                    if (existing_window != null)
+                    {
+                        existing_window.Activate();
+                    }
+                    else
+                    {
+                        AssemblerView assemblerView = new AssemblerView();
+                        assemblerView.DataContext = this;
+                        assemblerView.Show();
                     }
                 }
             });

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -43,15 +44,30 @@ public partial class MemoryView : Window
         
         bt_search.IsEnabled = false;
 
+        string input = tb_search.Text;
+
         byte[] search_bytes;
-        
-        if (tb_search.Text.Length > 2 && tb_search.Text.Substring(0, 2) == "0x")
+
+        if (cb_search.SelectedItem == "String")
         {
-            search_bytes = Convert.FromHexString(tb_search.Text.Substring(2, tb_search.Text.Length-2));
+            search_bytes = System.Text.Encoding.ASCII.GetBytes(input);
+        }
+        else if (cb_search.SelectedItem == "Binary")
+        {
+            search_bytes = Enumerable.Range(0, (input.Length + 7) / 8)
+                .Select(i => Convert.ToByte(input.PadLeft(((input.Length + 7) / 8) * 8, '0')
+                .Substring(i * 8, 8), 2))
+                .ToArray();
             Array.Reverse(search_bytes);
-        } else
+        }
+        else if (cb_search.SelectedItem == "Decimal")
         {
-            search_bytes = System.Text.Encoding.ASCII.GetBytes(tb_search.Text);
+            search_bytes = BitConverter.GetBytes(int.Parse(input));
+        }
+        else
+        {
+            search_bytes = Convert.FromHexString(input);
+            Array.Reverse(search_bytes);
         }
         
         await viewModel.search_memory(search_bytes);

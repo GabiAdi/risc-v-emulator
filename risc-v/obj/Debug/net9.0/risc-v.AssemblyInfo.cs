@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("risc-v")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+21bfdae7ee46276cba5f2f18e6038734d9783d66")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0f03da748b74e68364e8f4ea6f2fd64843d2cbf1")]
 [assembly: System.Reflection.AssemblyProductAttribute("risc-v")]
 [assembly: System.Reflection.AssemblyTitleAttribute("risc-v")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
