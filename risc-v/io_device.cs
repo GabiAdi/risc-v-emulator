@@ -70,4 +70,11 @@ public class IODevice : IMemoryDevice, IInterruptDevice
             interrupt_cleared?.Invoke();
         }
     }
+
+    public void clear()
+    {
+
+        Array.Clear(buffer, 0, buffer.Length);
+        interrupt_cleared?.Invoke();
+    }
 }

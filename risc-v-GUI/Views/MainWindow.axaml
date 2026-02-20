@@ -12,12 +12,8 @@
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top" Background="#FF2D2D2D">
             <MenuItem Header="_File">
-                <MenuItem Header="_Open" />
+                <MenuItem Header="_Open" Command="{Binding open_program}" CommandParameter="{Binding $parent[Window]}" />
                 <MenuItem Header="_Exit" />
-            </MenuItem>
-            <MenuItem Header="_Edit">
-                <MenuItem Header="_Copy" />
-                <MenuItem Header="_Paste" />
             </MenuItem>
             <MenuItem Header="_Tools">
                 <MenuItem Header="_Memory view" Command="{Binding open_memory_view}"/>

@@ -49,4 +49,9 @@ public class Memory : IMemoryDevice
         mem[addr + 2] = (byte)((value >> 16) & 0xFF);
         mem[addr + 3] = (byte)((value >> 24) & 0xFF);
     }
+    
+    public void clear()
+    {
+        Array.Clear(mem, 0, mem.Length);
+    }
 }

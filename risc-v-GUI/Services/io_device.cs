@@ -20,6 +20,8 @@ public class IODevice : IMemoryDevice, IInterruptDevice
     private Queue<char> input_buffer = new Queue<Char>();
     private char[] output_buffer = new char[4] { '\0', '\0', '\0', '\0' };
     
+    bool interrupt_pending = false;
+    
     public IODevice(uint size, uint start_addr)
     {
         this.size = size;
@@ -30,7 +32,10 @@ public class IODevice : IMemoryDevice, IInterruptDevice
     public void key_pressed(char key)
     { 
         input_buffer.Enqueue(key);
-        interrupt_requested?.Invoke();
+        if(input_buffer.Count == 1)
+        {
+            interrupt_requested?.Invoke();
+        }
     }
     
     public uint read_word(uint addr)
@@ -89,6 +94,17 @@ public class IODevice : IMemoryDevice, IInterruptDevice
         if (addr == 4 && value == 0)
         {
             interrupt_cleared?.Invoke();
+            if (input_buffer.Count > 0)
+            {
+                interrupt_requested?.Invoke();
+            }
         }
+    }
+
+    public void clear()
+    {
+        Array.Clear(output_buffer, 0, output_buffer.Length);
+        input_buffer.Clear();
+        interrupt_cleared?.Invoke();
     }
 }

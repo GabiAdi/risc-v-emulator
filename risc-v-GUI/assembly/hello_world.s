@@ -4,8 +4,8 @@ msg:
     .byte 0
 
 .text
-.globl _start
-_start:
+.globl main
+main:
     la a0, msg    
     jal ra, bios_puts
 

@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
+using Avalonia.Layout;
+using Avalonia.Media;
+using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using risc_v_GUI.Models;
@@ -355,6 +360,70 @@ namespace risc_v_GUI.ViewModels
                     Disassembly = Emulator.disassembler.DisassembleInstruction(value, i),
                     Register = GetRegisterPointer(i),
                 });
+            }
+        }
+        
+        public async Task open_program(Visual? visual)
+        {
+            if(visual == null) return;
+            
+            var top_level = TopLevel.GetTopLevel(visual);
+            string base_dir = AppDomain.CurrentDomain.BaseDirectory;
+            var storage_folder = await top_level.StorageProvider.TryGetFolderFromPathAsync(new Uri(base_dir));
+            var files = await top_level.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            {
+                Title = "Select a RISC-V binary",
+                SuggestedStartLocation = storage_folder,
+                FileTypeFilter = new List<FilePickerFileType>
+                {
+                    new FilePickerFileType("RISC-V Binaries")
+                    {
+                        Patterns = new[] { "*.bin", "*.elf" }
+                    },
+                    new FilePickerFileType("All Files")
+                    {
+                        Patterns = new[] { "*.*" }
+                    }
+                },
+                AllowMultiple = false
+            });
+            if(files.Count > 0)
+            {
+                string path = files[0].TryGetLocalPath() ?? throw new Exception("Unable to get file path");
+                try
+                {
+                    Emulator.load_program(path);
+                    GetMemoryView(Emulator.cpu.get_pc(), Memory);
+                    UpdateRegistersView();
+                }
+                catch(Exception e)
+                {
+                    var error_win = new Window
+                    {
+                        Title = "Error",
+                        Width = 300,
+                        Height = 150,
+                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                        Content = new StackPanel
+                        {
+                            Margin = new Thickness(10),
+                            Spacing = 10,
+                            Children =
+                            {
+                                new TextBlock { Text = "An Error Occured", FontWeight = FontWeight.Bold },
+                                new TextBlock { Text = e.Message, TextWrapping = TextWrapping.Wrap },
+                                new Button
+                                {
+                                    Content = "OK",
+                                    HorizontalAlignment = HorizontalAlignment.Center,
+                                }
+                            }
+                        }
+                    };
+                    
+                    ((Button)((StackPanel)error_win.Content).Children[2]).Click += (s, args) => error_win.Close();
+                    error_win.ShowDialog(TopLevel.GetTopLevel(visual) as Window);
+                }
             }
         }
     }

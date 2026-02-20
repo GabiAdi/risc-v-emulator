@@ -2,7 +2,7 @@ namespace risc_v;
 
 public class Bus
 {
-    private List<IMemoryDevice> devices = new List<IMemoryDevice>();
+    public List<IMemoryDevice> devices { get; private set; } = new List<IMemoryDevice>();
     public event Action? clear_interrupt;
     public event Action? request_interrupt;
 

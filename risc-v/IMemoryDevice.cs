@@ -12,4 +12,5 @@ public interface IMemoryDevice
     public void write_byte(uint addr, uint value);
     public void write_halfword(uint addr, uint value);
     public void write_word(uint addr, uint value);
+    public void clear();
 }
