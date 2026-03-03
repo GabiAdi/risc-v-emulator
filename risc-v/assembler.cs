@@ -3,39 +3,58 @@ using System.Runtime.InteropServices;
 
 namespace risc_v;
 
-public class Assembler
+public static class Assembler
 {
-    public static void assemble(string source, string out_file, string directory, string linker_file = "")
-    {
-        string tool_prefix = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-            ? $"{directory}tools/win/bin/riscv-none-elf-"
-            : $"{directory}tools/linux/bin/riscv-none-elf-";
-        string assembler = tool_prefix+"as" + (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : "");
-        string linker = tool_prefix+"ld" + (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : "");
+    private static readonly string root_directory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", ".."));
+    
+    // Build paths relative to the resolved RootDirectory
+    private static readonly string bios_file = Path.Combine(root_directory, "assembly", "bios.s");
+    private static readonly string assembly_folder = Path.Combine(root_directory, "assembly");
 
-        run_process(assembler, $"-march=rv32imazicsr -o {directory}/assembly/program.o {directory}/assembly/{source}");
-        run_process(assembler, $"-march=rv32imazicsr -o {directory}/assembly/bios.o {directory}/assembly/bios.s");
-        run_process(linker, linker_file != "" ? $"-T {directory}/assembly/{linker_file} -o {directory}/assembly/{out_file} {directory}/assembly/program.o {directory}/assembly/bios.o" : $"-o {directory}/assembly/{out_file} {directory}/assembly/program.o {directory}/assembly/bios.o");
+    public static void assemble(string source_file_path, string out_file_path, string linker_file = "")
+    {
+        string os_folder = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "win" : "linux";
+        string extension = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : "";
+
+        string toolsBin = Path.Combine(root_directory, "tools", os_folder, "bin");
+        string assembler = Path.Combine(toolsBin, $"riscv-none-elf-as{extension}");
+        string linker = Path.Combine(toolsBin, $"riscv-none-elf-ld{extension}");
+
+        string program_obj = Path.Combine(assembly_folder, "program.o");
+        string bios_obj = Path.Combine(assembly_folder, "bios.o");
+
+        run_process(assembler, $"-I \"{assembly_folder}\" -march=rv32imazicsr -o \"{program_obj}\" \"{source_file_path}\"", root_directory);
+
+        run_process(assembler, $"-I \"{assembly_folder}\" -march=rv32imazicsr -o \"{bios_obj}\" \"{bios_file}\"", root_directory);
+
+        string linkerArgs = linker_file != "" 
+            ? $"-T \"{Path.Combine(assembly_folder, linker_file)}\" -o \"{out_file_path}\" \"{program_obj}\" \"{bios_obj}\"" 
+            : $"-o \"{out_file_path}\" \"{program_obj}\" \"{bios_obj}\"";
+
+        run_process(linker, linkerArgs, root_directory);
     }
 
-    private static void run_process(string program, string args)
+    private static void run_process(string program, string args, string root_directory)
     {
         var start_info = new ProcessStartInfo
         {
             FileName = program,
             Arguments = args,
             RedirectStandardOutput = true,
+            RedirectStandardError = true,
             UseShellExecute = false,
             CreateNoWindow = true,
+            WorkingDirectory = root_directory 
         };
-        
+    
         using var process = Process.Start(start_info);
+
         process.WaitForExit();
 
         if (process.ExitCode != 0)
         {
             string error = process.StandardError.ReadToEnd();
-            throw new Exception($"Process {program} exited with code {process.ExitCode}: {error}");
+            throw new Exception($"Process {Path.GetFileName(program)} failed (Code {process.ExitCode}): {error}");
         }
     }
 }

@@ -9,7 +9,7 @@ counter_val:
 reg_save_area:
     .word 0, 0, 0 # space for t0, t1, t2
 
-_start:
+main:
     # Set mtvec to trap handler
     la t0, trap_handler
     csrw mtvec, t0

@@ -14,3 +14,4 @@ main:
     li a0, 0         # Exit code 0
     li a7, 10        # Syscall 10 = exit
     ecall            # Exit cleanly
+#komentar

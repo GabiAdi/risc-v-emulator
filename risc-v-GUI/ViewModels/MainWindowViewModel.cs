@@ -60,6 +60,43 @@ namespace risc_v_GUI.ViewModels
             }
         }
 
+        private string? _assemblerTitle = "New Assembly File";
+        public string AssemblerTitle { 
+            get => _assemblerTitle;
+            set
+            {
+                _assemblerTitle = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        private string? _assemblerText;
+        public string? AssemblerText { 
+            get => _assemblerText;
+            set
+            {
+                assembler_text_edited = true;
+                if (assembler_text_edited && AssemblerTitle.Last() != '*')
+                {
+                    AssemblerTitle += "*";
+                }
+                _assemblerText = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        private string? _assemblerOutput;
+        public string? AssemblerOutput { 
+            get => _assemblerOutput;
+            set
+            {
+                _assemblerOutput = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        private bool assembler_text_edited = false;
+
         public ICommand toggle_halt_on_ebreak { get; }
         public ICommand enter_pressed { get; }
         public ICommand back_pressed { get; }
@@ -68,7 +105,7 @@ namespace risc_v_GUI.ViewModels
 
         public ObservableCollection<string> Status { get; } = new ObservableCollection<string>();
         public ObservableCollection<string> Search { get; } = new ObservableCollection<string>() {"String", "Binary", "Decimal", "Hexadecimal"};
-    public ObservableCollection<MemoryRow> Memory { get; } = new ObservableCollection<MemoryRow>();
+        public ObservableCollection<MemoryRow> Memory { get; } = new ObservableCollection<MemoryRow>();
         public ObservableCollection<MemoryRow> MemoryView { get; } = new ObservableCollection<MemoryRow>();  
         public ObservableCollection<RegisterRow> Registers { get; } = new ObservableCollection<RegisterRow>();
 
@@ -362,6 +399,86 @@ namespace risc_v_GUI.ViewModels
                 });
             }
         }
+
+        public async Task<bool> save_as(Visual? visual)
+        {
+            if(visual == null) return false;
+            
+            var top_level = TopLevel.GetTopLevel(visual);
+            string base_dir = AppDomain.CurrentDomain.BaseDirectory;
+            var storage_folder = await top_level.StorageProvider.TryGetFolderFromPathAsync(new Uri(base_dir));
+            var file = await top_level.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+            {
+                Title = "Select a RISC-V assembly file",
+                SuggestedStartLocation = storage_folder,
+                FileTypeChoices = new List<FilePickerFileType>
+                {
+                    new FilePickerFileType("Assembly Files")
+                    {
+                        Patterns = new[] { "*.s", "*.asm" }
+                    },
+                    new FilePickerFileType("All Files")
+                    {
+                        Patterns = new[] { "*.*" }
+                    }
+                },
+            });
+            if(file != null)
+            {
+                string path = file.TryGetLocalPath() ?? throw new Exception("Unable to get file path");
+                try
+                {
+                    AssemblerTitle = path;
+                    assembler_text_edited = false;
+                    System.IO.File.WriteAllText(path, AssemblerText);
+                    return true;
+                }
+                catch(Exception e)
+                {
+                    MessageBoxService.ShowError(e.Message, visual);
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        private async Task<bool> save_dialog(Visual? visual)
+        {
+            if(visual == null) return false;
+            
+            if(!assembler_text_edited) return true;
+            if(AssemblerTitle.Last() != '*') return true;
+            return await save_assembly(visual);
+        }
+
+        public async Task<bool> save_assembly(Visual? visual)
+        {
+            if(visual == null) return false;
+            if (AssemblerTitle == "*") return false;
+            if (AssemblerTitle.Substring(0, AssemblerTitle.LastIndexOf("*")) == "New Assembly File")
+            {
+                return await save_as(visual);
+            }
+            
+            System.IO.File.WriteAllText(AssemblerTitle.Substring(0, AssemblerTitle.LastIndexOf("*")), AssemblerText);
+            AssemblerTitle = AssemblerTitle.Substring(0, AssemblerTitle.LastIndexOf("*"));
+            assembler_text_edited = false;
+            
+            return true;
+        }
+
+        public void new_assembly(Visual? visual)
+        {
+            if(visual == null) return;
+            if (!(save_dialog(visual).Result))
+            {
+                return;
+            }
+            
+            AssemblerText = "";
+            AssemblerTitle = "New Assembly File";
+            assembler_text_edited = false;
+        }
         
         public async Task open_program(Visual? visual)
         {
@@ -398,33 +515,71 @@ namespace risc_v_GUI.ViewModels
                 }
                 catch(Exception e)
                 {
-                    var error_win = new Window
-                    {
-                        Title = "Error",
-                        Width = 300,
-                        Height = 150,
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                        Content = new StackPanel
-                        {
-                            Margin = new Thickness(10),
-                            Spacing = 10,
-                            Children =
-                            {
-                                new TextBlock { Text = "An Error Occured", FontWeight = FontWeight.Bold },
-                                new TextBlock { Text = e.Message, TextWrapping = TextWrapping.Wrap },
-                                new Button
-                                {
-                                    Content = "OK",
-                                    HorizontalAlignment = HorizontalAlignment.Center,
-                                }
-                            }
-                        }
-                    };
-                    
-                    ((Button)((StackPanel)error_win.Content).Children[2]).Click += (s, args) => error_win.Close();
-                    error_win.ShowDialog(TopLevel.GetTopLevel(visual) as Window);
+                    MessageBoxService.ShowError(e.Message, visual);
                 }
             }
+        }
+
+        public async Task open_assembly(Visual? visual)
+        {
+            if(visual == null) return;
+            
+            var top_level = TopLevel.GetTopLevel(visual);
+            string base_dir = AppDomain.CurrentDomain.BaseDirectory;
+            var storage_folder = await top_level.StorageProvider.TryGetFolderFromPathAsync(new Uri(base_dir));
+            var files = await top_level.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            {
+                Title = "Select a RISC-V assembly file",
+                SuggestedStartLocation = storage_folder,
+                FileTypeFilter = new List<FilePickerFileType>
+                {
+                    new FilePickerFileType("Assembly Files")
+                    {
+                        Patterns = new[] { "*.s", "*.asm" }
+                    },
+                    new FilePickerFileType("All Files")
+                    {
+                        Patterns = new[] { "*.*" }
+                    }
+                },
+                AllowMultiple = false
+            });
+            if(files.Count > 0)
+            {
+                string path = files[0].TryGetLocalPath() ?? throw new Exception("Unable to get file path");
+                try
+                {
+                    AssemblerTitle = path;
+                    AssemblerText = System.IO.File.ReadAllText(path);
+                    AssemblerTitle = AssemblerTitle.Substring(0, AssemblerTitle.LastIndexOf('*'));
+                    assembler_text_edited = false;
+                }
+                catch (Exception e)
+                {
+                    MessageBoxService.ShowError(e.Message, visual);
+                }
+            }
+        }
+
+        public async Task assemble(Visual? visual)
+        {
+            if (AssemblerTitle == "New Assembly File")
+            {
+                MessageBoxService.ShowError("No assembly file is currently open.", visual);
+                return;
+            }
+            string in_path = AssemblerTitle.Last() == '*' ? AssemblerTitle.Substring(0, AssemblerTitle.Length - 2) : AssemblerTitle;
+            string out_path = in_path.Substring(0, in_path.LastIndexOf('.')) + ".elf";
+
+            try
+            { 
+                Assembler.assemble(in_path, out_path);
+            } catch (Exception e)    
+            {
+                AssemblerOutput = e.Message;
+                return;
+            }
+            AssemblerOutput = "Assembly successful. Output written to " + out_path;
         }
     }
 }

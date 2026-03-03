@@ -53,9 +53,8 @@ D - Doubleword  64b
 +-----+-------+-------------------------------+
 
 TODO
-1. Assembler window
-2. Light GPU and display support
-3. File system support
+2. File system support
+3. Light GPU and display support
 4. Device manager
 5. RISCV privileged architecture support
 6. Add support for compressed instructions (16-bit)
