@@ -21,6 +21,11 @@ public class Bus
                 interrupt_device.interrupt_requested += external_interrupt;
                 interrupt_device.interrupt_cleared += clear_external_interrupt;
             }
+            if (d1 is IDmaDevice)
+            {
+                IDmaDevice dma_device = (IDmaDevice)d1;
+                dma_device.connect_bus(this);
+            }
             foreach (IMemoryDevice d2 in devices)
             {
                 if(d1 != d2 && d1.start_addr < d2.end_addr && d2.start_addr < d1.end_addr)

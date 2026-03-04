@@ -24,6 +24,7 @@ public class EmulatorService
         devices = new List<IMemoryDevice>();
         devices.Add(memory); // 5 MB main memory
         devices.Add(new IODevice(12, 1024 * 1024 * 5));
+        devices.Add(new Disk(1024 * 1024 * 5 + 12));
         bus = new Bus(devices);
         cpu = new Cpu(bus);
         cpu.set_pc(loader.GetFirstExecutableAddress());
