@@ -32,7 +32,6 @@
 
     <ItemGroup>
       <Folder Include="Converters\" />
-      <Folder Include="disks\" />
     </ItemGroup>
 
     <ItemGroup>

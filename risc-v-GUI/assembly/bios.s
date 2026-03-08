@@ -8,10 +8,16 @@
     .globl bios_puts
     .globl bios_clin
     .globl bios_getc
+    .globl bios_rsec
+    .globl bios_wsec
+    .globl heap_start
     .globl _start
 
 # MMIO console
 .equ MMIO_CONSOLE, 0x500000
+
+# Disk controller MMIO
+.equ MMIO_DISK, 0x50000C
 
 _start:
     la sp, stack_top
@@ -122,11 +128,79 @@ bios_getc:
     lb   a0, 8(t0)      # read from input register
     ret
 
+# ----------------------------------------------
+# bios_read_sector(uint32 sector_num, uint32 buffer_addr)
+# Reads a 512-byte sector from disk into memory
+# Arg: a0 = sector number, a1 = buffer address
+# Clobbers: t0, t1, t2
+# --------------------------------------------------
+bios_rsec:
+    PUSH ra
+    
+    li t0, MMIO_DISK
+    
+    sw a0, 0(t0)                    # write sector number to disk controller
+    sw a1, 8(t0)                    # write buffer address to disk
+    li t1, 1
+    sw t1, 16(t0)                   # start read operation
+    
+wait_for_disk_read:
+    lw t1, 20(t0)                   # read status register
+    li t2, 1
+    beq t1, t2, wait_for_disk_read  # wait until disk is ready
+    
+    li t2, 2
+    beq t1, t2, handle_read_error        # if error bit is set, handle error
+    
+    POP ra
+    ret
+    
+handle_read_error:
+    ebreak
+    POP ra
+    ret
+    
+# --------------------------------------------------
+# bios_write_sector(uint32 sector_num, uint32 buffer_addr)
+# Writes a 512-byte sector from memory to disk
+# Arg: a0 = sector number, a1 = buffer address
+# Clobbers: t0, t1, t2
+# --------------------------------------------------
+bios_wsec:
+    PUSH ra
+    
+    li t0, MMIO_DISK
+    
+    sw a0, 0(t0)                    # write sector number to disk controller
+    sw a1, 8(t0)                    # write buffer address to disk
+    li t1, 2
+    sw t1, 16(t0)                   # start write operation
+   
+wait_for_disk_write:
+    lw t1, 20(t0)                   # read status register
+    li t2, 1
+    beq t1, t2, wait_for_disk_write # wait until disk is ready
+    
+    li t2, 2
+    beq t1, t2, handle_write_error   # if error bit is set
+    
+    POP ra
+    ret
+
+handle_write_error:
+    ebreak
+    POP ra
+    ret
+    
     .section .bss
     .align 4
 digit_buf:
     .space 12
-    
+
 stack_bottom:
     .space 1024
 stack_top:
+
+heap_start:
+    .space 4096
+    

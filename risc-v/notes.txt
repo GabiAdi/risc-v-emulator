@@ -52,6 +52,20 @@ D - Doubleword  64b
 | x31 | t6    | Temporary / scratch (caller)  |
 +-----+-------+-------------------------------+
 
+
+Fat16 Command registers
++--------+---------------+-----------------------------+
+| Offset | Name          | Description                 |
++--------+---------------+-----------------------------+
+| 0x00   | LBA_LOW       | Low bytes of sector number  |
+| 0x04   | LBA_HIGH      | High bytes of sector number |
+| 0x08   | MEM_ADDR_LOW  | Low bytes of memory address |
+| 0x0C   | MEM_ADDR_HIGH | Reserved                    |
+| 0x10   | COMMAND       | Command to execute          |
+| 0x14   | STATUS        | Status of the command       |
++--------+---------------+-----------------------------+
+
+
 TODO
 2. File system support
 3. Light GPU and display support

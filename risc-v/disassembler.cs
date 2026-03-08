@@ -38,9 +38,15 @@ public class Disassembler
 
         using (var enumerator = disasmEnumerable.GetEnumerator())
         {
-            if (!enumerator.MoveNext())
-                throw new Exception("Failed to disassemble instruction");
-
+            try
+            {
+                if (!enumerator.MoveNext())
+                    throw new Exception("Failed to disassemble instruction");
+            } catch (NullReferenceException)
+            {
+                return "invalid";
+            }
+            
             var ins = enumerator.Current;
 
             // Split mnemonic and operands
