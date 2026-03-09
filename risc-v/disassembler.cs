@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Reko.Core;
 using Reko.Arch.RiscV;
 using Reko.Core.Memory;
+using Reko.Core.Machine;
 
 public class Disassembler
 {
@@ -10,10 +11,12 @@ public class Disassembler
     private Dictionary<uint, string> symbols;
     private RiscVArchitecture arch;
 
-    public Disassembler(uint startAddress, Dictionary<uint, string> symbols = null)
+    public Disassembler(uint startAddress, Dictionary<uint, string> rawSymbols)
     {
         currentAddress = startAddress;
-        this.symbols = symbols ?? new Dictionary<uint, string>();
+
+        // Convert to Reko Address-keyed dictionary for native symbol resolution
+        symbols = rawSymbols;
 
         arch = new RiscVArchitecture(
             services: null,
@@ -22,11 +25,6 @@ public class Disassembler
         );
     }
 
-    /// <summary>
-    /// Disassembles a single RV32 instruction (4 bytes)
-    /// </summary>
-    /// <param name="instructionWord">Raw 32-bit instruction</param>
-    /// <returns>Disassembled instruction string with symbols</returns>
     public string DisassembleInstruction(uint instructionWord, uint address)
     {
         currentAddress = address;
@@ -42,34 +40,36 @@ public class Disassembler
             {
                 if (!enumerator.MoveNext())
                     throw new Exception("Failed to disassemble instruction");
-            } catch (NullReferenceException)
+            }
+            catch (NullReferenceException)
             {
                 return "invalid";
             }
-            
+
             var ins = enumerator.Current;
 
-            // Split mnemonic and operands
-            string[] parts = ins.ToString().Split(new[] { ' ' }, 2);
+            var options = new MachineInstructionRendererOptions(
+                flags: MachineInstructionRendererFlags.None
+            );
+
+            var renderer = new StringRenderer();
+            ins.Render(renderer, options);
+            string rendered = renderer.ToString();
+
+            // Replace addresses in Reko's exact output format (zero-padded 8 digit hex)
+            foreach (var kvp in symbols)
+            {
+                string rekoAddr = $"0x{kvp.Key:X8}";
+                rendered = rendered.Replace(rekoAddr, kvp.Value, StringComparison.OrdinalIgnoreCase);
+            }
+
+            string[] parts = rendered.Split(new[] { '\t', ' ' }, 2);
             string mnemonic = parts[0];
             string operands = parts.Length > 1 ? parts[1] : "";
 
-            // Replace exact addresses in operands only
-            foreach (var kvp in symbols)
-            {
-                string addrHex = $"0x{kvp.Key:X}"; // format like 0xADDR
-                operands = operands.Replace(addrHex, kvp.Value);
-            }
+            string text = mnemonic.PadRight(10) + operands;
 
-            // Pad address and mnemonic for alignment
-            int addrWidth = 10;
-            int mnemonicWidth = 10;
-
-            string text = $"{mnemonic}".PadRight(mnemonicWidth)+
-                          $"{operands}";
-
-            // Advance current address
-            currentAddress += 4;
+            currentAddress += (uint)ins.Length;  // use actual instruction length (handles compressed 16-bit RVC too)
 
             return text;
         }

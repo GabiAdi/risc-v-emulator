@@ -160,16 +160,19 @@ public class ElfLoader
     {
         Dictionary<uint, string> symbols = new Dictionary<uint, string>();
 
-        ushort shoff = BitConverter.ToUInt16(elfData, 0x20); // Section header offset
+        uint shoff = BitConverter.ToUInt32(elfData, 0x20);
         ushort shentsize = BitConverter.ToUInt16(elfData, 0x2E);
         ushort shnum = BitConverter.ToUInt16(elfData, 0x30);
         ushort shstrndx = BitConverter.ToUInt16(elfData, 0x32); // Section header string table index
 
+        if (shoff == 0 || shnum == 0) return symbols;
+
         // Read section header string table
-        uint shstrOffset = BitConverter.ToUInt32(elfData, (int)(shoff + shstrndx * shentsize + 16));
-        uint shstrSize = BitConverter.ToUInt32(elfData, (int)(shoff + shstrndx * shentsize + 20));
+        uint shstrHeaderAddr = shoff + (uint)(shstrndx * shentsize);
+        uint shstrFileOffset = BitConverter.ToUInt32(elfData, (int)shstrHeaderAddr + 16);
+        uint shstrSize = BitConverter.ToUInt32(elfData, (int)shstrHeaderAddr + 20);
         byte[] shstr = new byte[shstrSize];
-        Array.Copy(elfData, shstrOffset, shstr, 0, shstrSize);
+        Array.Copy(elfData, shstrFileOffset, shstr, 0, shstrSize);
 
         // Iterate section headers to find symbol tables
         for (int i = 0; i < shnum; i++)
@@ -184,27 +187,38 @@ public class ElfLoader
             string sectionName = ReadString(shstr, sh_name);
 
             // Only parse SYMTAB sections
-            if (sh_type == 2) // SHT_SYMTAB
+            if (sh_type == 2 && sh_entsize > 0) // SHT_SYMTAB
             {
                 // Find associated string table
-                uint link = BitConverter.ToUInt32(elfData, offset + 24); // sh_link
-                int strOffset = (int)BitConverter.ToUInt32(elfData, (int)(shoff + link * shentsize + 16));
-                int strSize = (int)BitConverter.ToUInt32(elfData, (int)(shoff + link * shentsize + 20));
+                uint link = BitConverter.ToUInt32(elfData, offset + 24); 
+                uint strHeaderAddr = shoff + (link * shentsize);
+                uint strOffset = BitConverter.ToUInt32(elfData, (int)strHeaderAddr + 16);
+                uint strSize = BitConverter.ToUInt32(elfData, (int)strHeaderAddr + 20);
                 byte[] strtab = new byte[strSize];
-                Array.Copy(elfData, strOffset, strtab, 0, strSize);
-
+                Array.Copy(elfData, (int)strOffset, strtab, 0, (int)strSize);
+                
                 int numSymbols = (int)(sh_size / sh_entsize);
                 for (int s = 0; s < numSymbols; s++)
                 {
                     int symOffset = (int)(sh_offset + s * sh_entsize);
                     uint st_name = BitConverter.ToUInt32(elfData, symOffset);
-                    uint st_value = BitConverter.ToUInt32(elfData, symOffset + 4);
-                    // uint st_size = BitConverter.ToUInt32(elfData, symOffset + 8);
-                    // byte st_info = elfData[symOffset + 12];
+                    uint st_value = BitConverter.ToUInt32(elfData, symOffset + 4) + GetFirstExecutableAddress(); // Adjust symbol value to actual memory address
+                    
 
                     string name = ReadString(strtab, st_name);
-                    if (!string.IsNullOrEmpty(name) && !symbols.ContainsKey(st_value))
+                    
+                    byte st_info = elfData[symOffset + 12];
+                    int type = st_info & 0x0F;
+                    
+                    // Filter out:
+                    // type 3 = Section (e.g., .text)
+                    // type 4 = File (e.g., bios.s)
+                    // name starts with '$' = RISC-V mapping symbols ($x, $d)
+                    if (!string.IsNullOrEmpty(name) && type != 3 && type != 4 && !name.StartsWith("$")) 
+                    {
+                        // Removed the ContainsKey check so real functions overwrite mapping artifacts
                         symbols[st_value] = name;
+                    }
                 }
             }
         }

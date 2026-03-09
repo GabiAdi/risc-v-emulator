@@ -1,5 +1,13 @@
     .include "bios_macros.s"
    
+.section .data
+.align 4
+b_fat_start:    .word 0
+b_root_start:   .word 0
+b_data_start:   .word 0
+b_sec_per_clus: .word 0
+b_root_entries: .word 0
+   
     .section .text
     .globl bios_putc
     .globl bios_puth
@@ -8,9 +16,14 @@
     .globl bios_puts
     .globl bios_clin
     .globl bios_getc
+    .globl heap_start
+    .globl bios_memcmp
+    .globl bios_memcpy
     .globl bios_rsec
     .globl bios_wsec
-    .globl heap_start
+    .globl bios_init
+    .globl bios_find
+    .globl bios_load
     .globl _start
 
 # MMIO console
@@ -128,6 +141,53 @@ bios_getc:
     lb   a0, 8(t0)      # read from input register
     ret
 
+# --------------------------------------------------
+# bios_memcmp(uint32* ptr1, uint32* ptr2, uint32 length)
+# Compares two memory regions word by word
+# Args: a0 = ptr1, a1 = ptr2, a2 = length
+# Clobbers: t0, t1, t2
+# Returns: a0 = 0 if equal, nonzero if different
+# --------------------------------------------------
+bios_memcmp:
+    PUSH ra
+    
+    li t0, 0
+memcmp_loop:
+    lbu t1, 0(a0)
+    lbu t2, 0(a1)
+    bne t1, t2, memcmp_diff
+    addi a0, a0, 1
+    addi a1, a1, 1
+    addi t0, t0, 1
+    blt t0, a2, memcmp_loop
+    li a0, 0
+    POP ra
+    ret
+memcmp_diff:
+    li a0, 1
+    POP ra
+    ret
+    
+# --------------------------------------------------
+# bios_memcpy(uint32* dest, uint32* src, uint32 length)
+# Copies memory from src to dest word by word
+# Args: a0 = dest, a1 = src, a2 = length
+# Clobbers: t0, t1
+# --------------------------------------------------
+bios_memcpy:
+    PUSH ra
+    beqz a2, memcpy_done
+memcpy_loop:
+    lbu t0, 0(a1)
+    sb t0, 0(a0)
+    addi a0, a0, 1
+    addi a1, a1, 1
+    addi a2, a2, -1
+    bnez a2, memcpy_loop
+memcpy_done:
+    POP ra
+    ret
+
 # ----------------------------------------------
 # bios_read_sector(uint32 sector_num, uint32 buffer_addr)
 # Reads a 512-byte sector from disk into memory
@@ -192,6 +252,165 @@ handle_write_error:
     POP ra
     ret
     
+# --------------------------------------------------
+# bios_init_fat()
+# Reads the FAT filesystem parameters from the boot sector and stores them in .data
+# Clobbers: t0, t1, t2, t3, t4
+# --------------------------------------------------
+bios_init:
+    PUSH ra
+    PUSH s0; PUSH s1; PUSH s2; PUSH s3; PUSH s4
+    
+    li a0, 0
+    la a1, heap_start
+    jal ra, bios_rsec  
+    
+    la t0, heap_start
+    
+    # 1. Reserved Sectors (FAT Start)
+    lhu s0, 0x0E(t0)   
+    la t1, b_fat_start
+    sw s0, 0(t1)       # Store FAT Start
+    
+    # 2. Calculate Root Start
+    lbu t1, 0x10(t0)   # FAT Count
+    lhu t2, 0x16(t0)   # Sectors per FAT
+    mul t3, t1, t2     # Total FAT size
+    add s1, s0, t3     # s1 = Root Start (s0 was FAT start)
+    la t1, b_root_start
+    sw s1, 0(t1)
+    
+    # 3. Calculate Data Start
+    lhu s2, 0x11(t0)   # Root entry count
+    la t1, b_root_entries
+    sw s2, 0(t1)
+    
+    slli t2, s2, 5     # entry count * 32
+    srli t2, t2, 9     # / 512
+    add s3, s1, t2     # s3 = Data Start (s1 was Root start)
+    la t1, b_data_start
+    sw s3, 0(t1)
+    
+    # 4. Sectors per Cluster
+    lbu s4, 0x0D(t0)   
+    la t1, b_sec_per_clus
+    sw s4, 0(t1)
+    
+    POP s4; POP s3; POP s2; POP s1; POP s0
+    POP ra
+    ret
+
+# --------------------------------------------------
+# bios_find_file(char* filename)
+# Searches the root directory for a file with the given name and returns its starting cluster
+# Arg: a0 = pointer to 11-byte filename (padded with spaces)
+# Clobbers: t0, t1, t2, t3, t4
+# Returns: a0 = starting cluster of file, or 0 if not found
+# --------------------------------------------------
+bios_find:
+    PUSH ra
+    PUSH s0; PUSH s1; PUSH s2; PUSH s3; PUSH s4
+    
+    mv s3, a0           # s3 = target filename (survives jal)
+    lw s4, b_root_start # s4 = current sector (survives jal)
+    lw s0, b_root_entries
+    
+find_next_sector:
+    mv a0, s4
+    la a1, heap_start
+    jal ra, bios_rsec  
+    
+    li s1, 0           
+    la s2, heap_start  
+    
+check_entry:
+    lbu t0, 0(s2)      
+    beqz t0, find_failed  
+    
+    mv a0, s2     
+    mv a1, s3           # Use s3, t5 would be destroyed by rsec
+    li a2, 11
+    jal ra, bios_memcmp
+    
+    beqz a0, find_success 
+    
+    addi s2, s2, 32
+    addi s1, s1, 1
+    addi s0, s0, -1
+    beqz s0, find_failed  
+    
+    li t0, 16
+    blt s1, t0, check_entry  
+    
+    addi s4, s4, 1      # Use s4, t6 would be destroyed by memcmp
+    j find_next_sector
+    
+find_success:
+    lhu a0, 26(s2)    
+    j find_done
+find_failed:
+    li a0, 0
+find_done:
+    POP s4; POP s3; POP s2; POP s1; POP s0
+    POP ra
+    ret
+    
+# --------------------------------------------------
+# bios_read_file(uint32 start_cluster, uint32* buffer)
+# Reads the entire file starting from the given cluster into the buffer
+# Arg: a0 = starting cluster, a1 = buffer address
+# Clobbers: t0, t1, t2, t3, t4
+# --------------------------------------------------
+bios_load:
+    ebreak
+    PUSH ra
+    PUSH s0; PUSH s1; PUSH s2; PUSH s3
+    
+    mv s0, a0     # s0 = current cluster
+    mv s1, a1     # s1 = buffer pointer
+    
+load_loop:
+    # 1. Convert cluster to LBA
+    lw t2, b_data_start
+    addi t3, s0, -2
+    lw s2, b_sec_per_clus # s2 = sectors to read in this cluster
+    mul t3, t3, s2
+    add s3, t2, t3        # s3 = starting LBA of this cluster
+    
+read_entire_cluster:
+    mv a0, s3             # Sector to read
+    mv a1, s1             # Destination
+    jal ra, bios_rsec
+    
+    addi s3, s3, 1        # Next LBA
+    addi s1, s1, 512      # Next Memory Slot
+    addi s2, s2, -1       # One less sector to go
+    bnez s2, read_entire_cluster # Loop until cluster is fully read
+    
+    # 2. Get next cluster from FAT
+    slli t2, s0, 1
+    srli t3, t2, 9
+    lw t4, b_fat_start
+    add a0, t3, t4
+    la a1, heap_start     # Scratch area
+    jal ra, bios_rsec    
+    
+    li t3, 511
+    and t2, t2, t3
+    la t3, heap_start
+    add t3, t3, t2
+    lhu s0, 0(t3)        # Update s0 with next cluster link
+    
+    li t2, 0xFFF8
+    
+    ebreak
+    
+    bltu s0, t2, load_loop  
+    
+    POP s3; POP s2; POP s1; POP s0
+    POP ra
+    ret
+    
     .section .bss
     .align 4
 digit_buf:
@@ -202,5 +421,5 @@ stack_bottom:
 stack_top:
 
 heap_start:
-    .space 4096
+    .space 0x10000
     

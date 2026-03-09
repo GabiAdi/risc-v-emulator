@@ -65,6 +65,38 @@ Fat16 Command registers
 | 0x14   | STATUS        | Status of the command       |
 +--------+---------------+-----------------------------+
 
+Fat 16 BIOS Parameter Block (BPB)
++--------+------+---------------------+-------------------------------------------------------+
+| Offset | Size | Name                | Description                                           |
++--------+------+---------------------+-------------------------------------------------------+
+| 0x00   | 3    | Jump instruction    | Jump to the boot                                      |
+| 0x03   | 8    | OEM Name            |                                                       |
+| 0x0B   | 2    | Bytes per sector    | Usually 512                                           |
+| 0x0D   | 1    | Sectors per cluster | 4, 8, 16 or 32                                        |
+| 0x0E   | 2    | Reserved sectors    | Number of reserved sectors (Sectors before first FAT) |
+| 0x10   | 1    | FAT count           | Number of FAT tables (Usually 2)                      |
+| 0x11   | 2    | Root entry count    | Number of root directory (Max files in root)          |
+| 0x13   | 2    | Total sectors       | Total number of sectors in the volume                 |
+| 0x15   | 1    | Media descriptor    | Fixed disk is F8                                      |
+| 0x16   | 2    | Sectors per FAT     | Number of sectors occupied by each FAT table          |
+| 0x18   | 2    | Sectors per track   | For physical disk                                     |
+| 0x1A   | 2    | Number of heads     | For physical disk                                     |
+| 0x1C   | 4    | Hidden sectors      | Number of hidden (sectors before the partition)       |
+| 0x20   | 4    | Total sectors       | Used if offset 0x13 is 0                              |
++--------+------+---------------------+-------------------------------------------------------+
+
+Extended Boot record (EBR) for FAT16
++--------+------+-------------------------------------------------------+
+| Offset | Size | Description                                           |
++--------+------+-------------------------------------------------------+
+| 0x24   | 1    | Physical drive number                                 |
+| 0x25   | 1    | Reserved                                              |
+| 0x26   | 1    | Extended boot signature (0x29)                        |
+| 0x27   | 4    | Volume serial number                                  |
+| 0x2B   | 11   | Volume label (Padded with spaces)                     |
+| 0x36   | 8    | File system type                                      |
+| 0x1FE  | 2    | Boot sector signature (0x55AA)                        |
++--------+------+-------------------------------------------------------+
 
 TODO
 2. File system support

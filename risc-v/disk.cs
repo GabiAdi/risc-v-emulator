@@ -193,7 +193,8 @@ public class Disk : IMemoryDevice, IDmaDevice
         if(sector * 512 > file_size) throw new Exception("Disk read out of bounds");
         
         byte[] buffer = new byte[512];
-        disk_file.ReadExactly(buffer, (int)(sector * 512), 512);
+        disk_file.Position = (long)sector * 512;
+        disk_file.ReadExactly(buffer, 0, 512);
         return buffer;
     }
     
