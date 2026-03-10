@@ -1,5 +1,5 @@
     .include "bios_macros.s"
-    
+        
     .section .data
 counter_val:
     .word 0

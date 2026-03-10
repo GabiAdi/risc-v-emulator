@@ -102,13 +102,15 @@ namespace risc_v_GUI.ViewModels
         public ICommand back_pressed { get; }
         public ICommand open_memory_view { get; }
         public ICommand open_assembler_view { get; }
+        public ICommand open_symbol_view { get; }
 
         public ObservableCollection<string> Status { get; } = new ObservableCollection<string>();
         public ObservableCollection<string> Search { get; } = new ObservableCollection<string>() {"String", "Binary", "Decimal", "Hexadecimal"};
         public ObservableCollection<MemoryRow> Memory { get; } = new ObservableCollection<MemoryRow>();
         public ObservableCollection<MemoryRow> MemoryView { get; } = new ObservableCollection<MemoryRow>();  
         public ObservableCollection<RegisterRow> Registers { get; } = new ObservableCollection<RegisterRow>();
-
+        public ObservableCollection<SymbolRow> SymbolView { get;  } = new ObservableCollection<SymbolRow>();
+        
         public EmulatorService Emulator { get; }
 
         public event Action<char>? on_key_pressed;
@@ -126,6 +128,15 @@ namespace risc_v_GUI.ViewModels
             foreach (IODevice ioDevice in Emulator.devices.OfType<IODevice>())
             {
                 on_key_pressed += ioDevice.key_pressed;
+            }
+            
+            foreach (var symbol in Emulator.symbols)
+            {
+                SymbolView.Add(new SymbolRow()
+                {
+                    Address = symbol.Key.ToString("X8"),
+                    Symbol = symbol.Value,
+                });
             }
             
             toggle_halt_on_ebreak = new RelayCommand(() =>
@@ -173,6 +184,24 @@ namespace risc_v_GUI.ViewModels
                         AssemblerView assemblerView = new AssemblerView();
                         assemblerView.DataContext = this;
                         assemblerView.Show();
+                    }
+                }
+            });
+            open_symbol_view = new RelayCommand(() =>
+            {
+                if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                {
+                    var existing_window = desktop.Windows.OfType<SymbolView>().FirstOrDefault();
+
+                    if (existing_window != null)
+                    {
+                        existing_window.Activate();
+                    }
+                    else
+                    {
+                        SymbolView symbolView = new SymbolView();
+                        symbolView.DataContext = this;
+                        symbolView.Show();
                     }
                 }
             });

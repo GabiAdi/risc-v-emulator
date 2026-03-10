@@ -339,7 +339,7 @@ public class Cpu
                 else if (d.funct3 == 0x5) // LHU
                 {
                     r.mem_addr = d.val_rs1 + d.imm;
-                    r.mem_width = 1;
+                    r.mem_width = 2; // Ne verjem da je to tak dugo bilo 1
                     r.dest = d.rd;
                     r.read_from_memory = true;
                     r.zero_extend = true; 

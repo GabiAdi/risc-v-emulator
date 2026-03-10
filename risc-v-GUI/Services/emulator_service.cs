@@ -15,9 +15,19 @@ public class EmulatorService
     public Disassembler disassembler;
     public SystemHandler system_handler;
     public List<IMemoryDevice> devices;
+    public Dictionary<uint, string> symbols;
     
     public EmulatorService()
     {
+        // Fat16Reader fat = new Fat16Reader("../../../disks/disk.img");
+        // var e = fat.FindFile("test.txt");
+        // Console.WriteLine($"  Full name     : {e.FullName}");
+        // Console.WriteLine($"  File size     : {e.FileSize} bytes");
+        // Console.WriteLine($"  First cluster : {e.FirstCluster}");
+        // Console.WriteLine($"  First sector  : {e.FirstSector}");
+        // Console.WriteLine($"  Byte offset   : 0x{e.ByteOffset:X}");
+        // Console.WriteLine($"  Cluster chain : {string.Join(" -> ", e.ClusterChain)}");
+        
         loader = new ElfLoader(program_path);
         Memory memory = new Memory(1024 * 1024 * 5, 0x0); // 5 MB
         loader.WriteToMem(memory);
@@ -29,7 +39,8 @@ public class EmulatorService
         cpu = new Cpu(bus);
         cpu.set_pc(loader.GetFirstExecutableAddress());
         cpu.halt_on_break = true;
-        disassembler = new Disassembler(loader.TextStart, loader.GetSymbols());
+        symbols = loader.GetSymbols();
+        disassembler = new Disassembler(loader.TextStart, symbols);
         system_handler = new SystemHandler(bus, loader.GetFirstExecutableAddress());
         
         cpu.syscall_occured += system_handler.handle_syscall;

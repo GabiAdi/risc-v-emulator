@@ -1,0 +1,19 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:risc_v_GUI.ViewModels"
+        x:Class="risc_v_GUI.SymbolView"
+        x:DataType="vm:MainWindowViewModel"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        Title="SymbolView"
+        Width="800" Height="450"
+        Background="#FF1E1E1E">
+        <DataGrid Foreground="White" ItemsSource="{Binding SymbolView}" IsReadOnly="True" AutoGenerateColumns="False" GridLinesVisibility="All" FontFamily="Consolas" RowHeight="22">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="120"/>
+                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="*"/>
+            </DataGrid.Columns>
+                
+        </DataGrid>
+</Window>

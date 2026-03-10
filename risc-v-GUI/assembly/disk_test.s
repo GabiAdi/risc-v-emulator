@@ -1,16 +1,25 @@
     .include "bios_macros.s"
     
     .section .data
-target_file: .ascii "TEST    TXT"
+target_file: .ascii "IMAGE   BMP"
 error_msg: .ascii "File not found!\n\0"
-success_msg: .ascii "File read successfully!\n\0"
+success_msg: .ascii "File read successfully! File size: \n\0"
+init_msg: .ascii "Saving file at address: \0"
+newline: .ascii "\n\0"
 
 .section .text
     .globl main
     .global _start
     
 main:
-    # la t0, heap_start
+    la a0, init_msg
+    jal ra, bios_puts
+    
+    la a0, heap_start
+    jal ra, bios_putx
+    
+    la a0, newline
+    jal ra, bios_puts
 
     jal ra, bios_init
     
@@ -19,15 +28,21 @@ main:
     
     beqz a0, file_not_found
     
+    PUSH a1
+    
     la s11, heap_start
-    li t0, 0x1000
-    add s11, s11, t0
-
+    
     mv a1, s11
     jal ra, bios_load
 
     la a0, success_msg
     jal ra, bios_puts
+    
+    POP a0
+    jal ra, bios_putu
+    
+    #la a0, heap_start
+    #jal ra, bios_puts
     
     ebreak
     

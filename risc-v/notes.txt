@@ -99,9 +99,12 @@ Extended Boot record (EBR) for FAT16
 +--------+------+-------------------------------------------------------+
 
 TODO
-2. File system support
 3. Light GPU and display support
 4. Device manager
-5. RISCV privileged architecture support
-6. Add support for compressed instructions (16-bit)
-7. UI improvements
+5. Malloc
+6. Simple shell
+7. File system writing and new files
+8. RISCV privileged architecture support
+9. Add support for compressed instructions (16-bit)
+10. UI improvements (Symbols in tables, input validation)
+
