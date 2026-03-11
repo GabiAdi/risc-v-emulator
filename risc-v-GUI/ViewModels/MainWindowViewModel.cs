@@ -11,6 +11,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
@@ -32,6 +33,18 @@ namespace risc_v_GUI.ViewModels
             set
             {
                 _outputText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Bitmap _gpuBitmap;
+
+        public Bitmap GpuBitmap
+        {
+            get => _gpuBitmap;
+            set
+            {
+                _gpuBitmap = value;
                 OnPropertyChanged();
             }
         }
@@ -103,6 +116,7 @@ namespace risc_v_GUI.ViewModels
         public ICommand open_memory_view { get; }
         public ICommand open_assembler_view { get; }
         public ICommand open_symbol_view { get; }
+        public ICommand open_screen_view { get; }
 
         public ObservableCollection<string> Status { get; } = new ObservableCollection<string>();
         public ObservableCollection<string> Search { get; } = new ObservableCollection<string>() {"String", "Binary", "Decimal", "Hexadecimal"};
@@ -125,6 +139,7 @@ namespace risc_v_GUI.ViewModels
             Emulator.system_handler.OutputProduced += OnOutputProduced;
             Emulator.system_handler.StatusChanged += OnStatusChanged;
             Emulator.devices.OfType<IODevice>().First().OutputWritten += io_written;
+            Emulator.devices.OfType<Gpu>().First().OutputWritten += gpu_written;
             foreach (IODevice ioDevice in Emulator.devices.OfType<IODevice>())
             {
                 on_key_pressed += ioDevice.key_pressed;
@@ -202,6 +217,24 @@ namespace risc_v_GUI.ViewModels
                         SymbolView symbolView = new SymbolView();
                         symbolView.DataContext = this;
                         symbolView.Show();
+                    }
+                }
+            });
+            open_screen_view = new RelayCommand(() =>
+            {
+                if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                {
+                    var existing_window = desktop.Windows.OfType<ScreenView>().FirstOrDefault();
+
+                    if (existing_window != null)
+                    {
+                        existing_window.Activate();
+                    }
+                    else
+                    {
+                        ScreenView screenView = new ScreenView();
+                        screenView.DataContext = this;
+                        screenView.Show();
                     }
                 }
             });
@@ -327,6 +360,11 @@ namespace risc_v_GUI.ViewModels
             }
             if(output != "\b")
                 Dispatcher.UIThread.Post(() => OutputText += output);
+        }
+
+        private void gpu_written(Bitmap image)
+        {
+            Dispatcher.UIThread.Post(() => GpuBitmap = image);
         }
         
         private void OnOutputProduced(string output)

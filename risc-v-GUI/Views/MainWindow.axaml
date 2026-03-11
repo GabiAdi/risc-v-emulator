@@ -18,7 +18,8 @@
             <MenuItem Header="_Tools">
                 <MenuItem Header="_Memory view" Command="{Binding open_memory_view}"/>
                 <MenuItem Header="_Assembler" Command="{Binding open_assembler_view}" />
-               <MenuItem Header="_Symbol view" Command="{Binding open_symbol_view}"/> 
+                <MenuItem Header="_Symbol view" Command="{Binding open_symbol_view}"/> 
+                <MenuItem Header="Screen _view" Command="{Binding open_screen_view}"/>
             </MenuItem>
             <MenuItem Header="_Cpu settings">
                 <MenuItem Header="_Halt on ebreak" Command="{Binding toggle_halt_on_ebreak}">

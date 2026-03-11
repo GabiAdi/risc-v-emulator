@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Avalonia.Media.Imaging;
 using risc_v;
 using SystemHandler = risc_v_GUI.Services.SystemHandler;
 
@@ -16,18 +17,10 @@ public class EmulatorService
     public SystemHandler system_handler;
     public List<IMemoryDevice> devices;
     public Dictionary<uint, string> symbols;
+    public Bitmap gpu_image;
     
     public EmulatorService()
     {
-        // Fat16Reader fat = new Fat16Reader("../../../disks/disk.img");
-        // var e = fat.FindFile("test.txt");
-        // Console.WriteLine($"  Full name     : {e.FullName}");
-        // Console.WriteLine($"  File size     : {e.FileSize} bytes");
-        // Console.WriteLine($"  First cluster : {e.FirstCluster}");
-        // Console.WriteLine($"  First sector  : {e.FirstSector}");
-        // Console.WriteLine($"  Byte offset   : 0x{e.ByteOffset:X}");
-        // Console.WriteLine($"  Cluster chain : {string.Join(" -> ", e.ClusterChain)}");
-        
         loader = new ElfLoader(program_path);
         Memory memory = new Memory(1024 * 1024 * 5, 0x0); // 5 MB
         loader.WriteToMem(memory);
@@ -35,6 +28,7 @@ public class EmulatorService
         devices.Add(memory); // 5 MB main memory
         devices.Add(new IODevice(12, 1024 * 1024 * 5));
         devices.Add(new Disk(1024 * 1024 * 5 + 12, "../../../disks/disk.img"));
+        devices.Add(new Gpu(1024 * 1024 * 5 + 36));
         bus = new Bus(devices);
         cpu = new Cpu(bus);
         cpu.set_pc(loader.GetFirstExecutableAddress());

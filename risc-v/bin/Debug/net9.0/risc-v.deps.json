@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v9.0": {
       "risc-v/1.0.0": {
         "dependencies": {
-          "Reko.Decompiler.Runtime": "0.12.1"
+          "Reko.Decompiler.Runtime": "0.12.1",
+          "Avalonia.Base": "11.3.10.0"
         },
         "runtime": {
           "risc-v.dll": {}
@@ -485,6 +486,14 @@
             "fileVersion": "0.12.1.0"
           }
         }
+      },
+      "Avalonia.Base/11.3.10.0": {
+        "runtime": {
+          "Avalonia.Base.dll": {
+            "assemblyVersion": "11.3.10.0",
+            "fileVersion": "11.3.10.0"
+          }
+        }
       }
     }
   },
@@ -500,6 +509,11 @@
       "sha512": "sha512-tbUGmGDDWr0iZo5PiFoogI8LkQ8TeAnz8gEvdV3HS9Cfx8FxS9rk0fKzTkv9QzM57S/pKlM71j3rhLY3LGrXAw==",
       "path": "reko.decompiler.runtime/0.12.1",
       "hashPath": "reko.decompiler.runtime.0.12.1.nupkg.sha512"
+    },
+    "Avalonia.Base/11.3.10.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

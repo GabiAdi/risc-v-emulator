@@ -283,3 +283,5 @@
 /home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/risc-v.pdb
 /home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/risc-v.genruntimeconfig.cache
 /home/user/RiderProjects/risc-v/risc-v/obj/Debug/net9.0/ref/risc-v.dll
+/home/user/RiderProjects/risc-v/risc-v/bin/Debug/net9.0/Avalonia.Base.dll
+/home/user/RiderProjects/risc-v/risc-v/bin/Debug/net9.0/Avalonia.Base.xml

@@ -107,24 +107,27 @@ public class Disk : IMemoryDevice, IDmaDevice
 
     public uint read_word(uint addr)
     {
-        if(addr > 0x14) throw new Exception("Invalid disk register address");   
+        if(addr > size - 4) throw new Exception("Invalid disk register address");   
         return command_registers.get_reg(addr);
     }
 
     public uint read_halfword(uint addr)
     {
+        if(addr > size - 2) throw new Exception("Invalid disk register address");
         uint offset = addr - addr % 4;
         return (command_registers.get_reg(offset) >> (int)((addr%4)*8)) & 0xFFFF;
     }
     
     public uint read_byte(uint addr)
     {
+        if(addr > size) throw new Exception("Invalid disk register address");
         uint offset = addr - addr % 4;
         return (command_registers.get_reg(offset) >> (int)((addr%4)*8)) & 0xFF;
     }
     
     public void write_byte(uint addr, uint value)
     {
+        if(addr > size) throw new Exception("Invalid disk register address");
         uint offset = addr - addr % 4;
         int shift = (int)(addr % 4) * 8;
         uint reg_val = command_registers.get_reg(offset);
@@ -135,6 +138,7 @@ public class Disk : IMemoryDevice, IDmaDevice
     
     public void write_halfword(uint addr, uint value)
     {
+        if(addr > size - 2) throw new Exception("Invalid disk register address");
         uint offset = addr - addr % 4;
         int shift = (int)(addr % 4) * 8;
         uint reg_val = command_registers.get_reg(offset);
@@ -145,7 +149,7 @@ public class Disk : IMemoryDevice, IDmaDevice
     
     public void write_word(uint addr, uint value)
     {
-        if(addr > 0x14) throw new Exception("Invalid disk register address");
+        if(addr > size-4) throw new Exception("Invalid disk register address");
 
         command_registers.set_reg(addr, value);
         

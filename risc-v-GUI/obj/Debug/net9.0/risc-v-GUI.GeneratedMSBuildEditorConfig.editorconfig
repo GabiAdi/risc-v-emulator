@@ -33,5 +33,8 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [/home/user/RiderProjects/risc-v/risc-v-GUI/Views/MemoryView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[/home/user/RiderProjects/risc-v/risc-v-GUI/Views/ScreenView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/home/user/RiderProjects/risc-v/risc-v-GUI/Views/SymbolView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

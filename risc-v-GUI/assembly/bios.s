@@ -36,6 +36,9 @@ b_root_entries: .word 0
 # Disk controller MMIO
 .equ MMIO_DISK, 0x50000C
 
+# GPU MMIO
+.equ MMIO_GPU, 0x500024
+
 _start:
     la sp, stack_top
     jal main
@@ -471,5 +474,5 @@ stack_top:
 bios_scratch:
     .space 0x1000
 heap_start:
-    .space 0x10000
+    .space 0x100000  # 1 MB
     
