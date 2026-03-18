@@ -68,6 +68,8 @@ public class Gpu : IMemoryDevice, IDmaDevice
         }
     }
 
+    public const uint default_size = 16;
+    
     public uint size { get; }
     public uint start_addr { get; }
     public uint end_addr { get; }
@@ -76,7 +78,7 @@ public class Gpu : IMemoryDevice, IDmaDevice
     public Bitmap image { get; private set; }
     private Bus bus;
 
-    public Gpu(uint start_addr, uint size=16)
+    public Gpu(uint start_addr, uint size=default_size)
     {
         this.start_addr = start_addr;
         this.size = size;
@@ -148,9 +150,11 @@ public class Gpu : IMemoryDevice, IDmaDevice
                 {
                     bmp_bytes[i] = (byte)bus.read(command_registers.MEM_ADDR+i, 1);
                 }
-                
-                var stream = new MemoryStream(bmp_bytes);
-                image = new Bitmap(stream);
+
+                using (var stream = new MemoryStream(bmp_bytes))
+                {
+                    image = new Bitmap(stream);
+                }
                 
                 command_registers.STATUS = 0;
                 command_registers.COMMAND = 0;

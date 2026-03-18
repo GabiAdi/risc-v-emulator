@@ -1,0 +1,227 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:risc_v_GUI.ViewModels"
+        xmlns:local="clr-namespace:risc_v_GUI"
+        x:Class="risc_v_GUI.DeviceView"
+        x:DataType="vm:MainWindowViewModel"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        Title="Device manager"
+        Width="800" Height="450"
+        Background="#FF1E1E1E">
+        
+ <Grid ColumnDefinitions="180,*">
+
+    <!-- ══ LEFT PANEL ══════════════════════════════════════════════════ -->
+<Border Grid.Column="0" Background="#12121e" Padding="12">
+  <DockPanel LastChildFill="False">
+
+    <!-- Save button pinned to bottom -->
+    <Button DockPanel.Dock="Bottom"
+            Content="💾  Save"
+            Background="#cba6f7"
+            Foreground="#1e1e2e"
+            FontWeight="SemiBold"
+            CornerRadius="6"
+            Padding="10,9"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"
+            Margin="0,8,0,0"
+            Click="OnSaveClick"/>
+
+    <!-- Device list -->
+    <StackPanel Spacing="6">
+      <TextBlock Text="DEVICES" Foreground="#6c7086"
+                 FontSize="11" FontWeight="Bold"
+                 LetterSpacing="2" Margin="0,0,0,10"/>
+
+      <!-- ROM -->
+      <Border Tag="ROM" CornerRadius="6" Padding="10,9" Cursor="Hand"
+              Background="#2a1520" BorderBrush="#f38ba8" BorderThickness="1"
+              PointerPressed="OnSourceItemPressed">
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <Ellipse Width="8" Height="8" Fill="#f38ba8" VerticalAlignment="Center"/>
+          <TextBlock Text="ROM" Foreground="White" FontWeight="SemiBold"/>
+        </StackPanel>
+      </Border>
+
+      <!-- RAM -->
+      <Border Tag="RAM" CornerRadius="6" Padding="10,9" Cursor="Hand"
+              Background="#1a2a1a" BorderBrush="#a6e3a1" BorderThickness="1"
+              PointerPressed="OnSourceItemPressed">
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <Ellipse Width="8" Height="8" Fill="#a6e3a1" VerticalAlignment="Center"/>
+          <TextBlock Text="RAM" Foreground="White" FontWeight="SemiBold"/>
+        </StackPanel>
+      </Border>
+
+      <!-- Disk -->
+      <Border Tag="Disk" CornerRadius="6" Padding="10,9" Cursor="Hand"
+              Background="#2a1f10" BorderBrush="#fab387" BorderThickness="1"
+              PointerPressed="OnSourceItemPressed">
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <Ellipse Width="8" Height="8" Fill="#fab387" VerticalAlignment="Center"/>
+          <TextBlock Text="Disk" Foreground="White" FontWeight="SemiBold"/>
+        </StackPanel>
+      </Border>
+
+      <!-- GPU -->
+      <Border Tag="GPU" CornerRadius="6" Padding="10,9" Cursor="Hand"
+              Background="#20152a" BorderBrush="#cba6f7" BorderThickness="1"
+              PointerPressed="OnSourceItemPressed">
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <Ellipse Width="8" Height="8" Fill="#cba6f7" VerticalAlignment="Center"/>
+          <TextBlock Text="GPU" Foreground="White" FontWeight="SemiBold"/>
+        </StackPanel>
+      </Border>
+
+      <!-- Console -->
+      <Border Tag="Console" CornerRadius="6" Padding="10,9" Cursor="Hand"
+              Background="#0f2025" BorderBrush="#89dceb" BorderThickness="1"
+              PointerPressed="OnSourceItemPressed">
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <Ellipse Width="8" Height="8" Fill="#89dceb" VerticalAlignment="Center"/>
+          <TextBlock Text="Console" Foreground="White" FontWeight="SemiBold"/>
+        </StackPanel>
+      </Border>
+
+    </StackPanel>
+  </DockPanel>
+</Border>
+
+    <!-- ══ RIGHT PANEL ═════════════════════════════════════════════════ -->
+    <DockPanel Grid.Column="1" Margin="16">
+
+      <!-- Table header -->
+      <Border DockPanel.Dock="Top" Background="#313244"
+              Padding="12,8" CornerRadius="6,6,0,0">
+        <Grid ColumnDefinitions="110,140,120,*,110">
+          <TextBlock Grid.Column="0" Text="Type"          Foreground="#cdd6f4" FontWeight="Bold"/>
+          <TextBlock Grid.Column="1" Text="Start Address" Foreground="#cdd6f4" FontWeight="Bold"/>
+          <TextBlock Grid.Column="2" Text="Size"          Foreground="#cdd6f4" FontWeight="Bold"/>
+          <TextBlock Grid.Column="3" Text="File"          Foreground="#cdd6f4" FontWeight="Bold"/>
+          <TextBlock Grid.Column="4" Text=""              Foreground="#cdd6f4" FontWeight="Bold"/>
+        </Grid>
+      </Border>
+
+      <!-- Drop zone -->
+      <Border x:Name="DropBorder"
+              DockPanel.Dock="Top"
+              Background="#1e1e2e"
+              BorderBrush="#45475a" BorderThickness="1"
+              CornerRadius="0,0,6,6"
+              MinHeight="400"
+              DragDrop.AllowDrop="True"
+              DragDrop.DragOver="OnTableDragOver"
+              DragDrop.Drop="OnTableDrop">
+        <ScrollViewer>
+          <ItemsControl x:Name="TableList">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:DeviceViewModel">
+                <Border BorderBrush="#313244" BorderThickness="0,0,0,1"
+                        Padding="6,6" Cursor="Hand"
+                        PointerPressed="OnRowPressed">
+                  <Grid ColumnDefinitions="110,140,120,*,110">
+
+                    <!-- Type badge -->
+                    <StackPanel Grid.Column="0"
+                                Orientation="Horizontal" Spacing="8"
+                                VerticalAlignment="Center">
+                      <Ellipse Width="9" Height="9"
+                               Fill="{Binding BadgeColor}"
+                               VerticalAlignment="Center"/>
+                      <TextBlock Text="{Binding Type}"
+                                 Foreground="White"
+                                 FontWeight="SemiBold"
+                                 VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Start address -->
+                    <TextBox Grid.Column="1"
+                             Text="{Binding StartAddressText}"
+                             Background="#181825" Foreground="#cdd6f4"
+                             BorderBrush="#45475a" BorderThickness="1"
+                             FontFamily="Consolas,monospace"
+                             Padding="6,4" Margin="0,0,8,0"
+                             VerticalAlignment="Center"/>
+
+                    <!-- Size (all devices) -->
+                    <!-- Size column: fixed (read-only label) or editable -->
+                    <TextBox Grid.Column="2"
+                             IsVisible="{Binding !IsFixedSize}"
+                             Text="{Binding SizeText}"
+                             Background="#181825" Foreground="#cdd6f4"
+                             BorderBrush="#45475a" BorderThickness="1"
+                             FontFamily="Consolas,monospace"
+                             Padding="6,4" Margin="0,0,8,0"
+                             VerticalAlignment="Center"/>
+
+                    <Border Grid.Column="2"
+                            IsVisible="{Binding IsFixedSize}"
+                            Background="#12121e"
+                            BorderBrush="#313244" BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="6,4" Margin="0,0,8,0"
+                            VerticalAlignment="Center">
+                      <StackPanel Orientation="Horizontal" Spacing="6">
+                        <TextBlock Text="{Binding SizeText}"
+                                   Foreground="#45475a"
+                                   FontFamily="Consolas,monospace"/>
+                        <TextBlock Text="fixed"
+                                   Foreground="#313244"
+                                   FontSize="10"
+                                   VerticalAlignment="Center"/>
+                      </StackPanel>
+                    </Border>
+
+                    <!-- File (ROM / Disk only) -->
+                    <StackPanel Grid.Column="3"
+                                Orientation="Horizontal" Spacing="6"
+                                VerticalAlignment="Center">
+                      <Ellipse Width="6" Height="6"
+                               Fill="{Binding BadgeColor}"
+                               VerticalAlignment="Center"
+                               Opacity="0.6"
+                               IsVisible="{Binding HasFile}"/>
+                      <TextBlock Foreground="#6c7086"
+                                 TextTrimming="CharacterEllipsis"
+                                 VerticalAlignment="Center"
+                                 Text="{Binding FileName}"
+                                 IsVisible="{Binding HasFile}"/>
+                      <TextBlock Foreground="#45475a"
+                                 VerticalAlignment="Center"
+                                 Text="—"
+                                 IsVisible="{Binding !HasFile}"/>
+                    </StackPanel>
+
+                    <!-- Actions -->
+                    <StackPanel Grid.Column="4"
+                                Orientation="Horizontal" Spacing="4"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center">
+                      <Button IsVisible="{Binding HasFile}"
+                              Content="📂"
+                              Background="#2a2a3e"
+                              Foreground="White"
+                              Padding="7,4"
+                              Click="OnBrowseClick"
+                              ToolTip.Tip="Choose file"/>
+                      <Button Content="✕"
+                              Background="#2a1520"
+                              Foreground="#f38ba8"
+                              Padding="7,4"
+                              Click="OnRemoveClick"
+                              ToolTip.Tip="Remove device"/>
+                    </StackPanel>
+
+                  </Grid>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </ScrollViewer>
+      </Border>
+    </DockPanel>
+  </Grid>
+</Window>

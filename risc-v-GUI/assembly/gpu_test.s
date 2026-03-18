@@ -4,7 +4,7 @@
 target_file: .ascii "LINUX   PNG"
 error_msg: .ascii "File not found!\n\0"
 newline: .ascii "\n\0"
-.equ MMIO_GPU, 0x500024
+.equ MMIO_GPU, 0xFF000024
 
 .section .text
     .globl main

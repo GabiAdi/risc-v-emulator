@@ -117,6 +117,7 @@ namespace risc_v_GUI.ViewModels
         public ICommand open_assembler_view { get; }
         public ICommand open_symbol_view { get; }
         public ICommand open_screen_view { get; }
+        public ICommand open_device_view { get; }
 
         public ObservableCollection<string> Status { get; } = new ObservableCollection<string>();
         public ObservableCollection<string> Search { get; } = new ObservableCollection<string>() {"String", "Binary", "Decimal", "Hexadecimal"};
@@ -235,6 +236,24 @@ namespace risc_v_GUI.ViewModels
                         ScreenView screenView = new ScreenView();
                         screenView.DataContext = this;
                         screenView.Show();
+                    }
+                }
+            });
+            open_device_view = new RelayCommand(() =>
+            {
+                if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                {
+                    var existing_window = desktop.Windows.OfType<DeviceView>().FirstOrDefault();
+
+                    if (existing_window != null)
+                    {
+                        existing_window.Activate();
+                    }
+                    else
+                    {
+                        DeviceView deviceView = new DeviceView(Emulator.bus.devices);
+                        deviceView.DataContext = this;
+                        deviceView.Show();
                     }
                 }
             });
@@ -448,8 +467,8 @@ namespace risc_v_GUI.ViewModels
         private void GetMemoryView(uint address, ObservableCollection<MemoryRow> memory_view, uint range_before = 32, uint range_after = 32)
         {
             memory_view.Clear();
-            
-            if(address < range_before) throw new Exception("Address is too low to display the requested range.");
+
+            if (address < range_before) range_before = address;
             
             if(address + range_after > Emulator.bus.max_addr) range_after = Emulator.bus.max_addr - address;
             
@@ -647,6 +666,35 @@ namespace risc_v_GUI.ViewModels
                 return;
             }
             AssemblerOutput = "Assembly successful. Output written to " + out_path;
+        }
+
+        public void new_devices(ObservableCollection<DeviceViewModel> devices)
+        {
+            List<IMemoryDevice> device_list = new List<IMemoryDevice>();
+            foreach (var device in devices)
+            {
+                switch (device.Type)
+                {
+                    case "ROM":
+                        device_list.Add(new Rom(device.StartAddress, device.FilePath)); 
+                        break;
+                    case "RAM":
+                        device_list.Add(new Ram(device.Size, device.StartAddress));
+                        break;
+                    case "Disk":
+                        device_list.Add(new Disk(device.StartAddress, device.FilePath));
+                        break;
+                    case "GPU":
+                        device_list.Add(new Gpu(device.StartAddress));
+                        break;
+                    case "Console":
+                        device_list.Add(new IODevice(device.StartAddress));
+                        break;
+                    default:
+                        throw new Exception($"Unknown device {device.Type}");
+                }
+            }
+            Emulator.new_devices(device_list);
         }
     }
 }

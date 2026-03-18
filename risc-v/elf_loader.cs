@@ -10,11 +10,13 @@ public class ElfLoader
     private uint entryPoint;
     private uint textStart;
     private uint textEnd;
+    private uint ram_start;
 
-    public ElfLoader(string path)
+    public ElfLoader(string path, uint ram_start)
     {
         elfData = File.ReadAllBytes(path);
         ParseElfHeader();
+        this.ram_start = ram_start;
     }
 
     private void ParseElfHeader()
@@ -127,7 +129,7 @@ public class ElfLoader
                 // Verify it's within file bounds
                 if (fileOffset + 4 <= elfData.Length)
                 {
-                    return fileOffset;
+                    return fileOffset + ram_start; // ?
                 }
             }
         }
@@ -238,7 +240,7 @@ public class ElfLoader
         return Encoding.ASCII.GetString(bytes.ToArray());
     }
 
-    public void WriteToMem(Memory memory)
+    public void WriteToMem(Ram memory)
     {
         for (uint i = 0; i < elfData.Length; i++)
         {

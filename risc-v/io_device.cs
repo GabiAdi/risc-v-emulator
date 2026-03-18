@@ -2,6 +2,8 @@ namespace risc_v;
 
 public class IODevice : IMemoryDevice, IInterruptDevice
 {
+    public const uint default_size = 0xC;
+    
     public uint size { get; }
     public uint start_addr { get; }
     public uint end_addr { get; }

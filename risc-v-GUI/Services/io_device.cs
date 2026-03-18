@@ -8,6 +8,8 @@ namespace risc_v_GUI.Services;
 
 public class IODevice : IMemoryDevice, IInterruptDevice
 {
+    public const uint default_size = 12;
+    
     public event Action<string>? OutputWritten;
     
     public uint size { get; }
@@ -22,7 +24,7 @@ public class IODevice : IMemoryDevice, IInterruptDevice
     
     bool interrupt_pending = false;
     
-    public IODevice(uint size, uint start_addr)
+    public IODevice(uint start_addr, uint size=default_size)
     {
         this.size = size;
         this.start_addr = start_addr;

@@ -2,6 +2,8 @@ ENTRY(_start)
 
 SECTIONS
 {
+    . = 0x4;
+    
     .text : {
         *(.text*)
     }

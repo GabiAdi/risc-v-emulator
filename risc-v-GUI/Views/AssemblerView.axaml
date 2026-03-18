@@ -5,22 +5,103 @@
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="{Binding AssemblerTitle}"
-        Width="800" Height="600"
-        Background="#FF1E1E1E">
-        
-        <DockPanel LastChildFill="True">
-                <Menu DockPanel.Dock="Top" Background="#FF2D2D2D">
-                        <MenuItem Header="_File">
-                                <MenuItem Header="_New" Command="{Binding new_assembly}" CommandParameter="{Binding $parent[Window]}"/>
-                                <MenuItem Header="_Open" Command="{Binding open_assembly}" CommandParameter="{Binding $parent[Window]}"/>
-                                <MenuItem Header="_Save" Command="{Binding save_assembly}" CommandParameter="{Binding $parent[Window]}"/>
-                                <MenuItem Header="Save _as" Command="{Binding save_as}" CommandParameter="{Binding $parent[Window]}"/>
-                        </MenuItem>
-                </Menu>
-                <Grid Margin="20" RowDefinitions="430, 100" ColumnDefinitions="500, 200">
-                        <TextBox Margin="2" Grid.Row="0" Grid.Column="0" Name="tb_edit" Text="{Binding AssemblerText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" AcceptsTab="True"/>
-                        <Button Margin="2" Grid.Row="0" Grid.Column="1" Command="{Binding assemble}" CommandParameter="{Binding $parent[Window]}">Assemble</Button>
-                        <TextBox Margin="2" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="tb_output" IsReadOnly="True" Text="{Binding AssemblerOutput}"/>
-                </Grid>
-        </DockPanel>
+        Width="900" Height="640"
+        Background="#181825">
+
+  <Window.Styles>
+    <Style Selector="Button">
+      <Setter Property="Background"      Value="#313244"/>
+      <Setter Property="Foreground"      Value="#cdd6f4"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="CornerRadius"    Value="5"/>
+      <Setter Property="Padding"         Value="12,6"/>
+      <Setter Property="FontWeight"      Value="SemiBold"/>
+      <Setter Property="Cursor"          Value="Hand"/>
+    </Style>
+    <Style Selector="Button:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#45475a"/>
+    </Style>
+    <Style Selector="Button.accent">
+      <Setter Property="Background" Value="#cba6f7"/>
+      <Setter Property="Foreground" Value="#1e1e2e"/>
+    </Style>
+    <Style Selector="Button.accent:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#b4befe"/>
+    </Style>
+    <Style Selector="TextBox">
+      <Setter Property="Background"      Value="#1e1e2e"/>
+      <Setter Property="Foreground"      Value="#cdd6f4"/>
+      <Setter Property="BorderBrush"     Value="#45475a"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="CaretBrush"      Value="#cdd6f4"/>
+      <Setter Property="FontFamily"      Value="Consolas,monospace"/>
+      <Setter Property="FontSize"        Value="13"/>
+    </Style>
+    <Style Selector="TextBox:focus">
+      <Setter Property="BorderBrush" Value="#cba6f7"/>
+    </Style>
+    <Style Selector="Menu">
+      <Setter Property="Background" Value="#12121e"/>
+      <Setter Property="Foreground" Value="#cdd6f4"/>
+    </Style>
+    <Style Selector="MenuItem">
+      <Setter Property="Foreground" Value="#cdd6f4"/>
+    </Style>
+  </Window.Styles>
+
+  <DockPanel LastChildFill="True">
+
+    <!-- ── Menu bar ─────────────────────────────────────────────────── -->
+    <Menu DockPanel.Dock="Top">
+      <MenuItem Header="_File">
+        <MenuItem Header="_New"     Command="{Binding new_assembly}"  CommandParameter="{Binding $parent[Window]}"/>
+        <MenuItem Header="_Open"    Command="{Binding open_assembly}" CommandParameter="{Binding $parent[Window]}"/>
+        <MenuItem Header="_Save"    Command="{Binding save_assembly}" CommandParameter="{Binding $parent[Window]}"/>
+        <MenuItem Header="Save _As" Command="{Binding save_as}"       CommandParameter="{Binding $parent[Window]}"/>
+      </MenuItem>
+    </Menu>
+
+    <!-- ── Assemble button bar ──────────────────────────────────────── -->
+    <Border DockPanel.Dock="Top"
+            Background="#1e1e2e"
+            BorderBrush="#313244" BorderThickness="0,0,0,1"
+            Padding="12,8">
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <TextBlock Text="ASSEMBLER" Foreground="#6c7086"
+                   FontSize="11" FontWeight="Bold" LetterSpacing="2"
+                   VerticalAlignment="Center" Margin="0,0,12,0"/>
+        <Button Content="⚙  Assemble"
+                Classes="accent"
+                Command="{Binding assemble}"
+                CommandParameter="{Binding $parent[Window]}"/>
+      </StackPanel>
+    </Border>
+
+    <!-- ── Output bar ───────────────────────────────────────────────── -->
+    <Border DockPanel.Dock="Bottom"
+            BorderBrush="#313244" BorderThickness="0,1,0,0"
+            Height="110">
+      <TextBox Name="tb_output"
+               IsReadOnly="True"
+               AcceptsReturn="True"
+               Text="{Binding AssemblerOutput}"
+               Background="#12121e"
+               Foreground="#a6adc8"
+               BorderThickness="0"
+               Padding="12"/>
+    </Border>
+
+    <!-- ── Editor ───────────────────────────────────────────────────── -->
+    <TextBox Name="tb_edit"
+             Text="{Binding AssemblerText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+             AcceptsReturn="True"
+             AcceptsTab="True"
+             TextWrapping="NoWrap"
+             Background="#1e1e2e"
+             BorderThickness="0"
+             Padding="12"
+             VerticalAlignment="Stretch"
+             HorizontalAlignment="Stretch"/>
+
+  </DockPanel>
 </Window>

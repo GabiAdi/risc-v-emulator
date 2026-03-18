@@ -51,7 +51,7 @@ public class Disk : IMemoryDevice, IDmaDevice
                     throw new Exception($"Unknown disk reg {addr}");
             }
         }
-        
+
         public void set_reg(uint addr, uint value)
         {
             switch (addr)
@@ -79,21 +79,26 @@ public class Disk : IMemoryDevice, IDmaDevice
             }
         }
     }
-    
+
+    public const uint default_size = 0x18;
+
     public uint size { get; }
     public uint start_addr { get; }
     public uint end_addr { get; }
 
     private FileStream disk_file;
+
+    public string file_path { get; }
     private int file_size;
     private command_regs command_registers;
     private Bus bus;
 
-    public Disk(uint start_addr, string file_path, uint size=0x18)
+    public Disk(uint start_addr, string file_path, uint size=default_size)
     {
         command_registers = new command_regs();
         disk_file = new FileStream(file_path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
         file_size = (int)disk_file.Length;
+        this.file_path = file_path;
         
         this.size = size;
         this.start_addr = start_addr;

@@ -31,13 +31,13 @@ b_root_entries: .word 0
     .globl _start
 
 # MMIO console
-.equ MMIO_CONSOLE, 0x500000
+.equ MMIO_CONSOLE, 0xFF000000
 
 # Disk controller MMIO
-.equ MMIO_DISK, 0x50000C
+.equ MMIO_DISK, 0xFF00000C
 
 # GPU MMIO
-.equ MMIO_GPU, 0x500024
+.equ MMIO_GPU, 0xFF000024
 
 _start:
     la sp, stack_top

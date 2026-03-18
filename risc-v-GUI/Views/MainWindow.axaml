@@ -6,80 +6,206 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="risc_v_GUI"
         Width="1440" Height="900"
-        Background="#FF1E1E1E">
-    
-        
-    <DockPanel LastChildFill="True">
-        <Menu DockPanel.Dock="Top" Background="#FF2D2D2D">
-            <MenuItem Header="_File">
-                <MenuItem Header="_Open" Command="{Binding open_program}" CommandParameter="{Binding $parent[Window]}" />
-                <MenuItem Header="_Exit" />
-            </MenuItem>
-            <MenuItem Header="_Tools">
-                <MenuItem Header="_Memory view" Command="{Binding open_memory_view}"/>
-                <MenuItem Header="_Assembler" Command="{Binding open_assembler_view}" />
-                <MenuItem Header="_Symbol view" Command="{Binding open_symbol_view}"/> 
-                <MenuItem Header="Screen _view" Command="{Binding open_screen_view}"/>
-            </MenuItem>
-            <MenuItem Header="_Cpu settings">
-                <MenuItem Header="_Halt on ebreak" Command="{Binding toggle_halt_on_ebreak}">
-                    <MenuItem.Icon>
-                        <CheckBox IsChecked="{Binding halt_on_ebreak }" Margin="0"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-            </MenuItem>
-        </Menu>
-    
+        Background="#181825">
+
+  <Window.Styles>
+    <Style Selector="Button">
+      <Setter Property="Background"      Value="#313244"/>
+      <Setter Property="Foreground"      Value="#cdd6f4"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="CornerRadius"    Value="5"/>
+      <Setter Property="Padding"         Value="12,6"/>
+      <Setter Property="FontWeight"      Value="SemiBold"/>
+      <Setter Property="Cursor"          Value="Hand"/>
+    </Style>
+    <Style Selector="Button:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#45475a"/>
+    </Style>
+    <Style Selector="Button:disabled /template/ ContentPresenter">
+      <Setter Property="Background" Value="#1e1e2e"/>
+      <Setter Property="Opacity"    Value="0.4"/>
+    </Style>
+    <Style Selector="Button.accent">
+      <Setter Property="Background" Value="#cba6f7"/>
+      <Setter Property="Foreground" Value="#1e1e2e"/>
+    </Style>
+    <Style Selector="Button.accent:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#b4befe"/>
+    </Style>
+    <Style Selector="Button.danger">
+      <Setter Property="Background" Value="#f38ba8"/>
+      <Setter Property="Foreground" Value="#1e1e2e"/>
+    </Style>
+    <Style Selector="Button.danger:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#eba0ac"/>
+    </Style>
+    <Style Selector="DataGrid">
+      <Setter Property="Background"               Value="#1e1e2e"/>
+      <Setter Property="Foreground"               Value="#cdd6f4"/>
+      <Setter Property="BorderBrush"              Value="#313244"/>
+      <Setter Property="BorderThickness"          Value="1"/>
+      <Setter Property="RowBackground"            Value="#1e1e2e"/>
+      <Setter Property="HorizontalGridLinesBrush" Value="#313244"/>
+      <Setter Property="VerticalGridLinesBrush"   Value="#313244"/>
+      <Setter Property="FontFamily"               Value="Consolas,monospace"/>
+    </Style>
+    <Style Selector="DataGridColumnHeader">
+      <Setter Property="Background"  Value="#313244"/>
+      <Setter Property="Foreground"  Value="#cdd6f4"/>
+      <Setter Property="FontWeight"  Value="Bold"/>
+      <Setter Property="Padding"     Value="10,8"/>
+      <Setter Property="BorderBrush" Value="#45475a"/>
+    </Style>
+    <Style Selector="DataGridCell">
+      <Setter Property="Padding" Value="10,0"/>
+    </Style>
+    <Style Selector="Menu">
+      <Setter Property="Background" Value="#12121e"/>
+      <Setter Property="Foreground" Value="#cdd6f4"/>
+    </Style>
+    <Style Selector="MenuItem">
+      <Setter Property="Foreground" Value="#cdd6f4"/>
+    </Style>
+    <Style Selector="MenuItem:pointerover /template/ Border#Root">
+      <Setter Property="Background" Value="#313244"/>
+    </Style>
+  </Window.Styles>
+
+  <DockPanel LastChildFill="True">
+
+    <!-- ── Menu bar ─────────────────────────────────────────────────── -->
+    <Menu DockPanel.Dock="Top">
+      <MenuItem Header="_File">
+        <MenuItem Header="_Open"  Command="{Binding open_program}" CommandParameter="{Binding $parent[Window]}"/>
+        <MenuItem Header="_Exit"/>
+      </MenuItem>
+      <MenuItem Header="_Tools">
+        <MenuItem Header="_Memory view"    Command="{Binding open_memory_view}"/>
+        <MenuItem Header="_Assembler"      Command="{Binding open_assembler_view}"/>
+        <MenuItem Header="_Symbol view"    Command="{Binding open_symbol_view}"/>
+        <MenuItem Header="Screen _view"    Command="{Binding open_screen_view}"/>
+        <MenuItem Header="_Device manager" Command="{Binding open_device_view}"/>
+      </MenuItem>
+      <MenuItem Header="_CPU Settings">
+        <MenuItem Header="_Halt on ebreak" Command="{Binding toggle_halt_on_ebreak}">
+          <MenuItem.Icon>
+            <CheckBox IsChecked="{Binding halt_on_ebreak}" Margin="0"/>
+          </MenuItem.Icon>
+        </MenuItem>
+      </MenuItem>
+    </Menu>
+
     <LayoutTransformControl>
-        <LayoutTransformControl.LayoutTransform>
-            <ScaleTransform ScaleX="1" ScaleY="1"></ScaleTransform>
-        </LayoutTransformControl.LayoutTransform>
-        
-        <Grid Margin="20" RowDefinitions="Auto,300,400,100" ColumnDefinitions="800,*">
+      <LayoutTransformControl.LayoutTransform>
+        <ScaleTransform ScaleX="1" ScaleY="1"/>
+      </LayoutTransformControl.LayoutTransform>
 
-        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpacing="2" ColumnDefinitions="100, 150, 100, 150, 100, 100">
-            <Button Grid.Column="0" Grid.Row="0" Content="Step" Click="step" Margin="5" Name="bt_step"/>
-            <Button Grid.Column="1" Grid.Row="0" Content="Run until break" Click="run_until_break" Margin="5" Name="bt_run"/>
-            <Button Grid.Column="2" Grid.Row="0" Content="Interrupt" Click="interrupt" Margin="5" Name="bt_int"/>
-            <Button Grid.Column="3" Grid.Row="0" Content="Clear interrupt" Click="clear_interrupt" Margin="5" Name="bt_clr"/>
-            <Button Grid.Column="4" Grid.Row="0" Content="Halt" Click="halt" Margin="5" Name="bt_halt"/>
-            <Button Grid.Column="5" Grid.Row="0" Content="Unhalt" Click="unhalt" Margin="5" Name="bt_unhalt" IsEnabled="False"/>
-        </Grid>
+      <DockPanel Margin="20" LastChildFill="True">
 
-        <TextBox Grid.Row="1" Grid.Column="0" FontFamily="Consolas" IsReadOnly="True" AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding OutputText}" KeyDown="on_key_down">
-            <TextBox.KeyBindings>
-                <KeyBinding  Command="{Binding enter_pressed}" Gesture="Enter" />
-                <KeyBinding  Command="{Binding back_pressed}" Gesture="Back" />
-            </TextBox.KeyBindings>
-        </TextBox>
-      
-        <DataGrid Grid.Row="1" Grid.Column="1" Foreground="White" Margin="5" ItemsSource="{Binding Registers}" IsReadOnly="True" AutoGenerateColumns="False" GridLinesVisibility="All" FontFamily="Consolas" RowHeight="22">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Register" Binding="{Binding Register}" Width="100"/>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="100"/>
-                <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        
-        <DataGrid  Grid.ColumnSpan="2" Grid.Row="2" Foreground="White" Margin="5" ItemsSource="{Binding Memory}" IsReadOnly="True" AutoGenerateColumns="False"  GridLinesVisibility="All" FontFamily="Consolas" RowHeight="22">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="120"/>
-                <DataGridTextColumn Header="Register" Binding="{Binding Register}" Width="100"/>
-                <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="220"/>
-                <DataGridTextColumn Header="Disassembly" Binding="{Binding Disassembly}" Width="*"/>
-                <DataGridTextColumn Header="Ascii" Binding="{Binding Ascii}" Width="100"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        
-        <ListBox Margin="5" Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{Binding Status}">
+        <!-- ── Control toolbar ────────────────────────────────────────── -->
+        <Border DockPanel.Dock="Top"
+                Background="#1e1e2e"
+                BorderBrush="#313244" BorderThickness="1"
+                CornerRadius="6" Padding="10,8" Margin="0,0,0,12">
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <TextBlock Text="EXECUTION" Foreground="#6c7086"
+                       FontSize="11" FontWeight="Bold" LetterSpacing="2"
+                       VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <Button Content="⏵  Step"              Click="step"             Name="bt_step"/>
+            <Button Content="⏵⏵ Run to Break"      Click="run_until_break"  Name="bt_run"   Classes="accent"/>
+            <Button Content="⚡ Interrupt"          Click="interrupt"        Name="bt_int"/>
+            <Button Content="✕  Clear Interrupt"   Click="clear_interrupt"  Name="bt_clr"/>
+            <Button Content="⏸  Halt"              Click="halt"             Name="bt_halt"  Classes="danger"/>
+            <Button Content="⏵  Unhalt"            Click="unhalt"           Name="bt_unhalt" IsEnabled="False"/>
+          </StackPanel>
+        </Border>
+
+        <!-- ── Status bar ─────────────────────────────────────────────── -->
+        <Border DockPanel.Dock="Bottom"
+                Background="#12121e"
+                BorderBrush="#313244" BorderThickness="1"
+                CornerRadius="6" Padding="4" Margin="0,12,0,0"
+                Height="100">
+          <ListBox Background="Transparent"
+                   ItemsSource="{Binding Status}">
             <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding}" FontFamily="Consolas"/>
-                </DataTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding}"
+                           Foreground="#a6adc8"
+                           FontFamily="Consolas,monospace"
+                           FontSize="12"/>
+              </DataTemplate>
             </ListBox.ItemTemplate>
-        </ListBox>
+          </ListBox>
+        </Border>
 
-    </Grid>
+        <!-- ── Main content ───────────────────────────────────────────── -->
+        <Grid RowDefinitions="*,300" ColumnDefinitions="800,*">
+
+          <!-- Console output -->
+          <Border Grid.Row="0" Grid.Column="0"
+                  BorderBrush="#313244" BorderThickness="1"
+                  CornerRadius="6" Margin="0,0,8,8"
+                  ClipToBounds="True">
+            <TextBox FontFamily="Consolas,monospace"
+                     IsReadOnly="True"
+                     AcceptsReturn="True"
+                     TextWrapping="NoWrap"
+                     Background="#12121e"
+                     Foreground="#a6e3a1"
+                     BorderThickness="0"
+                     Text="{Binding OutputText}"
+                     KeyDown="on_key_down"
+                     CaretBrush="#cdd6f4">
+              <TextBox.KeyBindings>
+                <KeyBinding Command="{Binding enter_pressed}" Gesture="Enter"/>
+                <KeyBinding Command="{Binding back_pressed}"  Gesture="Back"/>
+              </TextBox.KeyBindings>
+            </TextBox>
+          </Border>
+
+          <!-- Registers -->
+          <Border Grid.Row="0" Grid.Column="1"
+                  BorderBrush="#313244" BorderThickness="1"
+                  CornerRadius="6" Margin="0,0,0,8"
+                  ClipToBounds="True">
+            <DataGrid ItemsSource="{Binding Registers}"
+                      IsReadOnly="True"
+                      AutoGenerateColumns="False"
+                      GridLinesVisibility="Horizontal"
+                      RowHeight="23"
+                      CanUserResizeColumns="True">
+              <DataGrid.Columns>
+                <DataGridTextColumn Header="Reg"   Binding="{Binding Register}" Width="80"/>
+                <DataGridTextColumn Header="Name"  Binding="{Binding Name}"     Width="80"/>
+                <DataGridTextColumn Header="Value" Binding="{Binding Value}"    Width="*"/>
+              </DataGrid.Columns>
+            </DataGrid>
+          </Border>
+
+          <!-- Memory / disassembly -->
+          <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                  BorderBrush="#313244" BorderThickness="1"
+                  CornerRadius="6"
+                  ClipToBounds="True">
+            <DataGrid ItemsSource="{Binding Memory}"
+                      IsReadOnly="True"
+                      AutoGenerateColumns="False"
+                      GridLinesVisibility="Horizontal"
+                      RowHeight="23"
+                      CanUserResizeColumns="True">
+              <DataGrid.Columns>
+                <DataGridTextColumn Header="Address"     Binding="{Binding Address}"     Width="130"/>
+                <DataGridTextColumn Header="Register"    Binding="{Binding Register}"    Width="100"/>
+                <DataGridTextColumn Header="Value"       Binding="{Binding Value}"       Width="220"/>
+                <DataGridTextColumn Header="Disassembly" Binding="{Binding Disassembly}" Width="*"/>
+                <DataGridTextColumn Header="ASCII"       Binding="{Binding Ascii}"       Width="100"/>
+              </DataGrid.Columns>
+            </DataGrid>
+          </Border>
+
+        </Grid>
+      </DockPanel>
     </LayoutTransformControl>
-    </DockPanel>
+  </DockPanel>
 </Window>

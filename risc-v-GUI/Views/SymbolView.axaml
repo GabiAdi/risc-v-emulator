@@ -1,19 +1,61 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:risc_v_GUI.ViewModels"
         x:Class="risc_v_GUI.SymbolView"
         x:DataType="vm:MainWindowViewModel"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        Title="SymbolView"
-        Width="800" Height="450"
-        Background="#FF1E1E1E">
-        <DataGrid Foreground="White" ItemsSource="{Binding SymbolView}" IsReadOnly="True" AutoGenerateColumns="False" GridLinesVisibility="All" FontFamily="Consolas" RowHeight="22">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="120"/>
-                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="*"/>
-            </DataGrid.Columns>
-                
-        </DataGrid>
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Symbol View"
+        Width="600" Height="500"
+        Background="#181825">
+
+  <Window.Styles>
+    <Style Selector="DataGrid">
+      <Setter Property="Background"               Value="#1e1e2e"/>
+      <Setter Property="Foreground"               Value="#cdd6f4"/>
+      <Setter Property="BorderBrush"              Value="#313244"/>
+      <Setter Property="BorderThickness"          Value="0"/>
+      <Setter Property="RowBackground"            Value="#1e1e2e"/>
+      <Setter Property="HorizontalGridLinesBrush" Value="#313244"/>
+      <Setter Property="VerticalGridLinesBrush"   Value="Transparent"/>
+      <Setter Property="FontFamily"               Value="Consolas,monospace"/>
+    </Style>
+    <Style Selector="DataGridColumnHeader">
+      <Setter Property="Background"  Value="#313244"/>
+      <Setter Property="Foreground"  Value="#cdd6f4"/>
+      <Setter Property="FontWeight"  Value="Bold"/>
+      <Setter Property="Padding"     Value="14,10"/>
+      <Setter Property="BorderBrush" Value="#45475a"/>
+    </Style>
+    <Style Selector="DataGridCell">
+      <Setter Property="Padding" Value="14,0"/>
+    </Style>
+  </Window.Styles>
+
+  <DockPanel Margin="20" LastChildFill="True">
+
+    <!-- ── Header ───────────────────────────────────────────────────── -->
+    <StackPanel DockPanel.Dock="Top" Margin="0,0,0,12">
+      <TextBlock Text="SYMBOL TABLE"
+                 Foreground="#6c7086"
+                 FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
+    </StackPanel>
+
+    <!-- ── Table ────────────────────────────────────────────────────── -->
+    <Border BorderBrush="#313244" BorderThickness="1"
+            CornerRadius="6" ClipToBounds="True">
+      <DataGrid ItemsSource="{Binding SymbolView}"
+                IsReadOnly="True"
+                AutoGenerateColumns="False"
+                GridLinesVisibility="Horizontal"
+                RowHeight="24"
+                CanUserResizeColumns="True"
+                CanUserSortColumns="True">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="160"/>
+          <DataGridTextColumn Header="Symbol"  Binding="{Binding Symbol}"  Width="*"/>
+        </DataGrid.Columns>
+      </DataGrid>
+    </Border>
+
+  </DockPanel>
 </Window>

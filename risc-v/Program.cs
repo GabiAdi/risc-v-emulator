@@ -32,11 +32,11 @@ void WriteHex(uint[] data)
 
 string program_path = "../../../assembly/program";
 
-ElfLoader loader = new ElfLoader(program_path);
+ElfLoader loader = new ElfLoader(program_path, 0x0);
 
 Dictionary<uint, string> symbols = loader.GetSymbols();
 
-Memory memory = new Memory(1024*1024*300, 0x0); // 300 MB
+Ram memory = new Ram(1024*1024*300, 0x0); // 300 MB
 IODevice io_device = new IODevice(1024, 0x20000000); // I/O device at 0x20000000
 
 loader.WriteToMem(memory);
