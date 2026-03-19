@@ -2,13 +2,11 @@ ENTRY(_start)
 
 SECTIONS
 {
-    . = 0x4;
-    
+    . = 0x11000;
     .text : {
         *(.text*)
     }
 
-    . = 0x1000;
     .data : {
         *(.data*)
     }

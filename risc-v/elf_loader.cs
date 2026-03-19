@@ -204,7 +204,7 @@ public class ElfLoader
                 {
                     int symOffset = (int)(sh_offset + s * sh_entsize);
                     uint st_name = BitConverter.ToUInt32(elfData, symOffset);
-                    uint st_value = BitConverter.ToUInt32(elfData, symOffset + 4) + GetFirstExecutableAddress(); // Adjust symbol value to actual memory address
+                    uint st_value = BitConverter.ToUInt32(elfData, symOffset + 4); // Adjust symbol value to actual memory address
                     
 
                     string name = ReadString(strtab, st_name);

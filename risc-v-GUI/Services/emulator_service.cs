@@ -22,13 +22,14 @@ public class EmulatorService
     public EmulatorService()
     {
         devices = new List<IMemoryDevice>();
-        byte[] data = new byte[4] {0x6f, 0x10, 0x40, 0x00};
-        Rom rom = new Rom(0x0, data);
+        Rom rom = new Rom(0x0, "../../../assembly/bios_rom.bin");
         devices.Add(rom);
-        Ram memory = new Ram(1024 * 1024 * 5, rom.end_addr); // 5 MB
+        Ram bios_ram = new Ram(0x10000 - rom.size, rom.end_addr);
+        devices.Add(bios_ram);
+        Ram memory = new Ram(1024 * 1024 * 10, bios_ram.end_addr); // 10 MB
         loader = new ElfLoader(program_path, memory.start_addr);
         loader.WriteToMem(memory);
-        devices.Add(memory); // 5 MB main memory
+        devices.Add(memory); // 10 MB main memory
         devices.Add(new IODevice(0xFF000000));
         devices.Add(new Disk(devices.Last().end_addr, "../../../disks/disk.img"));
         devices.Add(new Gpu(devices.Last().end_addr));

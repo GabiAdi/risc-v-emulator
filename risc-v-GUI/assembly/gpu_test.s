@@ -1,16 +1,17 @@
     .include "bios_macros.s"
+    .include "bios_symbols.s"
     
     .section .data
 target_file: .ascii "LINUX   PNG"
 error_msg: .ascii "File not found!\n\0"
+success_msg: .ascii "Success\n\0"
 newline: .ascii "\n\0"
-.equ MMIO_GPU, 0xFF000024
 
 .section .text
-    .globl main
-    .global _start
+    .globl _start
+    .globl heap_start
     
-main:
+_start:
     la a0, heap_start
     jal ra, bios_putx
     
@@ -18,7 +19,7 @@ main:
     jal ra, bios_puts
 
     jal ra, bios_init
-    
+
     la a0, target_file
     jal ra, bios_find
     
@@ -43,10 +44,23 @@ main:
     li t1, 1
     sw t1, 0x08(t0)            # Write go command for drawing BMP 
     
-    ebreak
+    j file_found
     
 file_not_found:
+    la a0, newline
+    jal ra, bios_puts
     la a0, error_msg
     jal ra, bios_puts
     ebreak
+    
+file_found:
+    la a0, success_msg
+    jal ra, bios_puts
+    ebreak 
+    
+    .section .bss
+    .align 4
+    
+heap_start:
+    .space 0x100000
     

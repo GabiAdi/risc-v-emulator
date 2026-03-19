@@ -268,6 +268,7 @@ namespace risc_v_GUI.ViewModels
             Key.Enter => '\n',
             Key.Tab => '\t',
             Key.Back => '\b',
+            Key.OemPeriod => '.',
             _ => null, // Not a printable character
         };
 
@@ -338,8 +339,7 @@ namespace risc_v_GUI.ViewModels
         public async Task search_memory(byte[] search_bytes)
         {
             MemoryView.Clear();
-            // for (uint i = 0; i < Emulator.bus.max_addr; i++)
-            for(uint i=0; i < 40000; i++)
+            for (uint i = 0; i < Emulator.bus.devices.OfType<Ram>().Last().end_addr; i++)
             {
                 bool match = true;
                 if (i == 0x1000)
