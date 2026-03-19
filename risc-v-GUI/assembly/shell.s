@@ -6,7 +6,7 @@ newline: .ascii "\n\0"
 cmd_help: .ascii "HELP\0"
 cmd_ls: .ascii "LS\0"
 cmd_cat: .ascii "CAT\0"
-msg_help: .ascii "Help:\nhelp - prints this help\nls - prints all files\n\0"
+msg_help: .ascii "Help:\nhelp - prints this help\nls - prints all files\ncat <filename> - prints contents of <filename>\n\0"
 msg_unknown: .ascii "Unkown command\n\0"
 msg_cat_not_found: .ascii "File not found\n\0"
 msg_cat_usage: .asciz "Usage: cat <filename>\n\0"
@@ -54,6 +54,9 @@ trap_handler:
     li t0, 10
     beq a0, t0, enter_pressed
     
+    li t0, 8
+    beq a0, t0, backspace_pressed
+    
     jal ra, bios_putc
     
     li t0, 63
@@ -65,6 +68,17 @@ trap_handler:
     sw s2, 0(s1)
     j interrupt_done
     
+backspace_pressed:
+    beqz s2, interrupt_done
+    
+    addi s2, s2, -1
+    sw s2, 0(s1)
+    
+    li a0, 8
+    jal ra, bios_putc
+
+    j interrupt_done
+
 enter_pressed:
     add t0, s0, s2
     sb zero, 0(t0)
