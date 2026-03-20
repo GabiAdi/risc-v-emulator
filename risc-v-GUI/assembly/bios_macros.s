@@ -10,3 +10,7 @@
     addi sp, sp, 4
 .endm
 
+.macro bios_call func
+    li  t0, \func
+    jalr ra, t0, 0
+.endm

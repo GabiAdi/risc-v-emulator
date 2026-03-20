@@ -6,10 +6,12 @@ newline: .ascii "\n\0"
 cmd_help: .ascii "HELP\0"
 cmd_ls: .ascii "LS\0"
 cmd_cat: .ascii "CAT\0"
-msg_help: .ascii "Help:\nhelp - prints this help\nls - prints all files\ncat <filename> - prints contents of <filename>\n\0"
+cmd_run: .ascii "RUN\0"
+msg_help: .ascii "Help:\nhelp - prints this help\nls - prints all files\ncat <filename> - prints contents of <filename>\nrun <filename> - loads <filename> to memory and runs it\n\0"
 msg_unknown: .ascii "Unkown command\n\0"
-msg_cat_not_found: .ascii "File not found\n\0"
-msg_cat_usage: .asciz "Usage: cat <filename>\n\0"
+msg_file_not_found: .ascii "File not found\n\0"
+msg_cat_usage: .ascii "Usage: cat <filename>\n\0"
+msg_run_usage: .ascii "Usage: run <filename>\n\0"
 msg_shell: .ascii "/$ \0"
 
 .section .text
@@ -49,18 +51,17 @@ trap_handler:
     la s1, input_len
     lw s2, 0(s1)
    
-    jal ra, bios_getc
+    bios_call bios_getc
     
     li t0, 10
     beq a0, t0, enter_pressed
-    
     li t0, 8
     beq a0, t0, backspace_pressed
     
-    jal ra, bios_putc
+    bios_call bios_putc
     
     li t0, 63
-    bge s2, t0, interrupt_done # If buffer full, discard
+    bge s2, t0, interrupt_done
     
     add t1, s0, s2
     sb a0, 0(t1)
@@ -70,60 +71,62 @@ trap_handler:
     
 backspace_pressed:
     beqz s2, interrupt_done
-    
     addi s2, s2, -1
     sw s2, 0(s1)
-    
     li a0, 8
-    jal ra, bios_putc
-
+    bios_call bios_putc
+    li a0, ' '
+    bios_call bios_putc
+    li a0, 8
+    bios_call bios_putc
     j interrupt_done
 
 enter_pressed:
     add t0, s0, s2
     sb zero, 0(t0)
-    
     beqz s2, no_cmd
     
     la a0, newline
-    jal ra, bios_puts
+    bios_call bios_puts
     
-    # HELP
     mv a0, s0
     la a1, cmd_help
-    jal ra, bios_strcmp
+    bios_call bios_strcmp
     beqz a0, do_help
     
-    # LS
     mv a0, s0
     la a1, cmd_ls
-    jal ra, bios_strcmp
+    bios_call bios_strcmp
     beqz a0, do_ls
     
-    #CAT
     mv a0, s0
     la a1, cmd_cat
     li a2, 3
-    jal ra, bios_strncmp
+    bios_call bios_strncmp
     beqz a0, do_cat
+    
+    mv a0, s0
+    la a1, cmd_run
+    li a2, 3
+    bios_call bios_strncmp
+    beqz a0, do_run
 
     la a0, msg_unknown
-    jal ra, bios_puts
-    
+    bios_call bios_puts
     j clear_buffer
 
 do_help:
     la a0, msg_help
-    jal ra, bios_puts
+    bios_call bios_puts
     j clear_buffer
     
 do_ls:
     la a0, print_entry
-    jal ra, bios_ls
+    bios_call bios_ls
     j clear_buffer
 
 do_cat:
-    PUSH s0; PUSH s1;
+    PUSH s0; PUSH s1        # save trap handler's s0/s1, we need them for cat
     la a0, input_buf
     addi a0, a0, 3
     lbu t0, 0(a0)
@@ -132,60 +135,99 @@ do_cat:
     addi a0, a0, 1
     
     la a1, fat_name_buf
-    jal ra, str_to_fat83
+    jal ra, str_to_fat83    # local function, jal ra is correct
     
     la a0, fat_name_buf
-    jal ra, bios_find
+    bios_call bios_find
     
     beqz a0, cat_not_found
     
-    PUSH a1
-    
+    PUSH a1                 # save file size
     la a1, heap_start
-    jal ra, bios_load
+    bios_call bios_load
     
-    POP s1
+    POP s1                  # s1 = file size
     la s0, heap_start
     
 cat_print_loop:
     beqz s1, cat_done
     lbu a0, 0(s0)
-    jal ra, bios_putc
+    bios_call bios_putc
     addi s0, s0, 1
     addi s1, s1, -1
     j cat_print_loop
 
 cat_no_arg:
     la a0, msg_cat_usage
-    jal ra, bios_puts
-    j clear_buffer
+    bios_call bios_puts
+    j cat_done
 
 cat_not_found:
-    la a0, msg_cat_not_found
-    jal ra, bios_puts
+    la a0, msg_file_not_found
+    bios_call bios_puts
 
 cat_done:
-    POP s1; POP s0;
+    POP s1; POP s0          # restore trap handler's s0/s1
+    j clear_buffer
+    
+do_run:
+    # no extra PUSH/POP — trap handler's ra/s0/s1/s2 are already saved
+    la a0, input_buf
+    addi a0, a0, 3
+    lbu t0, 0(a0)
+    li t1, ' '
+    bne t0, t1, run_no_arg
+    addi a0, a0, 1
+    
+    la a1, fat_name_buf
+    jal ra, str_to_fat83    # local function, jal ra is correct
+    
+    la a0, fat_name_buf
+    bios_call bios_find
+    beqz a0, run_not_found
+    
+    la a1, heap_start
+    bios_call bios_load
+
+    la t0, run_addr
+    la t1, heap_start
+    sw t1, 0(t0)
+
+    la t0, run_trampoline
+    csrw mepc, t0
+    j clear_buffer          # mret will jump to run_trampoline
+    
+run_no_arg:
+    la a0, msg_run_usage
+    bios_call bios_puts
+    j clear_buffer
+    
+run_not_found:
+    la a0, msg_file_not_found
+    bios_call bios_puts
     j clear_buffer
     
 no_cmd:
     la a0, newline
-    jal ra, bios_puts
+    bios_call bios_puts
     j clear_buffer
     
+clear_buffer_no_shell:
+    sw zero, 0(s1)
+    j interrupt_done    
+
 clear_buffer:
     la a0, msg_shell
-    jal ra, bios_puts
-    sw zero, 0(s1)
+    bios_call bios_puts
+    sw zero, 0(s1)          # s1 = input_len, still valid from trap handler push
 
 interrupt_done:
-    jal ra, bios_clin
+    bios_call bios_clin
     
-    POP s2; POP s1; POP s0; POP ra
+    POP s2; POP s1; POP s0; POP ra   # one single pop point
 
-    li t0, 11           # MEIP bit = 11
+    li t0, 11
     csrrc zero, mip, t0
-    
     mret
     
 # --------------------------------------------------
@@ -321,6 +363,23 @@ fat83_store_ext:
 fat83_done:
     POP ra
     ret
+    
+run_trampoline:
+    la   t0, run_addr
+    lw   t0, 0(t0)
+    la   a0, trap_handler    # pass shell handler so program can restore it
+    jalr ra, t0              # call program from clean context
+
+    # re-enable interrupts when program returns
+    li   t1, 8
+    csrs mstatus, t1
+    li   t1, 1 << 11
+    csrs mie, t1
+    
+    la a0, msg_shell
+    bios_call bios_puts
+    
+    j    loop
 
     .section .bss
     .align 4
@@ -328,6 +387,7 @@ fat83_done:
 input_buf: .space 64
 input_len: .space 4
 fat_name_buf: .space 12
+run_addr: .word 0
 heap_start:
     .space 0x100000
     

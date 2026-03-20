@@ -12,6 +12,7 @@ str_0x: .ascii "0x\0"
     .globl bios_puth
     .globl bios_putw
     .globl bios_putu
+    .globl bios_puti
     .globl bios_putx
     .globl bios_puts
     .globl bios_clin
@@ -20,6 +21,7 @@ str_0x: .ascii "0x\0"
     .globl bios_memcpy
     .globl bios_strcmp
     .globl bios_strncmp
+    .globl bios_atoi
     .globl bios_rsec
     .globl bios_wsec
     .globl bios_init
@@ -126,7 +128,27 @@ bios_putu:
 
     POP ra
     ret
-    
+
+# --------------------------------------------------
+# bios_puti(int32 value)
+# prints signed integer in decimal
+# Arg: a0 contains value
+# Clobbers: 
+# --------------------------------------------------
+
+bios_puti:
+    PUSH ra
+    bgez a0, bios_puti_pos
+    PUSH a0
+    li a0, '-'
+    jal bios_putc
+    POP a0
+    neg a0, a0
+bios_puti_pos:
+    jal bios_putu
+    POP ra
+    ret
+
 # --------------------------------------------------
 # bios_putx(uint32 value)
 # prints unsigned integer in hexadecimal
@@ -290,6 +312,46 @@ strncmp_equal:
 
 strncmp_diff:
     sub a0, t0, t1
+    POP ra
+    ret
+
+# --------------------------------------------------
+# bios_atoi(char* str)
+# Parses a decimal integer string, handles negative with '-'
+# a0 = pointer to string
+# Returns: a0 = integer value
+# --------------------------------------------------
+bios_atoi:
+    PUSH ra
+    PUSH s0; PUSH s1; PUSH s2
+
+    mv   s0, a0
+    li   s1, 0
+    li   s2, 1
+
+    lbu  t0, 0(s0)
+    li   t1, '-'
+    bne  t0, t1, atoi_loop
+    li   s2, -1
+    addi s0, s0, 1
+
+atoi_loop:
+    lbu  t0, 0(s0)
+    beqz t0, atoi_done
+    li   t1, '0'
+    blt  t0, t1, atoi_done
+    li   t1, '9'
+    bgt  t0, t1, atoi_done
+    addi t0, t0, -48
+    li   t1, 10
+    mul  s1, s1, t1
+    add  s1, s1, t0
+    addi s0, s0, 1
+    j    atoi_loop
+
+atoi_done:
+    mul  a0, s1, s2
+    POP s2; POP s1; POP s0
     POP ra
     ret
 

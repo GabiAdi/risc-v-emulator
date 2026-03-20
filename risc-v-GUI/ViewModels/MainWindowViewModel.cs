@@ -269,6 +269,10 @@ namespace risc_v_GUI.ViewModels
             Key.Tab => '\t',
             Key.Back => '\b',
             Key.OemPeriod => '.',
+            Key.OemPlus => '+',
+            Key.OemMinus => '-',
+            Key.Multiply => '*',
+            Key.Divide => '/',
             _ => null, // Not a printable character
         };
 
