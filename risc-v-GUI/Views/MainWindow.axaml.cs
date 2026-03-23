@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using risc_v_GUI.Services;
 using risc_v_GUI.ViewModels;
 using risc_v;
@@ -17,6 +18,25 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
+        Loaded += (_, _) => ConsoleInput.Focus();
+
+        DataContextChanged += (_, _) =>
+        {
+            if (DataContext is MainWindowViewModel vm)
+                vm.ConsoleLines.CollectionChanged += (_, _) => ScrollToBottom();
+        };
+
+    }
+    
+    private void OnConsoleClicked(object? sender, PointerPressedEventArgs e)
+    {
+        ConsoleInput.Focus();
+    }
+
+    private void ScrollToBottom()
+    {
+        Dispatcher.UIThread.Post(() => ConsoleScroller.ScrollToEnd());
     }
     
     private async void halt(object? sender, RoutedEventArgs e)

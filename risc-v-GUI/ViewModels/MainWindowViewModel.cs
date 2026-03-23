@@ -26,7 +26,7 @@ namespace risc_v_GUI.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         private string _outputText = "";
-
+        
         public string OutputText
         {
             get => _outputText;
@@ -125,6 +125,7 @@ namespace risc_v_GUI.ViewModels
         public ObservableCollection<MemoryRow> MemoryView { get; } = new ObservableCollection<MemoryRow>();  
         public ObservableCollection<RegisterRow> Registers { get; } = new ObservableCollection<RegisterRow>();
         public ObservableCollection<SymbolRow> SymbolView { get;  } = new ObservableCollection<SymbolRow>();
+        public ObservableCollection<ConsoleLine> ConsoleLines { get; } = new ObservableCollection<ConsoleLine>();
         
         public EmulatorService Emulator { get; }
 
@@ -376,13 +377,35 @@ namespace risc_v_GUI.ViewModels
         
         private void io_written(string output)
         {
-            if (output == "\b" && OutputText.Length > 0)
+            Dispatcher.UIThread.Post(() =>
             {
-                Dispatcher.UIThread.Post(() => OutputText = OutputText.Substring(0, OutputText.Length - 1));
-                return;
-            }
-            if(output != "\b")
-                Dispatcher.UIThread.Post(() => OutputText += output);
+                if(output == "\f")
+                {
+                    ConsoleLines.Clear();
+                }
+                else if (output == "\b")
+                {
+                    if (ConsoleLines.Count == 0) return;
+
+                    var last = ConsoleLines[^1];
+                    if (last.Text.Length > 0)
+                        ConsoleLines[^1] = last with { Text = last.Text[..^1] };
+                    else if (ConsoleLines.Count > 1)
+                        ConsoleLines.RemoveAt(ConsoleLines.Count - 1);
+                }
+                else if (output == "\n")
+                {
+                    ConsoleLines.Add(new ConsoleLine { Text = "", Color = "#a6e3a1" });
+                }
+                else
+                {
+                    if (ConsoleLines.Count == 0)
+                        ConsoleLines.Add(new ConsoleLine { Text = "", Color = "#a6e3a1" });
+
+                    var last = ConsoleLines[^1];
+                    ConsoleLines[^1] = last with { Text = last.Text + output };
+                }
+            });
         }
 
         private void gpu_written(Bitmap image)
@@ -446,7 +469,7 @@ namespace risc_v_GUI.ViewModels
             {
                 Register = "PC",
                 Name = "PC",
-                Value = Emulator.cpu.get_pc().ToString("X8"),
+                Value = "0x" + Emulator.cpu.get_pc().ToString("X8"),
             });
             for (int i = 0; i < regs.Length; i++)
             {
@@ -454,25 +477,29 @@ namespace risc_v_GUI.ViewModels
                 {
                     Register = $"x{i}",
                     Name = Enum.GetName(typeof(Cpu.register_names), i),
-                    Value = regs[i].ToString("X8"),
+                    Value = "0x" + regs[i].ToString("X8"),
                 });
             }
             foreach (uint i in (uint[])Enum.GetValues(typeof(Cpu.CSR)))
             {
                 Registers.Add(new RegisterRow()
                 {
-                    Register = i.ToString("X3"),
+                    Register = "0x" + i.ToString("X3"),
                     Name = Enum.GetName(typeof(Cpu.CSR), i),
                     Value = "0x" + Emulator.cpu.get_csr(i).ToString("X8"),
                 });
             }
         }
         
-        private void GetMemoryView(uint address, ObservableCollection<MemoryRow> memory_view, uint range_before = 32, uint range_after = 32)
+        private void GetMemoryView(uint address, ObservableCollection<MemoryRow> memory_view, uint range_before = 20, uint range_after = 20)
         {
             memory_view.Clear();
 
-            if (address < range_before) range_before = address;
+            if (address < range_before)
+            {
+                range_after += range_before;
+                range_before = address;
+            }
             
             if(address + range_after > Emulator.bus.max_addr) range_after = Emulator.bus.max_addr - address;
             

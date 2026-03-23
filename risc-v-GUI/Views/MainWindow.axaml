@@ -1,13 +1,14 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:risc_v_GUI.ViewModels"
+        xmlns:local="clr-namespace:risc_v_GUI.Models"
         x:Class="risc_v_GUI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="risc_v_GUI"
         Width="1440" Height="900"
         Background="#181825">
-
+  
   <Window.Styles>
     <Style Selector="Button">
       <Setter Property="Background"      Value="#313244"/>
@@ -47,7 +48,7 @@
       <Setter Property="RowBackground"            Value="#1e1e2e"/>
       <Setter Property="HorizontalGridLinesBrush" Value="#313244"/>
       <Setter Property="VerticalGridLinesBrush"   Value="#313244"/>
-      <Setter Property="FontFamily"               Value="Consolas,monospace"/>
+      <Setter Property="FontFamily"               Value="DejaVu Sans Mono,Consolas,Courier New,monospace"/>
     </Style>
     <Style Selector="DataGridColumnHeader">
       <Setter Property="Background"  Value="#313244"/>
@@ -146,22 +147,41 @@
           <Border Grid.Row="0" Grid.Column="0"
                   BorderBrush="#313244" BorderThickness="1"
                   CornerRadius="6" Margin="0,0,8,8"
-                  ClipToBounds="True">
-            <TextBox FontFamily="Consolas,monospace"
-                     IsReadOnly="True"
-                     AcceptsReturn="True"
-                     TextWrapping="NoWrap"
-                     Background="#12121e"
-                     Foreground="#a6e3a1"
-                     BorderThickness="0"
-                     Text="{Binding OutputText}"
-                     KeyDown="on_key_down"
-                     CaretBrush="#cdd6f4">
-              <TextBox.KeyBindings>
-                <KeyBinding Command="{Binding enter_pressed}" Gesture="Enter"/>
-                <KeyBinding Command="{Binding back_pressed}"  Gesture="Back"/>
-              </TextBox.KeyBindings>
-            </TextBox>
+                  ClipToBounds="True"
+                  Background="#12121e">
+            <Panel>
+
+              <ScrollViewer x:Name="ConsoleScroller"
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding ConsoleLines}" Padding="8">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="local:ConsoleLine">
+                      <TextBlock Text="{Binding Text}"
+                                 Foreground="{Binding Color}"
+                                 FontFamily="Liberation Mono,DejaVu Sans Mono,Consolas,Courier New"
+                                 FontSize="13"
+                                 TextWrapping="NoWrap"/>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </ScrollViewer>
+
+              <!-- Transparent focusable overlay on top -->
+              <Border x:Name="ConsoleInput"
+                      Background="Transparent"
+                      Focusable="True"
+                      KeyDown="on_key_down"
+                      PointerPressed="OnConsoleClicked">
+                <Border.Styles>
+                  <Style Selector="Border:focus">
+                    <Setter Property="BorderBrush" Value="#cba6f7"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                  </Style>
+                </Border.Styles>
+              </Border>
+
+            </Panel>
           </Border>
 
           <!-- Registers -->
@@ -177,7 +197,7 @@
                       CanUserResizeColumns="True">
               <DataGrid.Columns>
                 <DataGridTextColumn Header="Reg"   Binding="{Binding Register}" Width="80"/>
-                <DataGridTextColumn Header="Name"  Binding="{Binding Name}"     Width="80"/>
+                <DataGridTextColumn Header="Name"  Binding="{Binding Name}"     Width="100"/>
                 <DataGridTextColumn Header="Value" Binding="{Binding Value}"    Width="*"/>
               </DataGrid.Columns>
             </DataGrid>

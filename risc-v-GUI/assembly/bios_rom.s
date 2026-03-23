@@ -8,6 +8,7 @@ str_0x: .ascii "0x\0"
 
    
     .section .text
+    .globl bios_clear
     .globl bios_putc
     .globl bios_puth
     .globl bios_putw
@@ -28,6 +29,7 @@ str_0x: .ascii "0x\0"
     .globl bios_find
     .globl bios_load
     .globl bios_ls
+    .globl bios_render
     .globl _start
 
 # MMIO console
@@ -46,6 +48,17 @@ str_0x: .ascii "0x\0"
 _start:
     la sp, stack_top
     jal main
+
+# --------------------------------------------------
+# bios_clear()
+# Clears console
+# Clobbers: t0
+# --------------------------------------------------
+bios_clear:
+    la t0, MMIO_CONSOLE
+    li t1, 12
+    sb t1, 0(t0)
+    ret
 
 # --------------------------------------------------
 # bios_putc(char c)
@@ -642,6 +655,22 @@ ls_done:
     POP ra
     ret
     
+# --------------------------------------------------
+# bios_render(uint32* buffer, uint32 size)
+# Renders the buffer to the screen via GPU
+# Arg: a0 = buffer pointer, a1 = buffer size
+# Clobbers: t0, t1, t2
+# --------------------------------------------------
+bios_render:
+    PUSH ra
+    la t0, MMIO_GPU
+    sw a0, 0x00(t0)
+    sw a1, 0x04(t0)
+    li t1, 1
+    sw t1, 0x08(t0)
+    POP ra
+    ret
+
     .section .bss
     .org 0x2000
     .align 4

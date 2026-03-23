@@ -6,12 +6,25 @@ newline: .ascii "\n\0"
 cmd_help: .ascii "HELP\0"
 cmd_ls: .ascii "LS\0"
 cmd_cat: .ascii "CAT\0"
+cmd_clear: .ascii "CLEAR\0"
 cmd_run: .ascii "RUN\0"
-msg_help: .ascii "Help:\nhelp - prints this help\nls - prints all files\ncat <filename> - prints contents of <filename>\nrun <filename> - loads <filename> to memory and runs it\n\0"
+cmd_render: .ascii "RENDER\0"
+cmd_echo: .ascii "ECHO\0"
+cmd_about: .ascii "ABOUT\0"
+msg_help: .ascii "Help:\nhelp - prints this help\nls - prints all files\nabout - prints about\nclear - clears the console\necho <text> - prints <text>\ncat <filename> - prints contents of <filename>\nrun <filename> - loads <filename> to memory and runs it\nrender <filename> - renders <filename> to screen\n\0"
 msg_unknown: .ascii "Unkown command\n\0"
 msg_file_not_found: .ascii "File not found\n\0"
 msg_cat_usage: .ascii "Usage: cat <filename>\n\0"
 msg_run_usage: .ascii "Usage: run <filename>\n\0"
+msg_render_usage: .ascii "Usage: render <filename>\n\0"
+msg_echo_usage: .ascii "Usage: echo <text>\n\0"
+msg_rv1: .ascii "  _____  _____  _____ _____    __        __\n\0"
+msg_rv2: .ascii " |  __ \\|_   _|/ ____/ ____|   \\ \\      / /\n\0"
+msg_rv3: .ascii " | |__) | | | | (___| |         \\ \\    / / \n\0"
+msg_rv4: .ascii " |  _  /  | |  \\___ \\ |          \\ \\  / /  \n\0"
+msg_rv5: .ascii " | | \\ \\ _| |_ ____) | |____      \\ \\/ /   \n\0"
+msg_rv6: .ascii " |_|  \\_\\_____|_____/ \\_____|      \\__/    \n\0"
+msg_about: .ascii "\nA 32 bit rv32imazicsr RISC-V emulator\n\0"
 msg_shell: .ascii "/$ \0"
 
 .section .text
@@ -95,9 +108,25 @@ enter_pressed:
     beqz a0, do_help
     
     mv a0, s0
+    la a1, cmd_about
+    bios_call bios_strcmp
+    beqz a0, do_about
+    
+    mv a0, s0
+    la a1, cmd_clear
+    bios_call bios_strcmp
+    beqz a0, do_clear
+    
+    mv a0, s0
     la a1, cmd_ls
     bios_call bios_strcmp
     beqz a0, do_ls
+    
+    mv a0, s0
+    la a1, cmd_echo
+    li a2, 4
+    bios_call bios_strncmp
+    beqz a0, do_echo
     
     mv a0, s0
     la a1, cmd_cat
@@ -110,6 +139,12 @@ enter_pressed:
     li a2, 3
     bios_call bios_strncmp
     beqz a0, do_run
+    
+    mv a0, s0
+    la a1, cmd_render
+    li a2, 6
+    bios_call bios_strncmp
+    beqz a0, do_render
 
     la a0, msg_unknown
     bios_call bios_puts
@@ -120,9 +155,51 @@ do_help:
     bios_call bios_puts
     j clear_buffer
     
+do_about:
+    la a0, msg_rv1
+    bios_call bios_puts
+    la a0, msg_rv2
+    bios_call bios_puts
+    la a0, msg_rv3
+    bios_call bios_puts
+    la a0, msg_rv4
+    bios_call bios_puts
+    la a0, msg_rv5
+    bios_call bios_puts
+    la a0, msg_rv6
+    bios_call bios_puts
+
+    la a0, msg_about
+    bios_call bios_puts
+    j clear_buffer   
+ 
 do_ls:
     la a0, print_entry
     bios_call bios_ls
+    j clear_buffer
+    
+do_clear:
+    bios_call bios_clear
+    j clear_buffer
+
+do_echo:
+    la a0, input_buf
+    addi a0, a0, 4
+    lbu t0, 0(a0)
+    li t1, ' '
+    bne t0, t1, echo_no_arg
+    addi a0, a0, 1
+    
+    bios_call bios_puts
+    
+    la a0, newline
+    bios_call bios_puts
+    
+    j clear_buffer
+    
+echo_no_arg:
+    la a0, msg_echo_usage
+    bios_call bios_puts
     j clear_buffer
 
 do_cat:
@@ -205,6 +282,47 @@ run_no_arg:
 run_not_found:
     la a0, msg_file_not_found
     bios_call bios_puts
+    j clear_buffer
+
+do_render:
+    PUSH s0; PUSH s1
+    la a0, input_buf
+    addi a0, a0, 6
+    lbu t0, 0(a0)
+    li t1, ' '
+    bne t0, t1, render_no_arg
+    addi a0, a0, 1
+    
+    la a1, fat_name_buf
+    jal ra, str_to_fat83
+    
+    la a0, fat_name_buf
+    bios_call bios_find
+    
+    beqz a0, render_not_found
+    
+    PUSH a1                 # save file size
+    la a1, heap_start
+    bios_call bios_load
+    
+    POP a1                  # a1 = file size
+    la a0, heap_start
+    
+    bios_call bios_render
+    
+    j render_done
+
+render_no_arg:
+    la a0, msg_render_usage
+    bios_call bios_puts
+    j render_done
+
+render_not_found:
+    la a0, msg_file_not_found
+    bios_call bios_puts
+
+render_done:
+    POP s1; POP s0          # restore trap handler's s0/s1
     j clear_buffer
     
 no_cmd:

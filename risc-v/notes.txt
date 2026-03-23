@@ -99,9 +99,5 @@ Extended Boot record (EBR) for FAT16
 +--------+------+-------------------------------------------------------+
 
 TODO
-4. Device manager
-5. UI improvements (Symbols in tables, input validation)
-6. File system writing
-7. Malloc?
-8. Simple shell
-
+UI improvements (input validation)
+Windows support               
