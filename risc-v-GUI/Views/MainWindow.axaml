@@ -7,12 +7,12 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="risc_v_GUI"
         Width="1440" Height="900"
-        Background="#181825">
-  
+        Background="#eff1f5">
+
   <Window.Styles>
     <Style Selector="Button">
-      <Setter Property="Background"      Value="#313244"/>
-      <Setter Property="Foreground"      Value="#cdd6f4"/>
+      <Setter Property="Background"      Value="#ccd0da"/>
+      <Setter Property="Foreground"      Value="#4c4f69"/>
       <Setter Property="BorderThickness" Value="0"/>
       <Setter Property="CornerRadius"    Value="5"/>
       <Setter Property="Padding"         Value="12,6"/>
@@ -20,55 +20,55 @@
       <Setter Property="Cursor"          Value="Hand"/>
     </Style>
     <Style Selector="Button:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="#45475a"/>
+      <Setter Property="Background" Value="#bcc0cc"/>
     </Style>
     <Style Selector="Button:disabled /template/ ContentPresenter">
-      <Setter Property="Background" Value="#1e1e2e"/>
+      <Setter Property="Background" Value="#e6e9ef"/>
       <Setter Property="Opacity"    Value="0.4"/>
     </Style>
     <Style Selector="Button.accent">
-      <Setter Property="Background" Value="#cba6f7"/>
-      <Setter Property="Foreground" Value="#1e1e2e"/>
+      <Setter Property="Background" Value="#8839ef"/>
+      <Setter Property="Foreground" Value="#eff1f5"/>
     </Style>
     <Style Selector="Button.accent:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="#b4befe"/>
+      <Setter Property="Background" Value="#7287fd"/>
     </Style>
     <Style Selector="Button.danger">
-      <Setter Property="Background" Value="#f38ba8"/>
-      <Setter Property="Foreground" Value="#1e1e2e"/>
+      <Setter Property="Background" Value="#d20f39"/>
+      <Setter Property="Foreground" Value="#eff1f5"/>
     </Style>
     <Style Selector="Button.danger:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="#eba0ac"/>
+      <Setter Property="Background" Value="#e64553"/>
     </Style>
     <Style Selector="DataGrid">
-      <Setter Property="Background"               Value="#1e1e2e"/>
-      <Setter Property="Foreground"               Value="#cdd6f4"/>
-      <Setter Property="BorderBrush"              Value="#313244"/>
+      <Setter Property="Background"               Value="#e6e9ef"/>
+      <Setter Property="Foreground"               Value="#4c4f69"/>
+      <Setter Property="BorderBrush"              Value="#ccd0da"/>
       <Setter Property="BorderThickness"          Value="1"/>
-      <Setter Property="RowBackground"            Value="#1e1e2e"/>
-      <Setter Property="HorizontalGridLinesBrush" Value="#313244"/>
-      <Setter Property="VerticalGridLinesBrush"   Value="#313244"/>
+      <Setter Property="RowBackground"            Value="#e6e9ef"/>
+      <Setter Property="HorizontalGridLinesBrush" Value="#ccd0da"/>
+      <Setter Property="VerticalGridLinesBrush"   Value="#ccd0da"/>
       <Setter Property="FontFamily"               Value="DejaVu Sans Mono,Consolas,Courier New,monospace"/>
     </Style>
     <Style Selector="DataGridColumnHeader">
-      <Setter Property="Background"  Value="#313244"/>
-      <Setter Property="Foreground"  Value="#cdd6f4"/>
+      <Setter Property="Background"  Value="#ccd0da"/>
+      <Setter Property="Foreground"  Value="#4c4f69"/>
       <Setter Property="FontWeight"  Value="Bold"/>
       <Setter Property="Padding"     Value="10,8"/>
-      <Setter Property="BorderBrush" Value="#45475a"/>
+      <Setter Property="BorderBrush" Value="#bcc0cc"/>
     </Style>
     <Style Selector="DataGridCell">
       <Setter Property="Padding" Value="10,0"/>
     </Style>
     <Style Selector="Menu">
-      <Setter Property="Background" Value="#12121e"/>
-      <Setter Property="Foreground" Value="#cdd6f4"/>
+      <Setter Property="Background" Value="#dce0e8"/>
+      <Setter Property="Foreground" Value="#4c4f69"/>
     </Style>
     <Style Selector="MenuItem">
-      <Setter Property="Foreground" Value="#cdd6f4"/>
+      <Setter Property="Foreground" Value="#4c4f69"/>
     </Style>
     <Style Selector="MenuItem:pointerover /template/ Border#Root">
-      <Setter Property="Background" Value="#313244"/>
+      <Setter Property="Background" Value="#ccd0da"/>
     </Style>
   </Window.Styles>
 
@@ -105,11 +105,11 @@
 
         <!-- ── Control toolbar ────────────────────────────────────────── -->
         <Border DockPanel.Dock="Top"
-                Background="#1e1e2e"
-                BorderBrush="#313244" BorderThickness="1"
+                Background="#e6e9ef"
+                BorderBrush="#ccd0da" BorderThickness="1"
                 CornerRadius="6" Padding="10,8" Margin="0,0,0,12">
           <StackPanel Orientation="Horizontal" Spacing="6">
-            <TextBlock Text="EXECUTION" Foreground="#6c7086"
+            <TextBlock Text="EXECUTION" Foreground="#9ca0b0"
                        FontSize="11" FontWeight="Bold" LetterSpacing="2"
                        VerticalAlignment="Center" Margin="0,0,12,0"/>
             <Button Content="⏵  Step"              Click="step"             Name="bt_step"/>
@@ -123,8 +123,8 @@
 
         <!-- ── Status bar ─────────────────────────────────────────────── -->
         <Border DockPanel.Dock="Bottom"
-                Background="#12121e"
-                BorderBrush="#313244" BorderThickness="1"
+                Background="#dce0e8"
+                BorderBrush="#ccd0da" BorderThickness="1"
                 CornerRadius="6" Padding="4" Margin="0,12,0,0"
                 Height="100">
           <ListBox Background="Transparent"
@@ -132,7 +132,7 @@
             <ListBox.ItemTemplate>
               <DataTemplate>
                 <TextBlock Text="{Binding}"
-                           Foreground="#a6adc8"
+                           Foreground="#5c5f77"
                            FontFamily="Consolas,monospace"
                            FontSize="12"/>
               </DataTemplate>
@@ -145,10 +145,10 @@
 
           <!-- Console output -->
           <Border Grid.Row="0" Grid.Column="0"
-                  BorderBrush="#313244" BorderThickness="1"
+                  BorderBrush="#ccd0da" BorderThickness="1"
                   CornerRadius="6" Margin="0,0,8,8"
                   ClipToBounds="True"
-                  Background="#12121e">
+                  Background="#dce0e8">
             <Panel>
 
               <ScrollViewer x:Name="ConsoleScroller"
@@ -175,7 +175,7 @@
                       PointerPressed="OnConsoleClicked">
                 <Border.Styles>
                   <Style Selector="Border:focus">
-                    <Setter Property="BorderBrush" Value="#cba6f7"/>
+                    <Setter Property="BorderBrush" Value="#8839ef"/>
                     <Setter Property="BorderThickness" Value="1"/>
                   </Style>
                 </Border.Styles>
@@ -186,7 +186,7 @@
 
           <!-- Registers -->
           <Border Grid.Row="0" Grid.Column="1"
-                  BorderBrush="#313244" BorderThickness="1"
+                  BorderBrush="#ccd0da" BorderThickness="1"
                   CornerRadius="6" Margin="0,0,0,8"
                   ClipToBounds="True">
             <DataGrid ItemsSource="{Binding Registers}"
@@ -205,7 +205,7 @@
 
           <!-- Memory / disassembly -->
           <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                  BorderBrush="#313244" BorderThickness="1"
+                  BorderBrush="#ccd0da" BorderThickness="1"
                   CornerRadius="6"
                   ClipToBounds="True">
             <DataGrid ItemsSource="{Binding Memory}"

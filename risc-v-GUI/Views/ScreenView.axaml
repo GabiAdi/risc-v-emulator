@@ -8,9 +8,9 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         Title="Screen"
         Width="800" Height="450"
-        Background="#FF1E1E1E">
+        Background="#eff1f5">
 
-        <Canvas>
-                <Image Source="{Binding GpuBitmap}" Width="{Binding $parent.Bounds.Width}" Height="{Binding $parent.Bounds.Height}" />
-        </Canvas>
+    <Canvas>
+        <Image Source="{Binding GpuBitmap}" Width="{Binding $parent.Bounds.Width}" Height="{Binding $parent.Bounds.Height}" />
+    </Canvas>
 </Window>

@@ -7,33 +7,33 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="Error"
         Width="380" Height="160"
-        Background="#181825">
-    
-        <DockPanel Margin="20">
+        Background="#eff1f5">
 
-                <Button DockPanel.Dock="Bottom"
-                        Content="OK"
-                        HorizontalAlignment="Right"
-                        Background="#313244"
-                        Foreground="#cdd6f4"
-                        BorderThickness="0"
-                        CornerRadius="5"
-                        Padding="24,6"
-                        Click="OnOkClick"/>
+    <DockPanel Margin="20">
 
-                <StackPanel Orientation="Horizontal"
-                            VerticalAlignment="Center"
-                            Spacing="10">
-                        <TextBlock Text="✕"
-                                   Foreground="#f38ba8"
-                                   FontSize="16"
-                                   FontWeight="Bold"
-                                   VerticalAlignment="Center"/>
-                        <TextBlock x:Name="MessageText"
-                                   Foreground="#cdd6f4"
-                                   TextWrapping="Wrap"
-                                   VerticalAlignment="Center"/>
-                </StackPanel>
+        <Button DockPanel.Dock="Bottom"
+                Content="OK"
+                HorizontalAlignment="Right"
+                Background="#ccd0da"
+                Foreground="#4c4f69"
+                BorderThickness="0"
+                CornerRadius="5"
+                Padding="24,6"
+                Click="OnOkClick"/>
 
-        </DockPanel>
+        <StackPanel Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    Spacing="10">
+            <TextBlock Text="✕"
+                       Foreground="#d20f39"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       VerticalAlignment="Center"/>
+            <TextBlock x:Name="MessageText"
+                       Foreground="#4c4f69"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+
+    </DockPanel>
 </Window>

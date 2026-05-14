@@ -6,25 +6,25 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="Symbol View"
         Width="600" Height="500"
-        Background="#181825">
+        Background="#eff1f5">
 
   <Window.Styles>
     <Style Selector="DataGrid">
-      <Setter Property="Background"               Value="#1e1e2e"/>
-      <Setter Property="Foreground"               Value="#cdd6f4"/>
-      <Setter Property="BorderBrush"              Value="#313244"/>
+      <Setter Property="Background"               Value="#e6e9ef"/>
+      <Setter Property="Foreground"               Value="#4c4f69"/>
+      <Setter Property="BorderBrush"              Value="#ccd0da"/>
       <Setter Property="BorderThickness"          Value="0"/>
-      <Setter Property="RowBackground"            Value="#1e1e2e"/>
-      <Setter Property="HorizontalGridLinesBrush" Value="#313244"/>
+      <Setter Property="RowBackground"            Value="#e6e9ef"/>
+      <Setter Property="HorizontalGridLinesBrush" Value="#ccd0da"/>
       <Setter Property="VerticalGridLinesBrush"   Value="Transparent"/>
       <Setter Property="FontFamily"               Value="Consolas,monospace"/>
     </Style>
     <Style Selector="DataGridColumnHeader">
-      <Setter Property="Background"  Value="#313244"/>
-      <Setter Property="Foreground"  Value="#cdd6f4"/>
+      <Setter Property="Background"  Value="#ccd0da"/>
+      <Setter Property="Foreground"  Value="#4c4f69"/>
       <Setter Property="FontWeight"  Value="Bold"/>
       <Setter Property="Padding"     Value="14,10"/>
-      <Setter Property="BorderBrush" Value="#45475a"/>
+      <Setter Property="BorderBrush" Value="#bcc0cc"/>
     </Style>
     <Style Selector="DataGridCell">
       <Setter Property="Padding" Value="14,0"/>
@@ -36,12 +36,12 @@
     <!-- ── Header ───────────────────────────────────────────────────── -->
     <StackPanel DockPanel.Dock="Top" Margin="0,0,0,12">
       <TextBlock Text="SYMBOL TABLE"
-                 Foreground="#6c7086"
+                 Foreground="#9ca0b0"
                  FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
     </StackPanel>
 
     <!-- ── Table ────────────────────────────────────────────────────── -->
-    <Border BorderBrush="#313244" BorderThickness="1"
+    <Border BorderBrush="#ccd0da" BorderThickness="1"
             CornerRadius="6" ClipToBounds="True">
       <DataGrid ItemsSource="{Binding SymbolView}"
                 IsReadOnly="True"

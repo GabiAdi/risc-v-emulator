@@ -6,12 +6,12 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="{Binding AssemblerTitle}"
         Width="900" Height="640"
-        Background="#181825">
+        Background="#eff1f5">
 
   <Window.Styles>
     <Style Selector="Button">
-      <Setter Property="Background"      Value="#313244"/>
-      <Setter Property="Foreground"      Value="#cdd6f4"/>
+      <Setter Property="Background"      Value="#ccd0da"/>
+      <Setter Property="Foreground"      Value="#4c4f69"/>
       <Setter Property="BorderThickness" Value="0"/>
       <Setter Property="CornerRadius"    Value="5"/>
       <Setter Property="Padding"         Value="12,6"/>
@@ -19,33 +19,33 @@
       <Setter Property="Cursor"          Value="Hand"/>
     </Style>
     <Style Selector="Button:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="#45475a"/>
+      <Setter Property="Background" Value="#bcc0cc"/>
     </Style>
     <Style Selector="Button.accent">
-      <Setter Property="Background" Value="#cba6f7"/>
-      <Setter Property="Foreground" Value="#1e1e2e"/>
+      <Setter Property="Background" Value="#8839ef"/>
+      <Setter Property="Foreground" Value="#eff1f5"/>
     </Style>
     <Style Selector="Button.accent:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="#b4befe"/>
+      <Setter Property="Background" Value="#7287fd"/>
     </Style>
     <Style Selector="TextBox">
-      <Setter Property="Background"      Value="#1e1e2e"/>
-      <Setter Property="Foreground"      Value="#cdd6f4"/>
-      <Setter Property="BorderBrush"     Value="#45475a"/>
+      <Setter Property="Background"      Value="#e6e9ef"/>
+      <Setter Property="Foreground"      Value="#4c4f69"/>
+      <Setter Property="BorderBrush"     Value="#bcc0cc"/>
       <Setter Property="BorderThickness" Value="1"/>
-      <Setter Property="CaretBrush"      Value="#cdd6f4"/>
+      <Setter Property="CaretBrush"      Value="#4c4f69"/>
       <Setter Property="FontFamily"      Value="Consolas,monospace"/>
       <Setter Property="FontSize"        Value="13"/>
     </Style>
     <Style Selector="TextBox:focus">
-      <Setter Property="BorderBrush" Value="#cba6f7"/>
+      <Setter Property="BorderBrush" Value="#8839ef"/>
     </Style>
     <Style Selector="Menu">
-      <Setter Property="Background" Value="#12121e"/>
-      <Setter Property="Foreground" Value="#cdd6f4"/>
+      <Setter Property="Background" Value="#dce0e8"/>
+      <Setter Property="Foreground" Value="#4c4f69"/>
     </Style>
     <Style Selector="MenuItem">
-      <Setter Property="Foreground" Value="#cdd6f4"/>
+      <Setter Property="Foreground" Value="#4c4f69"/>
     </Style>
   </Window.Styles>
 
@@ -63,11 +63,11 @@
 
     <!-- ── Assemble button bar ──────────────────────────────────────── -->
     <Border DockPanel.Dock="Top"
-            Background="#1e1e2e"
-            BorderBrush="#313244" BorderThickness="0,0,0,1"
+            Background="#e6e9ef"
+            BorderBrush="#ccd0da" BorderThickness="0,0,0,1"
             Padding="12,8">
       <StackPanel Orientation="Horizontal" Spacing="8">
-        <TextBlock Text="ASSEMBLER" Foreground="#6c7086"
+        <TextBlock Text="ASSEMBLER" Foreground="#9ca0b0"
                    FontSize="11" FontWeight="Bold" LetterSpacing="2"
                    VerticalAlignment="Center" Margin="0,0,12,0"/>
         <Button Content="⚙  Assemble"
@@ -79,14 +79,14 @@
 
     <!-- ── Output bar ───────────────────────────────────────────────── -->
     <Border DockPanel.Dock="Bottom"
-            BorderBrush="#313244" BorderThickness="0,1,0,0"
+            BorderBrush="#ccd0da" BorderThickness="0,1,0,0"
             Height="110">
       <TextBox Name="tb_output"
                IsReadOnly="True"
                AcceptsReturn="True"
                Text="{Binding AssemblerOutput}"
-               Background="#12121e"
-               Foreground="#a6adc8"
+               Background="#dce0e8"
+               Foreground="#5c5f77"
                BorderThickness="0"
                Padding="12"/>
     </Border>
@@ -97,7 +97,7 @@
              AcceptsReturn="True"
              AcceptsTab="True"
              TextWrapping="NoWrap"
-             Background="#1e1e2e"
+             Background="#e6e9ef"
              BorderThickness="0"
              Padding="12"
              VerticalAlignment="Stretch"

@@ -8,15 +8,15 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         Title="Memory View"
         Width="900" Height="540"
-        Background="#181825">
+        Background="#eff1f5">
 
   <Window.Styles>
 
     <!-- TextBox -->
     <Style Selector="TextBox">
-      <Setter Property="Background"       Value="#1e1e2e"/>
-      <Setter Property="Foreground"       Value="#cdd6f4"/>
-      <Setter Property="BorderBrush"      Value="#45475a"/>
+      <Setter Property="Background"       Value="#e6e9ef"/>
+      <Setter Property="Foreground"       Value="#4c4f69"/>
+      <Setter Property="BorderBrush"      Value="#bcc0cc"/>
       <Setter Property="BorderThickness"  Value="1"/>
       <Setter Property="CornerRadius"     Value="5"/>
       <Setter Property="Padding"          Value="8,5"/>
@@ -24,13 +24,13 @@
       <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
     <Style Selector="TextBox:focus">
-      <Setter Property="BorderBrush" Value="#cba6f7"/>
+      <Setter Property="BorderBrush" Value="#8839ef"/>
     </Style>
 
     <!-- Button -->
     <Style Selector="Button">
-      <Setter Property="Background"      Value="#313244"/>
-      <Setter Property="Foreground"      Value="#cdd6f4"/>
+      <Setter Property="Background"      Value="#ccd0da"/>
+      <Setter Property="Foreground"      Value="#4c4f69"/>
       <Setter Property="BorderThickness" Value="0"/>
       <Setter Property="CornerRadius"    Value="5"/>
       <Setter Property="Padding"         Value="12,6"/>
@@ -38,21 +38,21 @@
       <Setter Property="Cursor"          Value="Hand"/>
     </Style>
     <Style Selector="Button:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="#45475a"/>
+      <Setter Property="Background" Value="#bcc0cc"/>
     </Style>
     <Style Selector="Button.accent">
-      <Setter Property="Background" Value="#cba6f7"/>
-      <Setter Property="Foreground" Value="#1e1e2e"/>
+      <Setter Property="Background" Value="#8839ef"/>
+      <Setter Property="Foreground" Value="#eff1f5"/>
     </Style>
     <Style Selector="Button.accent:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="#b4befe"/>
+      <Setter Property="Background" Value="#7287fd"/>
     </Style>
 
     <!-- ComboBox -->
     <Style Selector="ComboBox">
-      <Setter Property="Background"      Value="#1e1e2e"/>
-      <Setter Property="Foreground"      Value="#cdd6f4"/>
-      <Setter Property="BorderBrush"     Value="#45475a"/>
+      <Setter Property="Background"      Value="#e6e9ef"/>
+      <Setter Property="Foreground"      Value="#4c4f69"/>
+      <Setter Property="BorderBrush"     Value="#bcc0cc"/>
       <Setter Property="BorderThickness" Value="1"/>
       <Setter Property="CornerRadius"    Value="5"/>
       <Setter Property="Padding"         Value="8,5"/>
@@ -60,24 +60,24 @@
 
     <!-- DataGrid -->
     <Style Selector="DataGrid">
-      <Setter Property="Background"              Value="#1e1e2e"/>
-      <Setter Property="Foreground"              Value="#cdd6f4"/>
-      <Setter Property="BorderBrush"             Value="#313244"/>
-      <Setter Property="BorderThickness"         Value="1"/>
-      <Setter Property="RowBackground"           Value="#1e1e2e"/>
-      <Setter Property="HorizontalGridLinesBrush" Value="#313244"/>
-      <Setter Property="VerticalGridLinesBrush"   Value="#313244"/>
+      <Setter Property="Background"               Value="#e6e9ef"/>
+      <Setter Property="Foreground"               Value="#4c4f69"/>
+      <Setter Property="BorderBrush"              Value="#ccd0da"/>
+      <Setter Property="BorderThickness"          Value="1"/>
+      <Setter Property="RowBackground"            Value="#e6e9ef"/>
+      <Setter Property="HorizontalGridLinesBrush" Value="#ccd0da"/>
+      <Setter Property="VerticalGridLinesBrush"   Value="#ccd0da"/>
       <Setter Property="FontFamily"               Value="Consolas,monospace"/>
     </Style>
     <Style Selector="DataGridColumnHeader">
-      <Setter Property="Background"  Value="#313244"/>
-      <Setter Property="Foreground"  Value="#cdd6f4"/>
+      <Setter Property="Background"  Value="#ccd0da"/>
+      <Setter Property="Foreground"  Value="#4c4f69"/>
       <Setter Property="FontWeight"  Value="Bold"/>
       <Setter Property="Padding"     Value="10,8"/>
-      <Setter Property="BorderBrush" Value="#45475a"/>
+      <Setter Property="BorderBrush" Value="#bcc0cc"/>
     </Style>
     <Style Selector="DataGridRow:selected /template/ Rectangle#BackgroundRectangle">
-      <Setter Property="Fill" Value="#313244"/>
+      <Setter Property="Fill" Value="#ccd0da"/>
     </Style>
     <Style Selector="DataGridCell">
       <Setter Property="Padding" Value="10,0"/>
@@ -90,15 +90,15 @@
     <!-- ── Top label ──────────────────────────────────────────────────── -->
     <TextBlock DockPanel.Dock="Top"
                Text="MEMORY VIEW"
-               Foreground="#6c7086"
+               Foreground="#9ca0b0"
                FontSize="11" FontWeight="Bold"
                LetterSpacing="2"
                Margin="0,0,0,14"/>
 
     <!-- ── Toolbar row 1: Refresh / entries / address / goto ──────────── -->
     <Border DockPanel.Dock="Top"
-            Background="#1e1e2e"
-            BorderBrush="#313244" BorderThickness="1"
+            Background="#e6e9ef"
+            BorderBrush="#ccd0da" BorderThickness="1"
             CornerRadius="6"
             Padding="10,8"
             Margin="0,0,0,8">
@@ -109,17 +109,17 @@
                 Name="bt_refresh"
                 Click="refresh"/>
 
-        <Separator Width="1" Background="#45475a" Margin="4,0"/>
+        <Separator Width="1" Background="#bcc0cc" Margin="4,0"/>
 
-        <TextBlock Text="Show" Foreground="#6c7086"
+        <TextBlock Text="Show" Foreground="#9ca0b0"
                    VerticalAlignment="Center"/>
         <TextBox Name="tb_entry" Width="70" Text="32"/>
-        <TextBlock Text="bytes" Foreground="#6c7086"
+        <TextBlock Text="bytes" Foreground="#9ca0b0"
                    VerticalAlignment="Center"/>
 
-        <Separator Width="1" Background="#45475a" Margin="4,0"/>
+        <Separator Width="1" Background="#bcc0cc" Margin="4,0"/>
 
-        <TextBlock Text="Go to" Foreground="#6c7086"
+        <TextBlock Text="Go to" Foreground="#9ca0b0"
                    VerticalAlignment="Center"/>
         <TextBox Name="tb_address" Width="110"
                  Text="0x00000000"/>
@@ -132,14 +132,14 @@
 
     <!-- ── Toolbar row 2: Search ──────────────────────────────────────── -->
     <Border DockPanel.Dock="Top"
-            Background="#1e1e2e"
-            BorderBrush="#313244" BorderThickness="1"
+            Background="#e6e9ef"
+            BorderBrush="#ccd0da" BorderThickness="1"
             CornerRadius="6"
             Padding="10,8"
             Margin="0,0,0,12">
       <StackPanel Orientation="Horizontal" Spacing="8">
 
-        <TextBlock Text="Search" Foreground="#6c7086"
+        <TextBlock Text="Search" Foreground="#9ca0b0"
                    VerticalAlignment="Center"/>
         <TextBox Name="tb_search" Width="220"/>
         <ComboBox Name="cb_search" Width="160"
@@ -154,7 +154,7 @@
 
     <!-- ── Data grid ──────────────────────────────────────────────────── -->
     <Border DockPanel.Dock="Top"
-            BorderBrush="#313244" BorderThickness="1"
+            BorderBrush="#ccd0da" BorderThickness="1"
             CornerRadius="6"
             ClipToBounds="True">
       <DataGrid ItemsSource="{Binding MemoryView}"

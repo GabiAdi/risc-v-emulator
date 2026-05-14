@@ -395,12 +395,12 @@ namespace risc_v_GUI.ViewModels
                 }
                 else if (output == "\n")
                 {
-                    ConsoleLines.Add(new ConsoleLine { Text = "", Color = "#a6e3a1" });
+                    ConsoleLines.Add(new ConsoleLine { Text = "", Color = "#4c4f69" });
                 }
                 else
                 {
                     if (ConsoleLines.Count == 0)
-                        ConsoleLines.Add(new ConsoleLine { Text = "", Color = "#a6e3a1" });
+                        ConsoleLines.Add(new ConsoleLine { Text = "", Color = "#4c4f69" });
 
                     var last = ConsoleLines[^1];
                     ConsoleLines[^1] = last with { Text = last.Text + output };
